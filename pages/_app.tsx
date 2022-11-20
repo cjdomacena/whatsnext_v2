@@ -17,18 +17,17 @@ export default function App({ Component, pageProps, ...appProps }: AppProps) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
 
   return (
-    <main className="min-w-screen min-h-screen dark:bg-[#080808] bg-white transition-colors">
+    <main className="min-w-screen  dark:bg-[#080808] bg-white transition-colors">
       <SessionContextProvider
         supabaseClient={supabaseClient}
         initialSession={pageProps.initialSession}
       >
         <MetaHeader title="WhatsNext" description="Something something" />
-        <div className=" h-full">
-          {appProps.router.pathname.split("/").includes("auth") ? null : (
-            <Navbar />
-          )}
-          <Component {...pageProps} />
-        </div>
+
+        {appProps.router.pathname.split("/").includes("auth") ? null : (
+          <Navbar />
+        )}
+        <Component {...pageProps} />
       </SessionContextProvider>
     </main>
   );
