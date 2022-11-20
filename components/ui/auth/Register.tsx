@@ -37,7 +37,7 @@ const Register: NextPage = () => {
       }
       setErrorMessage(null);
       setLoading(false);
-      router.push("/auth/login");
+      router.reload();
     } catch (e) {
       if (e instanceof AuthError) {
         setErrorMessage(e.message);
@@ -51,9 +51,7 @@ const Register: NextPage = () => {
 
   return (
     <form className="space-y-4" autoComplete="off" onSubmit={handleSubmit}>
-      <p className="text-red-500">{errorMessage}</p>
-      <EmailInput loading={loading} />
-      <PasswordInput loading={loading} textLabel="Create Password" />
+      <p className="text-red-500 text-center mt-2 text-sm">{errorMessage}</p>
       <FormInput
         id="fullName"
         type="text"
@@ -61,7 +59,10 @@ const Register: NextPage = () => {
         value={name}
         textLabel="Full Name"
         placeholder="Enter Full Name"
+        disabled={loading}
       />
+      <EmailInput loading={loading} />
+      <PasswordInput loading={loading} textLabel="Create Password" />
       <div className="space-y-2">
         <button
           className={`w-full px-6 py-3 text-sm  transition-colors rounded font-medium bg-amber-900/20 ring-1 ring-amber-900 text-amber-500 hover:bg-amber-900 flex items-center justify-center gap-2 disabled:bg-orange-900`}
