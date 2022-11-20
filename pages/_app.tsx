@@ -11,19 +11,25 @@ import { useState } from "react";
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import MetaHeader from "@components/MetaHeader";
+import { Navbar } from "@components/common/navbar";
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps, ...appProps }: AppProps) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
 
   return (
-    <SessionContextProvider
-      supabaseClient={supabaseClient}
-      initialSession={pageProps.initialSession}
-    >
-      <MetaHeader title="WhatsNext" description="Something something" />
-      <main>
-        <Component {...pageProps} />
-      </main>
-    </SessionContextProvider>
+    <main className="min-w-screen min-h-screen dark:bg-[#080808] bg-white transition-colors">
+      <SessionContextProvider
+        supabaseClient={supabaseClient}
+        initialSession={pageProps.initialSession}
+      >
+        <MetaHeader title="WhatsNext" description="Something something" />
+        <div className=" h-full">
+          {appProps.router.pathname.split("/").includes("auth") ? null : (
+            <Navbar />
+          )}
+          <Component {...pageProps} />
+        </div>
+      </SessionContextProvider>
+    </main>
   );
 }
