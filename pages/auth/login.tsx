@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Login from "../../components/ui/auth/Login";
+import Login from "@components/ui/auth/Login";
 
 const UserLogin = () => {
   return (
