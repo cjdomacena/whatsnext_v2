@@ -1,26 +1,127 @@
-html,
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:where(:root) {
+  background-color: #0c0d0c;
+}
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: "Montserrat", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  @apply text-neutral-50;
+  @apply tracking-wide;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+/* RADIX DEFAULTS */
+/* https://www.radix-ui.com/docs/primitives/components/navigation-menu */
+.NavigationMenuContent {
+  animation-duration: 250ms;
+  animation-timing-function: ease;
 }
 
-* {
-  box-sizing: border-box;
+.NavigationMenuContent[data-state="open"] {
+  animation: scaleIn 200ms ease;
 }
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+.NavigationMenuContent[data-state="closed"] {
+  animation: scaleOut 200ms ease;
+}
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: rotateX(-30deg) scale(0.9);
   }
-  body {
-    color: white;
-    background: black;
+  to {
+    opacity: 1;
+    transform: rotateX(0deg) scale(1);
+  }
+}
+
+@keyframes scaleOut {
+  from {
+    opacity: 1;
+    transform: rotateX(0deg) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: rotateX(-10deg) scale(0.95);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.NavigationMenuContent {
+  animation-duration: 250ms;
+  animation-timing-function: ease;
+}
+.NavigationMenuContent[data-motion="from-start"] {
+  animation-name: enterFromLeft;
+}
+.NavigationMenuContent[data-motion="from-end"] {
+  animation-name: enterFromRight;
+}
+.NavigationMenuContent[data-motion="to-start"] {
+  animation-name: exitToLeft;
+}
+.NavigationMenuContent[data-motion="to-end"] {
+  animation-name: exitToRight;
+}
+
+@keyframes enterFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(200px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes enterFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-200px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes exitToRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(200px);
+  }
+}
+
+@keyframes exitToLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-200px);
   }
 }
