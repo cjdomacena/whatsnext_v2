@@ -6,7 +6,7 @@ import { ThemeToggle } from "../button/ThemeToggle";
 type NavbarProps = {};
 const Navbar: FC<NavbarProps> = ({}) => {
   return (
-    <nav className="container mx-auto dark:bg-neutral-900 bg-neutral-50 my-4 p-2 rounded dark:drop-shadow-[0_1px_35px_rgba(32,32,32,0.4)] drop-shadow-sm">
+    <nav className="container mx-auto dark:bg-neutral-900 bg-neutral-50 my-4 p-2 rounded dark:drop-shadow-[0_1px_35px_rgba(32,32,32,0.4)] drop-shadow">
       <div className=" flex justify-between items-center">
         <Link href="/">
           <div className="flex items-center gap-1 px-1 ">
@@ -16,12 +16,12 @@ const Navbar: FC<NavbarProps> = ({}) => {
         </Link>
         <div className="flex gap-4 text-xs items-center">
           <Link href={"/auth/login"} legacyBehavior role="button">
-            <a className="px-6  text-amber-500 font-semibold  py-2 rounded hover:bg-amber-900/50 transition-opacity">
+            <a className="px-6  dark:text-amber-500 font-semibold  py-2 rounded dark:hover:bg-amber-900/50 transition-opacity hover:bg-neutral-200">
               Log In
             </a>
           </Link>
           <Link href={"/auth/register"} legacyBehavior role="button">
-            <a className="px-6 bg-amber-900/20 hover:bg-amber-900/50 transition-opacity text-amber-500 font-semibold py-2 rounded">
+            <a className="px-6 bg-amber-500 hover:bg-amber-600 text-white dark:bg-amber-900/20 dark:hover:bg-amber-900/50 transition-opacity dark:text-amber-500 font-semibold py-2 rounded">
               Register
             </a>
           </Link>
