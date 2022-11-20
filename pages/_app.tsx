@@ -10,6 +10,7 @@ import type { AppProps } from "next/app";
 import { useState } from "react";
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
+import MetaHeader from "@components/MetaHeader";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
@@ -19,6 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
       supabaseClient={supabaseClient}
       initialSession={pageProps.initialSession}
     >
+      <MetaHeader title="WhatsNext" description="Something something" />
       <main>
         <Component {...pageProps} />
       </main>
