@@ -2,13 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-:where(:root) {
-  background-color: #080808;
-}
 body {
   font-family: "Montserrat", sans-serif;
   -webkit-font-smoothing: antialiased;
-  color: white;
+  @apply dark:text-white text-black;
 }
 
 /* RADIX DEFAULTS */
