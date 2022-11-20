@@ -6,7 +6,9 @@ export const Button: React.FC<
 > = ({ children, ...props }) => {
   return (
     <button
-      className={`w-full px-6 py-3 text-sm  transition-colors rounded font-medium bg-amber-900/20 ring-1 ring-amber-900 text-amber-500 hover:bg-amber-900 flex items-center justify-center gap-2 disabled:bg-orange-900`}
+      className="w-full px-6 py-3 text-sm  transition-colors rounded dark:bg-amber-600 dark:text-amber-50 dark:hover:bg-amber-900 flex items-center justify-center gap-2 dark:disabled:bg-orange-900
+    bg-amber-500 ring-amber-300 text-white font-bold
+    "
     >
       {children}
       {props.disabled ? (
