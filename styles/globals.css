@@ -3,13 +3,12 @@
 @tailwind utilities;
 
 :where(:root) {
-  background-color: #0c0d0c;
+  background-color: #080808;
 }
 body {
   font-family: "Montserrat", sans-serif;
   -webkit-font-smoothing: antialiased;
-  @apply text-neutral-50;
-  @apply tracking-wide;
+  color: white;
 }
 
 /* RADIX DEFAULTS */

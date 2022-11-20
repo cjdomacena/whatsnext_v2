@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Register from "@components/ui/auth";
+import { BackButton } from "@components/common/button";
+import router from "next/router";
 
 const UserRegistration = () => {
   return (
@@ -28,6 +30,9 @@ const UserRegistration = () => {
             </Link>
           </p>
         </div>
+      </div>
+      <div className="absolute z-20 top-6 left-6">
+        <BackButton onClick={() => router.push("/")} />
       </div>
     </div>
   );
