@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Login from "@components/ui/auth";
+import { Login } from "@components/ui/auth";
 import { BackButton } from "@components/common/button";
 import { useRouter } from "next/router";
 
