@@ -6,6 +6,7 @@ body {
   font-family: "Montserrat", sans-serif;
   -webkit-font-smoothing: antialiased;
   @apply dark:text-white text-black;
+  @apply dark:bg-main bg-white;
 }
 
 /* RADIX DEFAULTS */

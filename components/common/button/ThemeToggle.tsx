@@ -16,7 +16,6 @@ export const ThemeToggle = () => {
     <button
       className="px-2 py-1 rounded mr-2 dark:bg-neutral-800 bg-neutral-100 dark:text-white text-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-800/50 transition-colors"
       onClick={toggleDarkMode}
-      disabled
     >
       <IoSunnyOutline className="w-[1.15rem] h-[1.15rem]" />
     </button>

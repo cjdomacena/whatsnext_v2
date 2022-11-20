@@ -1,3 +1,9 @@
+import HeroText from "@components/ui/home/HeroText";
+
 export default function Home() {
-  return <div></div>;
+  return (
+    <div>
+      <HeroText />
+    </div>
+  );
 }
