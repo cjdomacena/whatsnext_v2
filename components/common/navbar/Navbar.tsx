@@ -6,7 +6,7 @@ import { ThemeToggle } from "../button/ThemeToggle";
 type NavbarProps = {};
 const Navbar: FC<NavbarProps> = ({}) => {
   return (
-    <nav className="container mx-auto dark:bg-neutral-900 bg-neutral-50 my-4 p-2 rounded dark:drop-shadow-[0_1px_35px_rgba(32,32,32,0.4)] drop-shadow">
+    <nav className="p-4 rounded dark:drop-shadow-[0_1px_35px_rgba(32,32,32,0.4)] drop-shadow">
       <div className=" flex justify-between items-center">
         <Link href="/">
           <div className="flex items-center gap-1 px-1 ">
