@@ -7,7 +7,7 @@ type CarouselSlideProps = {
 };
 const CarouselSlide: React.FC<CarouselSlideProps> = ({ movie }) => {
   return (
-    <div className="keen-slider__slide max-w-xs h-[490px] overflow-x-hidden group relative">
+    <div className="keen-slider__slide max-w-xs h-[500px] overflow-x-hidden group relative">
       <Image
         src={`${IMAGE_URL}/w780${movie.poster_path}`}
         alt=""
