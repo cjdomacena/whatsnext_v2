@@ -12,14 +12,22 @@ const Home: NextPage = () => {
     getTrendingMovie,
     { ...QUERY_CONFIG }
   );
-
-  return (
-    <div>
-      <HeroText />
-
-      {status === "success" ? <Carousel data={data.results} /> : null}
-    </div>
-  );
+  if (status === "error") {
+    return <h1 className="text-center">Oops.. Something went wrong</h1>;
+  }
+  switch (status) {
+    case "loading": {
+      return null;
+    }
+    case "success": {
+      return (
+        <div>
+          <HeroText />
+          <Carousel data={data.results} />
+        </div>
+      );
+    }
+  }
 };
 
 export default Home;
