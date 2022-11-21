@@ -10,7 +10,7 @@ export interface TrendingMovie {
   media_type: string;
   genre_ids: number[];
   popularity: number;
-  release_date: Date;
+  release_date: string;
   video: boolean;
   vote_average: number;
   vote_count: number;

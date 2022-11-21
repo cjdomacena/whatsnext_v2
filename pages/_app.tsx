@@ -20,7 +20,7 @@ export default function App({ Component, pageProps, ...appProps }: AppProps) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
   const [queryClient] = useState(() => new QueryClient());
   return (
-    <main className="min-w-screen transition-colors overflow-x-hidden">
+    <main className="min-w-screen transition-colors overflow-x-hidden flex flex-col">
       <SessionContextProvider
         supabaseClient={supabaseClient}
         initialSession={pageProps.initialSession}
@@ -32,6 +32,7 @@ export default function App({ Component, pageProps, ...appProps }: AppProps) {
         )}
         <QueryClientProvider client={queryClient}>
           <ReactQueryDevtools initialIsOpen={false} />
+
           <Component {...pageProps} />
         </QueryClientProvider>
       </SessionContextProvider>
