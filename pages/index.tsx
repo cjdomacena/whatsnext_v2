@@ -1,5 +1,4 @@
-import Carousel from "@components/ui/home/Carousel";
-import HeroText from "@components/ui/home/HeroText";
+import { HeroText, Carousel } from "@components/ui/home";
 import { getTrendingMovie } from "@lib/api/getTrendingMovie";
 import { QUERY_CONFIG } from "@lib/constants/config";
 import { QueryResult } from "@lib/types/common";
