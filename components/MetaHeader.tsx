@@ -13,6 +13,7 @@ const MetaHeader: React.FC<HeaderProps> = (props) => {
       <meta property="og:title" content={props.title} />
       <meta property="og:description" content={props.description} />
       <meta property="og:site_name" content="What's Next" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </Head>
   );
 };

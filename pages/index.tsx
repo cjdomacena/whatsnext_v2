@@ -1,3 +1,4 @@
+import Carousel from "@components/ui/home/Carousel";
 import HeroText from "@components/ui/home/HeroText";
 import { getTrendingMovie } from "@lib/api/getTrendingMovie";
 import { QUERY_CONFIG } from "@lib/constants/config";
@@ -16,6 +17,8 @@ const Home: NextPage = () => {
   return (
     <div>
       <HeroText />
+
+      {status === "success" ? <Carousel data={data.results} /> : null}
     </div>
   );
 };
