@@ -12,12 +12,14 @@ import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import MetaHeader from "@components/MetaHeader";
 import { Navbar } from "@components/common/navbar";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 export default function App({ Component, pageProps, ...appProps }: AppProps) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
-
+  const [queryClient] = useState(() => new QueryClient());
   return (
-    <main className="min-w-screen  dark:bg-[#080808] bg-white transition-colors">
+    <main className="min-w-screen   transition-colors">
       <SessionContextProvider
         supabaseClient={supabaseClient}
         initialSession={pageProps.initialSession}
@@ -27,7 +29,10 @@ export default function App({ Component, pageProps, ...appProps }: AppProps) {
         {appProps.router.pathname.split("/").includes("auth") ? null : (
           <Navbar />
         )}
-        <Component {...pageProps} />
+        <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={false} />
+          <Component {...pageProps} />
+        </QueryClientProvider>
       </SessionContextProvider>
     </main>
   );
