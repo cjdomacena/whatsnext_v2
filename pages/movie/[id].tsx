@@ -62,37 +62,36 @@ const MovieDetailsPage = () => {
       <div className="ratings-container flex gap-12 flex-wrap">
         <div className="2xl:w-96 xl:w-96 lg:w-96 w-full h-[250px] border"></div>
         <div className="flex-grow">
-          <form
-            className="flex-grow dark:bg-white/5 bg-neutral-200 text-sm rounded-lg h-fit p-4"
-            onSubmit={handleSumbit}
-          >
-            {/* <div className="  p-2 flex items-center gap-2 border-b dark:border-b-neutral-800">
-            <h4 className="text-sm font-medium">
-              {user?.user_metadata.full_name}
-            </h4>
-          </div> */}
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-neutral-500"></div>
-              <textarea
-                className="w-full appearance-none  bg-transparent focus:outline-none h-auto resize-none dark:text-neutral-300"
-                id="title"
-                placeholder="Add a comment"
-                value={review}
-                onChange={(e) => setReview(e.currentTarget.value)}
-                disabled={status === "loading"}
-              />
-              <button
-                type="submit"
-                className="dark:bg-neutral-800 bg-neutral-300 p-2 rounded-full "
-                disabled={status === "loading"}
-              >
-                <IoSendSharp />
-              </button>
-            </div>
-            <div className="px-10 text-xs text-neutral-600">
-              <p>{review.length} characters</p>
-            </div>
-          </form>
+          {user ? (
+            <form
+              className="flex-grow dark:bg-white/5 bg-neutral-200 text-sm rounded-lg h-fit p-4"
+              onSubmit={handleSumbit}
+            >
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-neutral-500"></div>
+                <textarea
+                  className="w-full appearance-none  bg-transparent focus:outline-none h-auto resize-none dark:text-neutral-300"
+                  id="title"
+                  placeholder="Add a comment"
+                  value={review}
+                  onChange={(e) => setReview(e.currentTarget.value)}
+                  disabled={status === "loading"}
+                />
+                <button
+                  type="submit"
+                  className="dark:bg-neutral-800 bg-neutral-300 p-2 rounded-full "
+                  disabled={status === "loading"}
+                >
+                  <IoSendSharp />
+                </button>
+              </div>
+              <div className="px-10 text-xs text-neutral-600">
+                <p>{review.length} characters</p>
+              </div>
+            </form>
+          ) : (
+            <div>Log In to create write a review</div>
+          )}
 
           {/* Comments */}
           {status === "success" ? (
