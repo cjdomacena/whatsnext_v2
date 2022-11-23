@@ -1,4 +1,4 @@
-import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
+import { useUser } from "@supabase/auth-helpers-react";
 import Link from "next/link";
 import { FC } from "react";
 import { TbClick } from "react-icons/tb";
@@ -7,7 +7,6 @@ import UserNav from "./userNav";
 
 type NavbarProps = {};
 const Navbar: FC<NavbarProps> = ({}) => {
-  const supabase = useSupabaseClient();
   const user = useUser();
   return (
     <nav className="p-4 rounded dark:drop-shadow-[0_1px_35px_rgba(32,32,32,0.4)] drop-shadow">
