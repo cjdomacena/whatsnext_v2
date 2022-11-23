@@ -14,3 +14,8 @@ export const formatDate = (
     ...options,
   }).format(new Date(date));
 };
+
+export const getNumSentences = (text: string) => {
+  const sentences = text.split(/[\.!?]+/);
+  return sentences.length - 1;
+};

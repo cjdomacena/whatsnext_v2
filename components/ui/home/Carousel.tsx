@@ -1,7 +1,7 @@
 import { TrendingMovie } from "@lib/types/movies";
 import CarouselSlide from "./CarouselSlide";
 import { useKeenSlider } from "keen-slider/react";
-
+import { motion } from "framer-motion";
 type CarouselProps = {
   data: TrendingMovie[];
 };
@@ -23,7 +23,7 @@ const Carousel: React.FC<CarouselProps> = ({ data }) => {
         slides: { perView: 3, spacing: 15 },
       },
       "(min-width: 1440px)": {
-        slides: { perView: 5, spacing: 15 },
+        slides: { perView: 4, spacing: 15 },
       },
     },
     // Default behaviour
@@ -33,11 +33,16 @@ const Carousel: React.FC<CarouselProps> = ({ data }) => {
     },
   });
   return (
-    <div ref={ref} className="w-full keen-slider overflow-x-hidden my-8">
+    <motion.div
+      ref={ref}
+      className="w-full keen-slider overflow-x-hidden my-8"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+    >
       {data.map((movie) => (
         <CarouselSlide key={movie.id} movie={movie} />
       ))}
-    </div>
+    </motion.div>
   );
 };
 
