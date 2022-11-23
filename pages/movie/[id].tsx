@@ -1,36 +1,51 @@
 import { t } from "@lib/constants/config";
-import { Review } from "@lib/types/common";
+import { Review, ReviewThread } from "@lib/types/common";
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { useUser } from "@supabase/auth-helpers-react";
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, ChangeEvent, useRef, useEffect } from "react";
 import { PostgrestError } from "@supabase/supabase-js";
 import { IoSendSharp } from "react-icons/io5";
 import { useQuery } from "@tanstack/react-query";
-import Rating from "@components/common/Rating";
+import { Loader, ReviewContainer } from "@components/common/review";
 
 const MovieDetailsPage = () => {
   const [review, setReview] = useState<string>("");
+  const ref = useRef<HTMLTextAreaElement>(null);
   const supabase = createBrowserSupabaseClient();
   const user = useUser();
   const movie = t.json.results[0];
-  const { data, status, refetch } = useQuery(
+  const { data, status, refetch } = useQuery<
+    ReviewThread[],
+    PostgrestError | Error
+  >(
     ["reviews", movie?.id],
     async () => {
       const { data, error } = await supabase
         .from("reviews")
-        .select("*,profiles(*)")
+        .select("*,profiles(full_name,is_verified)")
         .eq("movie_id", movie?.id)
-        .order("created_at", { ascending: false }); // sort by latest
+        .order("is_featured", { ascending: false })
+        .order("created_at", { ascending: false });
       if (error) {
         throw error;
       }
       return data;
     },
     {
-      cacheTime: 5000,
-      staleTime: 5000,
+      cacheTime: 5000 * 100,
+      staleTime: 5000 * 100,
+      refetchOnWindowFocus: false,
     }
   );
+
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const target = e.target;
+    if (ref.current) {
+      ref.current.style.height = "50px";
+      ref.current.style.height = `${target.scrollHeight}px`;
+    }
+    setReview(e.target.value);
+  };
 
   const handleSumbit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -56,26 +71,32 @@ const MovieDetailsPage = () => {
     }
   };
 
+  useEffect(() => {
+    if (ref.current && !review) {
+      ref.current.style.height = "50px";
+    }
+  }, [review]);
+
   return (
     <div className="container mx-auto my-12 space-y-12 p-4">
       <div className="2xl:h-[600px] xl:h-[600px] lg:h-[600px] h-[500px] w-full bg-neutral-900"></div>
-      <div className="ratings-container flex gap-12 flex-wrap">
+      <div className="ratings-container flex gap-12 flex-wrap justify-center">
         <div className="2xl:w-96 xl:w-96 lg:w-96 w-full h-[250px] border"></div>
-        <div className="flex-grow">
+        <div className="w-full max-w-2xl">
           {user ? (
             <form
-              className="flex-grow dark:bg-white/5 bg-neutral-200 text-sm rounded-lg h-fit p-4"
+              className="flex-grow dark:bg-white/5 bg-neutral-100 text-sm rounded h-fit p-4"
               onSubmit={handleSumbit}
             >
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-neutral-500"></div>
                 <textarea
                   className="w-full appearance-none  bg-transparent focus:outline-none h-auto resize-none dark:text-neutral-300"
                   id="title"
                   placeholder="Add a comment"
                   value={review}
-                  onChange={(e) => setReview(e.currentTarget.value)}
+                  onChange={handleChange}
                   disabled={status === "loading"}
+                  ref={ref}
                 />
                 <button
                   type="submit"
@@ -85,28 +106,21 @@ const MovieDetailsPage = () => {
                   <IoSendSharp />
                 </button>
               </div>
-              <div className="px-10 text-xs text-neutral-600">
+              <div className=" text-xs text-neutral-600">
                 <p>{review.length} characters</p>
               </div>
             </form>
           ) : (
-            <div>Log In to create write a review</div>
+            <div className="p-4 bg-neutral-900">
+              Log In to create write a review
+            </div>
           )}
 
           {/* Comments */}
           {status === "success" ? (
-            <>
-              <ul className="space-y-4 mt-4">
-                {data.map((res) => (
-                  <li key={res.id}>
-                    <Rating votes={res.rating} />
-                    {res.review} - {res.profiles.full_name}
-                  </li>
-                ))}
-              </ul>
-            </>
+            <ReviewContainer reviews={data} />
           ) : status === "loading" ? (
-            "loading"
+            <Loader />
           ) : null}
         </div>
       </div>
