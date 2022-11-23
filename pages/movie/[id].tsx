@@ -1,4 +1,4 @@
-import { t } from "@lib/constants/config";
+import { IMAGE_URL, t } from "@lib/constants/config";
 import { Review, ReviewThread } from "@lib/types/common";
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { useUser } from "@supabase/auth-helpers-react";
@@ -13,7 +13,7 @@ const MovieDetailsPage = () => {
   const ref = useRef<HTMLTextAreaElement>(null);
   const supabase = createBrowserSupabaseClient();
   const user = useUser();
-  const movie = t.json.results[0];
+  const movie = t.json.results[2];
   const { data, status, refetch } = useQuery<
     ReviewThread[],
     PostgrestError | Error
@@ -79,10 +79,25 @@ const MovieDetailsPage = () => {
 
   return (
     <div className="container mx-auto my-12 space-y-12 p-4">
-      <div className="2xl:h-[600px] xl:h-[600px] lg:h-[600px] h-[500px] w-full bg-neutral-900"></div>
-      <div className="ratings-container flex gap-12 flex-wrap justify-center">
-        <div className="2xl:w-96 xl:w-96 lg:w-96 w-full h-[250px] border"></div>
-        <div className="w-full max-w-2xl">
+      <div
+        className="2xl:h-[600px] xl:h-[600px] lg:h-[600px] h-[500px] w-full bg-neutral-900 rounded-lg 
+        dark:drop-shadow-[0_5px_35px_rgba(32,32,32,0.6)] drop-shadow-2xl grid place-items-center
+        "
+        style={{
+          backgroundImage: `url('${
+            IMAGE_URL + "/original" + movie?.backdrop_path
+          }')`,
+          backgroundSize: "cover",
+          backgroundBlendMode: "overlay",
+        }}
+      >
+        <div className="p-4 dark:text-white text-white">
+          <h2 className="text-8xl font-black">{movie?.title}</h2>
+        </div>
+      </div>
+      <div className="ratings-container gap-12  grid grid-cols-8 ">
+        <div className="w-full h-[250px] border 2xl:col-span-3 xl:col-span-3 lg:col-span-3 col-span-8"></div>
+        <div className="w-full 2xl:col-span-5 xl:col-span-5 lg:col-span-5 col-span-8">
           {user ? (
             <form
               className="flex-grow dark:bg-white/5 bg-neutral-100 text-sm rounded h-fit p-4"

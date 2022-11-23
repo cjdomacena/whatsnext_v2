@@ -51,13 +51,16 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
           </div>
         </div>
       </div>
-      <div className=" whitespace-pre-wrap  mb-2 text-sm px-2">
+      <div className=" whitespace-pre-wrap  text-sm px-2 ">
         <p className={`${showAll ? "line-clamp-none" : "line-clamp-5"}`}>
           {review.review}
         </p>
 
         {numSentences > 5 ? (
-          <button className="mt-2" onClick={() => setShowAll((prev) => !prev)}>
+          <button
+            className="mt-4 text-xs bg-neutral-800 p-2 rounded w-fit"
+            onClick={() => setShowAll((prev) => !prev)}
+          >
             Show {showAll ? "less" : "more"}
           </button>
         ) : null}
