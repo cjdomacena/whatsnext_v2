@@ -1,5 +1,6 @@
-import { HeroText } from "@components/ui/home";
-import { t } from "@lib/constants/config";
+import { Carousel, HeroText } from "@components/ui/home";
+import { t } from "@lib/constants/testData";
+
 import { NextPage } from "next";
 
 const Home: NextPage = () => {
@@ -11,10 +12,11 @@ const Home: NextPage = () => {
   const data = t.json;
   return (
     <section className="h-full">
-      <div className="min-h-[calc(100vh-70px)] grid place-items-center">
+      <div className="min-h-[calc(100vh-70px)] grid place-items-center my-12">
         <div className=" ">
           <HeroText />
         </div>
+        <Carousel data={data.results} />
       </div>
     </section>
   );
