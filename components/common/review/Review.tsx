@@ -1,6 +1,6 @@
 import { ReviewThread } from "@lib/types/common";
 import { formatDate, getNumSentences } from "@lib/utils";
-import Rating from "../Rating";
+import Rating from "../util/Rating";
 import { MdVerified } from "react-icons/md";
 import { AiFillPushpin } from "react-icons/ai";
 import Avatar from "../avatar";
@@ -58,7 +58,7 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
 
         {numSentences > 5 ? (
           <button
-            className="mt-4 text-xs bg-neutral-800 p-2 rounded w-fit"
+            className="mt-4 text-xs bg-neutral-800 p-2 rounded w-fit text-[#fff6e2]"
             onClick={() => setShowAll((prev) => !prev)}
           >
             Show {showAll ? "less" : "more"}
