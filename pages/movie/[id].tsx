@@ -6,6 +6,9 @@ import { useQuery } from "@tanstack/react-query";
 import { Loader, ReviewContainer, ReviewForm } from "@components/common/review";
 import { movieDetails } from "@lib/constants/testData";
 import { Backdrop, DetailHeader, Poster } from "@components/ui/detail";
+import { getReviews } from "@lib/api/getReviews";
+
+// export const getServerSideProps = async () => {};
 
 const MovieDetailsPage = () => {
   const supabase = createBrowserSupabaseClient();
@@ -13,22 +16,12 @@ const MovieDetailsPage = () => {
   const movie = movieDetails;
   const { data, status } = useQuery<ReviewThread[], PostgrestError | Error>(
     ["reviews", movie?.id],
-    async () => {
-      const { data, error } = await supabase
-        .from("reviews")
-        .select("*,profiles(full_name,is_verified)")
-        .eq("movie_id", movie?.id)
-        .order("is_featured", { ascending: false })
-        .order("created_at", { ascending: false });
-      if (error) {
-        throw error;
-      }
-      return data;
-    },
+    async () => getReviews(movie.id, supabase),
     {
       cacheTime: 5000 * 100,
       staleTime: 5000 * 100,
       refetchOnWindowFocus: false,
+      enabled: !!movie,
     }
   );
 

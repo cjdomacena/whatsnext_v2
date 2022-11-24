@@ -13,7 +13,11 @@ import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import MetaHeader from "@components/MetaHeader";
 import { Navbar } from "@components/common/navbar";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  Hydrate,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "keen-slider/keen-slider.min.css";
 
@@ -33,7 +37,9 @@ export default function App({ Component, pageProps, ...appProps }: AppProps) {
         )}
         <QueryClientProvider client={queryClient}>
           <ReactQueryDevtools initialIsOpen={false} />
-          <Component {...pageProps} />
+          <Hydrate state={pageProps.dehydratedState}>
+            <Component {...pageProps} />
+          </Hydrate>
         </QueryClientProvider>
       </SessionContextProvider>
     </main>

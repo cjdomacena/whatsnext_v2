@@ -1,24 +1,44 @@
 import { Carousel, HeroText } from "@components/ui/home";
-import { t } from "@lib/constants/testData";
+import { getTrendingMovie } from "@lib/api/getTrendingMovie";
+import { QUERY_CONFIG } from "@lib/constants/config";
+import { QueryResult } from "@lib/types/common";
+import { TrendingMovie } from "@lib/types/movies";
+import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
+import { Suspense } from "react";
 
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({
+    queryKey: ["trending", "movie"],
+    queryFn: getTrendingMovie,
+  });
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
 
 const Home: NextPage = () => {
-  // const { data, status } = useQuery<QueryResult<TrendingMovie>, Error>(
-  //   ["trending", "movie"],
-  //   getTrendingMovie,
-  //   { ...QUERY_CONFIG }
-  // );
-  const data = t.json;
+  const { data } = useQuery<QueryResult<TrendingMovie>, Error>(
+    ["trending", "movie"],
+    getTrendingMovie,
+    { ...QUERY_CONFIG }
+  );
+
   return (
-    <section className="h-full">
-      <div className="min-h-[calc(100vh-70px)] grid place-items-center my-12">
-        <div className=" ">
-          <HeroText />
+    <Suspense>
+      <section className="h-full">
+        <div className="min-h-[calc(100vh-70px)] grid place-items-center my-12">
+          <div className=" ">
+            <HeroText />
+          </div>
+          {data ? <Carousel data={data.results} /> : null}
         </div>
-        <Carousel data={data.results} />
-      </div>
-    </section>
+      </section>
+    </Suspense>
   );
   // if (status === "error") {
   //   return <h1 className="text-center">Oops.. Something went wrong</h1>;
