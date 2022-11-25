@@ -29,16 +29,16 @@ const Home: NextPage = () => {
   );
 
   return (
-    <Suspense>
-      <section className="h-full">
-        <div className="min-h-[calc(100vh-70px)] grid place-items-center my-12">
-          <div className=" ">
-            <HeroText />
-          </div>
-          {data ? <Carousel data={data.results} /> : null}
+    <section className="h-full">
+      <div className="min-h-[calc(100vh-70px)] grid place-items-center my-12">
+        <div className=" ">
+          <HeroText />
         </div>
-      </section>
-    </Suspense>
+        <Suspense fallback={<h4>Loading...</h4>}>
+          {data ? <Carousel data={data.results} /> : null}
+        </Suspense>
+      </div>
+    </section>
   );
   // if (status === "error") {
   //   return <h1 className="text-center">Oops.. Something went wrong</h1>;
