@@ -8,13 +8,20 @@ export async function middleware(req: NextRequest) {
     req.nextUrl.pathname.includes("/login") ||
     req.nextUrl.pathname.includes("/register");
 
+  const isCheckoutPage = req.nextUrl.pathname.includes("/checkout");
+
   // Create authenticated supabase client
   const supabase = createMiddlewareSupabaseClient({ req, res });
   const {
     data: { session },
   } = await supabase.auth.getSession();
 
-  if (isAuthPage && !session?.user) {
+  if (isAuthPage) {
+    if (!session?.user) {
+      return res;
+    }
+  }
+  if (isCheckoutPage && session?.user) {
     return res;
   }
   const redirectUrl = req.nextUrl.clone();
@@ -27,5 +34,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/auth/:path*"],
+  matcher: ["/auth/:path*", "/auth/login", "/auth/register", "/auth/checkout"],
 };

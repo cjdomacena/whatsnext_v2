@@ -1,6 +1,6 @@
 export const getTrendingMovie = async () => {
   try {
-    const req = await fetch(`/api/trending/movie`);
+    const req = await fetch(`http://localhost:3000/api/trending/movie`);
     const res = await req.json();
 
     if (res.hasOwnProperty("error")) {
@@ -9,6 +9,6 @@ export const getTrendingMovie = async () => {
 
     return res;
   } catch (e) {
-    alert(e);
+    console.log(e);
   }
 };
