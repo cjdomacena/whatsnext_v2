@@ -26,6 +26,7 @@ export default async function handler(
         mode: "subscription",
         success_url: `http://localhost:3000/auth/checkout?success=true&session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `http://localhost:3000/auth/checkout?success=false&session_id={CHECKOUT_SESSION_ID}`,
+        payment_method_types: ["card"],
       });
       if (session) {
         return res.redirect(303, session.url as string);
