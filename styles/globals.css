@@ -8,7 +8,7 @@ body {
   font-family: "Montserrat", sans-serif;
   -webkit-font-smoothing: antialiased;
   @apply dark:text-[#f6efda] text-black;
-  @apply dark:bg-main bg-white;
+  @apply dark:bg-neutral-900 bg-white;
 }
 
 /* RADIX DEFAULTS */

@@ -31,11 +31,11 @@ export default function App({ Component, pageProps, ...appProps }: AppProps) {
         initialSession={pageProps.initialSession}
       >
         <MetaHeader title="WhatsNext" description="Something something" />
-
-        {appProps.router.pathname.split("/").includes("auth") ? null : (
-          <Navbar />
-        )}
         <QueryClientProvider client={queryClient}>
+          {appProps.router.pathname.split("/").includes("auth") ? null : (
+            <Navbar />
+          )}
+
           <ReactQueryDevtools initialIsOpen={false} />
           <Hydrate state={pageProps.dehydratedState}>
             <Component {...pageProps} />
