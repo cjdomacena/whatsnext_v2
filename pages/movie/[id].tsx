@@ -1,6 +1,5 @@
 import { ReviewThread } from "@lib/types/common";
-import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
-import { useUser } from "@supabase/auth-helpers-react";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { PostgrestError } from "@supabase/supabase-js";
 import { useQuery } from "@tanstack/react-query";
 import { Loader, ReviewContainer, ReviewForm } from "@components/common/review";
@@ -11,7 +10,7 @@ import { getReviews } from "@lib/api/getReviews";
 // export const getServerSideProps = async () => {};
 
 const MovieDetailsPage = () => {
-  const supabase = createBrowserSupabaseClient();
+  const supabase = useSupabaseClient();
   const user = useUser();
   const movie = movieDetails;
   const { data, status } = useQuery<ReviewThread[], PostgrestError | Error>(

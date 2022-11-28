@@ -1,5 +1,5 @@
 import { Review } from "@lib/types/common";
-import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { PostgrestError, User } from "@supabase/supabase-js";
 import { useQueryClient } from "@tanstack/react-query";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
@@ -13,7 +13,7 @@ type ReviewFormProps = {
 };
 
 const ReviewForm: React.FC<ReviewFormProps> = ({ user, movie_id, status }) => {
-  const supabase = createBrowserSupabaseClient();
+  const supabase = useSupabaseClient();
   const ref = useRef<HTMLTextAreaElement>(null);
   const [review, setReview] = useState<string>("");
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {

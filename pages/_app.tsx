@@ -24,6 +24,7 @@ import "keen-slider/keen-slider.min.css";
 export default function App({ Component, pageProps, ...appProps }: AppProps) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
   const [queryClient] = useState(() => new QueryClient());
+
   return (
     <main className="min-w-screen transition-colors ">
       <SessionContextProvider

@@ -17,3 +17,11 @@
 ## AAAAAAAAHHHHHHHHHHHH
 
 - [ ] to zod validations for inputs
+
+- [ ] INVALIDATE QUERIES INSTEAD OF USING REALTIME - FOR SIMPLICITY SAKE
+
+## VARS TO CHANGE FOR PROD
+
+- [ ] Supabase Webhooks
+
+- [ ] STripe Webhooks
