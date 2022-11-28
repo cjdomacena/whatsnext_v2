@@ -5,6 +5,7 @@ import { MdVerified } from "react-icons/md";
 import { AiFillPushpin } from "react-icons/ai";
 import Avatar from "../avatar";
 import { useState } from "react";
+import { Tooltip } from "../util";
 
 type ReviewProps = {
   review: ReviewThread;
@@ -29,16 +30,20 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
       <div className="flex gap-2 items-center mb-4">
         <Avatar name={review.profiles.full_name} />
         <div className="space-y-1">
-          <div className="">
-            <h4 className="">{review.profiles.full_name}</h4>
+          <div className="flex gap-1">
             <span className="text-xs flex items-center gap-1">
-              {review.profiles.is_verified ? (
-                <>
-                  {" "}
-                  <MdVerified className="text-green-500" /> critic
-                </>
+              {review.profiles.is_subscribed ? (
+                <Tooltip
+                  trigger={
+                    <div>
+                      <MdVerified className="text-amber-500 w-4 h-4" />
+                    </div>
+                  }
+                  portal={<p className="text-xs">Verified Critic</p>}
+                />
               ) : null}
             </span>
+            <h4 className="">{review.profiles.full_name}</h4>
           </div>
           <div className="flex gap-2">
             <Rating votes={review.rating * 2} />
@@ -52,7 +57,11 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
         </div>
       </div>
       <div className=" whitespace-pre-wrap  text-sm px-2 ">
-        <p className={`${showAll ? "line-clamp-none" : "line-clamp-5"}`}>
+        <p
+          className={`${
+            showAll ? "line-clamp-none" : "line-clamp-5"
+          } leading-normal`}
+        >
           {review.review}
         </p>
 

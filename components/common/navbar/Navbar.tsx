@@ -9,7 +9,7 @@ type NavbarProps = {};
 const Navbar: FC<NavbarProps> = ({}) => {
   const user = useUser();
   return (
-    <nav className="p-4 rounded dark:drop-shadow-[0_1px_35px_rgba(32,32,32,0.4)] drop-shadow-sm">
+    <nav className="p-4 rounded ">
       <div className=" flex justify-between items-center">
         <Link href="/">
           <div className="flex items-center gap-1 px-1 ">

@@ -42,7 +42,7 @@ const MovieDetailsPage = () => {
           {user ? (
             <ReviewForm user={user} movie_id={movie.id} status={status} />
           ) : (
-            <div className="p-4 bg-neutral-900">
+            <div className="p-4 dark:bg-neutral-800 bg-neutral-100 rounded">
               Log In to create write a review
             </div>
           )}

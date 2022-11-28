@@ -17,7 +17,7 @@ export interface ReviewThread {
   user_id: string;
   movie_id: number | string;
   review: string;
-  profiles: { full_name: string; is_verified: boolean };
+  profiles: { full_name: string; is_subscribed: boolean };
   rating: number;
   created_at: string;
   is_featured: boolean;
