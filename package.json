@@ -25,6 +25,7 @@
     "eslint-config-next": "13.0.4",
     "framer-motion": "^7.6.7",
     "keen-slider": "^6.8.3",
+    "micro": "^10.0.1",
     "next": "13.0.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
