@@ -8,7 +8,7 @@ export async function middleware(req: NextRequest) {
     req.nextUrl.pathname.includes("/login") ||
     req.nextUrl.pathname.includes("/register");
 
-  const isCheckoutPage = req.nextUrl.pathname.includes("/checkout");
+  const isCheckoutPage = req.nextUrl.pathname.includes("/manage-subscription");
 
   // Create authenticated supabase client
   const supabase = createMiddlewareSupabaseClient({ req, res });
@@ -34,5 +34,11 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/auth/:path*", "/auth/login", "/auth/register", "/auth/checkout"],
+  matcher: [
+    "/auth/:path*",
+    "/auth/login",
+    "/auth/register",
+    "/auth/checkout",
+    "/settings/:path*",
+  ],
 };

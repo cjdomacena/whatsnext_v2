@@ -27,7 +27,7 @@ const NavbarRoot: FC<PropsWithChildren<NavbarProps>> = ({ children }) => {
   //   }
   // }, []);
   return (
-    <div className="w-full h-auto transition-colors bg-transparent">
+    <div className="w-full h-auto transition-colors dark:bg-neutral-900 bg-white">
       <Navbar />
     </div>
   );

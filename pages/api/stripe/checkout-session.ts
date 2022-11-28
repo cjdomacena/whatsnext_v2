@@ -26,7 +26,7 @@ export default async function handler(
           customer: data?.stripe_id,
           line_items: [
             {
-              price: "price_1M6jfyEbEpPvaCtH6HvxlBOm",
+              price: "price_1M9AT7EbEpPvaCtHGMmL4WdO",
               quantity: 1,
             },
           ],

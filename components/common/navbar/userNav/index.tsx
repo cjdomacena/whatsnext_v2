@@ -4,25 +4,17 @@ import * as Popover from "@radix-ui/react-popover";
 import { HTMLAttributes, PropsWithChildren } from "react";
 import { IoPersonOutline, IoSettingsOutline } from "react-icons/io5";
 import { useQuery } from "@tanstack/react-query";
-import { QUERY_CONFIG } from "@lib/constants/config";
+import { useRouter } from "next/router";
+import { subscriptionInfo } from "@lib/api/getSubscriptionInfo";
 
 const UserNav = ({ user }: { user: User }) => {
   const supabase = useSupabaseClient();
-  const subscriptionInfo: any = async (userId: string) => {
-    const data = await supabase
-      .from("profiles")
-      .select("is_subscribed, stripe_id")
-      .eq("id", userId)
-      .single();
-    return data;
-  };
+  const router = useRouter();
 
   const { data, status, error } = useQuery(
     ["subscription_info", user.id],
-    () => subscriptionInfo(user.id),
-    {
-      ...QUERY_CONFIG,
-    }
+    () => subscriptionInfo(user.id, supabase),
+    { refetchOnWindowFocus: true }
   );
   if (error) {
     return <div>Something went wrong...</div>;
@@ -41,7 +33,7 @@ const UserNav = ({ user }: { user: User }) => {
 
             <div className="border-r dark:border-r-neutral-700" />
             <span className="text-xs capitalize  text-green-500 rounded ">
-              {data.data && data.data.is_subscribed ? "Pro" : "Free"}
+              {data && data.is_subscribed ? "Pro" : "Free"}
             </span>
           </div>
         </Popover.Trigger>
@@ -64,7 +56,10 @@ const UserNav = ({ user }: { user: User }) => {
                   Settings
                 </div>
               </MenuItemHeader>
-              <MenuItemButton text="Manage Subscription" />
+              <MenuItemButton
+                text="Manage Subscription"
+                onClick={() => router.push("/settings/manage-subscription")}
+              />
               <MenuItemButton text="Account Settings" />
               <MenuItemButton
                 text="Logout"
