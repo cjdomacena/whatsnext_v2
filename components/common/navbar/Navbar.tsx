@@ -13,8 +13,10 @@ const Navbar: FC<NavbarProps> = ({}) => {
       <div className=" flex justify-between items-center">
         <Link href="/">
           <div className="flex items-center gap-1 px-1 ">
-            <TbClick className="w-5 h-5 mb-1" />
-            <p className="text-sm font-black">WHATSNEXT</p>
+            <TbClick className="w-5 h-5 mb-1 " />
+            <p className="text-sm font-black bg-gradient-to-r from-amber-500 to-pink-500 bg-clip-text text-transparent">
+              WHATSNEXT
+            </p>
           </div>
         </Link>
         <div className="flex gap-4 text-xs items-center">

@@ -14,7 +14,7 @@ const UserNav = ({ user }: { user: User }) => {
   const { data, status, error } = useQuery(
     ["subscription_info", user.id],
     () => subscriptionInfo(user.id, supabase),
-    { refetchOnWindowFocus: true }
+    { refetchOnWindowFocus: true, cacheTime: 5000 * 100, staleTime: 5000 * 10 }
   );
   if (error) {
     return <div>Something went wrong...</div>;
@@ -25,7 +25,7 @@ const UserNav = ({ user }: { user: User }) => {
       <Popover.Root>
         <Popover.Trigger>
           <div
-            className="flex gap-2 dark:bg-neutral-800 dark:hover:bg-neutral-800 p-2 rounded
+            className="flex gap-2 dark:bg-neutral-800 dark:hover:bg-neutral-700 p-2 rounded
           bg-neutral-50 hover:bg-neutral-200
           "
           >

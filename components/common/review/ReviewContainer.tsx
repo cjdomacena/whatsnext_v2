@@ -1,12 +1,31 @@
+import { getReviews } from "@lib/api/getReviews";
 import { ReviewThread } from "@lib/types/common";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { PostgrestError } from "@supabase/supabase-js";
+import { useQuery } from "@tanstack/react-query";
+import Loader from "./Loader";
 import Review from "./Review";
 
 type CommentProps = {
-  reviews: ReviewThread[];
+  movie_id: string | number | undefined;
 };
 
-const ReviewContainer: React.FC<CommentProps> = ({ reviews }) => {
-  return (
+const ReviewContainer: React.FC<CommentProps> = ({ movie_id }) => {
+  const supabase = useSupabaseClient();
+  const { data: reviews, error } = useQuery<
+    ReviewThread[],
+    PostgrestError | Error
+  >(
+    ["reviews", { id: movie_id }],
+    async () => getReviews(movie_id as string, supabase),
+    {
+      refetchOnWindowFocus: true,
+    }
+  );
+  if (error) {
+    return <h4>Something went wrong...</h4>;
+  }
+  return reviews ? (
     <ul className="space-y-4 mt-4">
       {reviews.length === 0 ? (
         <p className="text-xs text-center pt-4">
@@ -16,6 +35,8 @@ const ReviewContainer: React.FC<CommentProps> = ({ reviews }) => {
         reviews.map((review) => <Review key={review.id} review={review} />)
       )}
     </ul>
+  ) : (
+    <Loader />
   );
 };
 

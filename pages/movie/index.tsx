@@ -1,7 +1,9 @@
+import RatingSelect from "@components/common/review/RadioButtons";
+
 const MoviePage = () => {
   return (
     <div>
-      <h1>Hello</h1>
+      <RatingSelect />
     </div>
   );
 };

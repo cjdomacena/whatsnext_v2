@@ -12,7 +12,7 @@ const Avatar: React.FC<AvatarProps> = ({ src, name }) => {
       .split(" ")
       .reduce((acc, initial) => acc + initial[0], "") ?? "";
   return (
-    <RadixAvatar.Root className=" flex items-center justify-center">
+    <RadixAvatar.Root className=" flex items-center justify-center rounded-full">
       <RadixAvatar.Image src={src} alt={name} />
       <RadixAvatar.Fallback
         className="uppercase dark:bg-neutral-800 bg-neutral-200 p-4 rounded-full font-bold text-xs"

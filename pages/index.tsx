@@ -1,10 +1,9 @@
-import { Carousel, HeroText } from "@components/ui/home";
+import { HeroText } from "@components/ui/home";
 import { getTrendingMovie } from "@lib/api/getTrendingMovie";
 import { QUERY_CONFIG } from "@lib/constants/config";
 import { QueryResult } from "@lib/types/common";
 import { TrendingMovie } from "@lib/types/movies";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
-import { Suspense } from "react";
 
 import { GetServerSideProps, NextPage } from "next";
 
@@ -30,13 +29,13 @@ const Home: NextPage = () => {
 
   return (
     <section className="h-full">
-      <div className="min-h-[calc(100vh-70px)] grid place-items-center my-12">
+      <div className="min-h-[calc(100vh-64px)] grid place-items-center">
         <div className=" ">
           <HeroText />
         </div>
-        <Suspense fallback={<h4>Loading...</h4>}>
+        {/* <Suspense fallback={<h4>Loading...</h4>}>
           {data ? <Carousel data={data.results} /> : null}
-        </Suspense>
+        </Suspense> */}
       </div>
     </section>
   );

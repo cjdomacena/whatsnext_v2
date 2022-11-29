@@ -20,6 +20,7 @@ import {
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "keen-slider/keen-slider.min.css";
+import { Toaster } from "react-hot-toast";
 
 export default function App({ Component, pageProps, ...appProps }: AppProps) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
@@ -43,6 +44,12 @@ export default function App({ Component, pageProps, ...appProps }: AppProps) {
           </Hydrate>
         </QueryClientProvider>
       </SessionContextProvider>
+      <Toaster
+        toastOptions={{
+          className: "dark:bg-neutral-900 bg-white dark:text-white text-sm",
+        }}
+        position="bottom-center"
+      />
     </main>
   );
 }
