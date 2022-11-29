@@ -1,30 +1,64 @@
 import { ReviewThread } from "@lib/types/common";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { PostgrestError } from "@supabase/supabase-js";
-import { useQuery } from "@tanstack/react-query";
+import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { Loader, ReviewContainer, ReviewForm } from "@components/common/review";
-import { movieDetails } from "@lib/constants/testData";
 import { Backdrop, DetailHeader, Poster } from "@components/ui/detail";
 import { getReviews } from "@lib/api/getReviews";
+import { GetServerSideProps } from "next";
+import { getMovie } from "@lib/api/getMovie";
+import { useRouter } from "next/router";
+import { QUERY_CONFIG } from "@lib/constants/config";
+import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 
-// export const getServerSideProps = async () => {};
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { id } = context.query;
+  const supabase = createServerSupabaseClient(context);
+  const queryClient = new QueryClient();
+  if (id) {
+    await queryClient.prefetchQuery({
+      queryKey: ["movie", id],
+      queryFn: () => getMovie(id as string),
+    });
+    await queryClient.prefetchQuery({
+      queryKey: ["reviews", id],
+      queryFn: () => getReviews(id as string, supabase),
+    });
+  }
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
 
 const MovieDetailsPage = () => {
   const supabase = useSupabaseClient();
   const user = useUser();
-  const movie = movieDetails;
-  const { data, status } = useQuery<ReviewThread[], PostgrestError | Error>(
-    ["reviews", movie?.id],
+  const router = useRouter();
+  const query = router.query;
+  // const movie = movieDetails;
+  const { data, isLoading } = useQuery<ReviewThread[], PostgrestError | Error>(
+    ["reviews", query?.id],
     async () => getReviews(movie.id, supabase),
     {
       cacheTime: 5000 * 100,
       staleTime: 5000 * 100,
       refetchOnWindowFocus: false,
-      enabled: !!movie,
+      enabled: !!router.isReady,
     }
   );
 
-  return (
+  const { data: movie } = useQuery(
+    ["movie", query.id],
+    () => getMovie(query.id as string),
+    {
+      ...QUERY_CONFIG,
+    }
+  );
+
+  return movie ? (
     <div className="container mx-auto my-12 space-y-12 p-4">
       <Backdrop backdropPath={movie.backdrop_path} />
       <div
@@ -40,23 +74,17 @@ const MovieDetailsPage = () => {
         <div className="w-full h-[250px] border 2xl:col-span-3 xl:col-span-3 lg:col-span-3 col-span-8"></div>
         <div className="w-full 2xl:col-span-5 xl:col-span-5 lg:col-span-5 col-span-8">
           {user ? (
-            <ReviewForm user={user} movie_id={movie.id} status={status} />
+            <ReviewForm user={user} movie_id={movie.id} status={isLoading} />
           ) : (
             <div className="p-4 dark:bg-neutral-800 bg-neutral-100 rounded">
               Log In to create write a review
             </div>
           )}
-
-          {/* Comments */}
-          {status === "success" ? (
-            <ReviewContainer reviews={data} />
-          ) : status === "loading" ? (
-            <Loader />
-          ) : null}
+          {data && !isLoading ? <ReviewContainer reviews={data} /> : <Loader />}
         </div>
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default MovieDetailsPage;

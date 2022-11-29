@@ -25,3 +25,9 @@
 - [ ] Supabase Webhooks
 
 - [ ] STripe Webhooks
+
+- [ ] CHANGE URL ORIGIN
+
+  - [ ] lib/api/getMovie
+
+  - [ ] lib/api/getTrending

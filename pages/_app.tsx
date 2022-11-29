@@ -26,7 +26,7 @@ export default function App({ Component, pageProps, ...appProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
 
   return (
-    <main className="min-w-screen transition-colors ">
+    <main className="min-w-screen transition-colors overflow-x-hidden">
       <SessionContextProvider
         supabaseClient={supabaseClient}
         initialSession={pageProps.initialSession}

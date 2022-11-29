@@ -1,3 +1,4 @@
+import { BASE_URL } from "@lib/constants/config";
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { NextApiRequest, NextApiResponse } from "next/types";
 import Stripe from "stripe";
@@ -31,9 +32,8 @@ export default async function handler(
             },
           ],
           mode: "subscription",
-          success_url: `http://localhost:3000/payment/success`,
-          cancel_url: `http://localhost:3000/payment/failed`,
-          payment_method_types: ["card"],
+          success_url: `${BASE_URL}/payment/success`,
+          cancel_url: `${BASE_URL}/payment/failed`,
         });
         if (session) {
           return res.redirect(303, checkoutSession.url as string);

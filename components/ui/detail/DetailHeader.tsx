@@ -8,9 +8,9 @@ type DetailHeaderProps = {
 const DetailHeader: React.FC<DetailHeaderProps> = ({ tagline, title }) => {
   return (
     <div className="p-4 dark:text-white text-neutral-900 relative break-all space-y-4">
-      <div className="">
+      <div className=" max-w-3xl">
         <h2 className=" font-medium">{tagline}</h2>
-        <h1 className=" font-black text-7xl">{title}</h1>
+        <h1 className=" font-black text-6xl">{title}</h1>
         <div className="flex gap-2 text-xs mt-4 text-white">
           <button className="px-4 py-4 bg-blue-900 rounded-sm flex items-center gap-1">
             <IoBookmarkSharp />

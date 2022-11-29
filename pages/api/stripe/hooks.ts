@@ -23,21 +23,22 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     process.env.SERVICE_KEY as string
   );
   switch (event?.type) {
-    case "customer.subscription.created": {
-      await supabase
+    case "customer.subscription.created":
+      const { error } = await supabase
         .from("profiles")
         .update({ is_subscribed: true })
-        // @ts-ignore
+        //@ts-ignore
         .eq("stripe_id", event.data.object.customer);
-    }
-    case "customer.subscription.deleted": {
-      // @ts-ignore
+      console.log(error);
+      break;
+
+    case "customer.subscription.deleted":
       await supabase
         .from("profiles")
-        .update({ is_subscribed: true })
+        .update({ is_subscribed: false })
         // @ts-ignore
         .eq("stripe_id", event.data.object.customer);
-    }
+      break;
   }
 
   res.send({ recieved: true });

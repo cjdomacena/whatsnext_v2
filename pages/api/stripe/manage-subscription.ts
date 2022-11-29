@@ -1,3 +1,4 @@
+import { BASE_URL } from "@lib/constants/config";
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
@@ -19,7 +20,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     });
     const stripeSession = await stripe.billingPortal.sessions.create({
       customer: data?.stripe_id,
-      return_url: "http://localhost:3000/",
+      return_url: BASE_URL,
     });
     res.redirect(303, stripeSession.url);
     return;

@@ -9,7 +9,7 @@ import { CharacterCounter } from "../util";
 type ReviewFormProps = {
   movie_id: number;
   user: User;
-  status: "loading" | "success" | "error";
+  status: boolean;
 };
 
 const ReviewForm: React.FC<ReviewFormProps> = ({ user, movie_id, status }) => {
@@ -61,13 +61,13 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ user, movie_id, status }) => {
           placeholder="Add a comment"
           value={review}
           onChange={handleChange}
-          disabled={status === "loading"}
+          disabled={status}
           ref={ref}
         />
         <button
           type="submit"
           className="dark:bg-neutral-800 bg-neutral-300 p-2 rounded-full "
-          disabled={status === "loading"}
+          disabled={status}
         >
           <IoSendSharp />
         </button>
