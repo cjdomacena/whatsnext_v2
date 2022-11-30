@@ -4,10 +4,14 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const { media, window } = req.query;
   try {
     const data = await fetch(
-      `${process.env.TMDB_URL}/trending/movie/week?api_key=${process.env.TMDB_API_KEY}`
+      `${process.env.TMDB_URL}/trending/${media}/${window ?? "week"}?api_key=${
+        process.env.TMDB_API_KEY
+      }`
     );
+
     const results = await data.json();
     if (results.hasOwnProperty("success") && !results.success) {
       throw new Error(results.status_message);

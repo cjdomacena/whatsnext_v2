@@ -2,7 +2,7 @@ import { BASE_URL } from "@lib/constants/config";
 
 export const getTrendingMovie = async () => {
   try {
-    const req = await fetch(`${BASE_URL}/api/trending/movie`);
+    const req = await fetch(`${BASE_URL}/api/list/movie/week/trending`);
     const res = await req.json();
 
     if (res.hasOwnProperty("error")) {
@@ -12,5 +12,6 @@ export const getTrendingMovie = async () => {
     return res;
   } catch (e) {
     console.log(e);
+    return e;
   }
 };
