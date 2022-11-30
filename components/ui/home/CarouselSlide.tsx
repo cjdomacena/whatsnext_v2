@@ -9,9 +9,9 @@ type CarouselSlideProps = {
 const CarouselSlide: React.FC<CarouselSlideProps> = ({ movie }) => {
   return (
     <Link href={`/movie/${movie.id}`}>
-      <div className="keen-slider__slide max-w-xs h-[600px] overflow-x-hidden group relative">
+      <div className="keen-slider__slide max-w-xs 2xl:h-[400px] xl:h-[800px] h-[500px] overflow-x-hidden group relative">
         <Image
-          src={`${IMAGE_URL}/w780${movie.poster_path}`}
+          src={`${IMAGE_URL}/original${movie.poster_path}`}
           alt=""
           loading="lazy"
           className="rounded transition-transform object-cover"
@@ -24,6 +24,9 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({ movie }) => {
         />
 
         <div className="h-full w-full bg-neutral-900/40  z-10 absolute top-0 left-0 rounded hover:bg-neutral-900/10 transition-colors " />
+        <div className="absolute h-full w-full z-20">
+          <div className="z-20 text-white">{movie.vote_average}</div>
+        </div>
       </div>
     </Link>
   );

@@ -6,6 +6,7 @@ import { TrendingMovie } from "@lib/types/movies";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 
 import { GetServerSideProps, NextPage } from "next";
+import { Suspense } from "react";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient();
@@ -28,33 +29,17 @@ const Home: NextPage = () => {
   );
 
   return (
-    <section className="h-full">
-      <div className="min-h-[calc(100vh-64px)] grid place-items-center">
-        <div className=" ">
-          <HeroText />
+    <Suspense>
+      <section className="h-full">
+        <div className="min-h-[calc(100vh-80px)]  mx-auto relative p-4 grid place-items-center">
+          <div className="w-fit uppercase text-center mx-auto container">
+            <HeroText />
+          </div>
+          {/* TODO: CREATE SEARCH HERE SO THEY CAN FIND STUFF... */}
         </div>
-        {/* <Suspense fallback={<h4>Loading...</h4>}>
-          {data ? <Carousel data={data.results} /> : null}
-        </Suspense> */}
-      </div>
-    </section>
+      </section>
+    </Suspense>
   );
-  // if (status === "error") {
-  //   return <h1 className="text-center">Oops.. Something went wrong</h1>;
-  // }
-  // switch (status) {
-  //   case "loading": {
-  //     return null;
-  //   }
-  //   case "success": {
-  //     return (
-  //       <div>
-  //         <HeroText />
-  //         <Carousel data={data.results} />
-  //       </div>
-  //     );
-  //   }
-  // }
 };
 
 export default Home;

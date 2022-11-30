@@ -23,7 +23,7 @@ const Carousel: React.FC<CarouselProps> = ({ data }) => {
         slides: { perView: 3, spacing: 15 },
       },
       "(min-width: 1440px)": {
-        slides: { perView: 4, spacing: 15 },
+        slides: { perView: 6, spacing: 15 },
       },
     },
     // Default behaviour
@@ -35,7 +35,7 @@ const Carousel: React.FC<CarouselProps> = ({ data }) => {
   return (
     <motion.div
       ref={ref}
-      className="w-full keen-slider overflow-x-hidden my-8"
+      className="w-full keen-slider overflow-x-hidden"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
     >
