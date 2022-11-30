@@ -5,7 +5,7 @@ html {
   @apply scroll-smooth;
 }
 body {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Work Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   @apply dark:text-white text-neutral-800;
   @apply dark:bg-neutral-900 bg-white;

@@ -1,22 +1,20 @@
+import { ReviewForm, ReviewContainer } from "@components/common/review";
+import { Backdrop, DetailHeader, Poster } from "@components/ui/detail";
+import { getDetails } from "@lib/api/getDetails";
+import { QUERY_CONFIG } from "@lib/constants/config";
 import { useUser } from "@supabase/auth-helpers-react";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
-import { ReviewContainer, ReviewForm } from "@components/common/review";
-import { Backdrop, DetailHeader, Poster } from "@components/ui/detail";
 import { GetServerSideProps } from "next";
-import { getMovie } from "@lib/api/getMovie";
 import { useRouter } from "next/router";
-import { QUERY_CONFIG } from "@lib/constants/config";
-import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { Suspense } from "react";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.query;
-  const supabase = createServerSupabaseClient(context);
+  const { id, type }: any = context.query;
   const queryClient = new QueryClient();
-  if (id) {
+  if (id && type) {
     await queryClient.prefetchQuery({
-      queryKey: ["movie", id],
-      queryFn: () => getMovie(id as string),
+      queryKey: [type, id],
+      queryFn: () => getDetails(id as string, type),
     });
   }
 
@@ -27,30 +25,32 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-const MovieDetailsPage = () => {
+const DetailsPage = () => {
   const user = useUser();
   const router = useRouter();
-  const query = router.query;
-  const { data: movie } = useQuery(
-    ["movie", query.id],
-    () => getMovie(query.id as string),
+  const query: any = router.query;
+
+  const { data: details } = useQuery(
+    [query.type, query.id],
+    () => getDetails(query.id as string, query.type),
     {
+      enabled: !!router.isReady,
       ...QUERY_CONFIG,
     }
   );
 
-  return movie ? (
+  return (
     <div className="container mx-auto my-12 space-y-12 p-4">
       <Suspense>
-        <Backdrop backdropPath={movie.backdrop_path} />
+        <Backdrop backdropPath={details.backdrop_path} />
         <div
           className="2xl:h-[600px] xl:h-[600px] lg:h-[600px] min-h-[500px] w-full  rounded-lg 
          relative flex 
          justify-center gap-12 flex-wrap-reverse items-center
         "
         >
-          <DetailHeader tagline={movie.tagline} title={movie.title} />
-          <Poster posterPath={movie.poster_path} />
+          <DetailHeader tagline={details.tagline} title={details.title} />
+          <Poster posterPath={details.poster_path} />
         </div>
       </Suspense>
       <div className="ratings-container gap-12  grid grid-cols-8 ">
@@ -68,7 +68,7 @@ const MovieDetailsPage = () => {
         </div>
       </div>
     </div>
-  ) : null;
+  );
 };
 
-export default MovieDetailsPage;
+export default DetailsPage;

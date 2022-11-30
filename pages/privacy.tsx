@@ -1,4 +1,11 @@
+import { getTrendingTV } from "@lib/api/tv/getTrendingTV";
+import { useQuery } from "@tanstack/react-query";
+
 const Privacy = () => {
+  const { data } = useQuery(["trending", "tv"], getTrendingTV);
+
+  console.log(data);
+
   return (
     <div>
       <div

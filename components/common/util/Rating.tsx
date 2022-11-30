@@ -11,7 +11,7 @@ const showRatings = (votes: number) => {
   const temp = new Array(5).fill("rating", 0);
   if (score.length === 1) {
     return (
-      <ul className="text-xs flex items-start gap-1 text-neutral-500">
+      <ul className="text-xs flex items-start gap-1 text-yellow-500">
         {temp.map((star, index) => {
           if (index < Number(score[0])) {
             return (
@@ -30,7 +30,7 @@ const showRatings = (votes: number) => {
     );
   } else if (score.length === 2) {
     return (
-      <ul className="text-xs flex items-start gap-1 text-neutral-500">
+      <ul className="text-xs flex items-start gap-1 text-yellow-500">
         {temp.map((star, index) => {
           if (index < Number(score[0])) {
             return (
@@ -81,7 +81,7 @@ const Rating: React.FC<Props> = ({ votes }) => {
   );
   // if (score.length === 1) {
   //   return (
-  //     <ul className="text-xs flex items-start gap-1 text-neutral-500">
+  //     <ul className="text-xs flex items-start gap-1 text-yellow-500">
   //       {temp.map((star, index) => {
   //         if (index < Number(score[0])) {
   //           return (
@@ -100,7 +100,7 @@ const Rating: React.FC<Props> = ({ votes }) => {
   //   );
   // } else if (score.length === 2) {
   //   return (
-  //     <ul className="text-xs flex items-start gap-1 text-neutral-500">
+  //     <ul className="text-xs flex items-start gap-1 text-yellow-500">
   //       {temp.map((star, index) => {
   //         if (index < Number(score[0])) {
   //           return (
