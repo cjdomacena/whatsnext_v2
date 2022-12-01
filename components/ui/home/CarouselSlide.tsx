@@ -11,12 +11,12 @@ type CarouselSlideProps = {
 const CarouselSlide: React.FC<CarouselSlideProps> = ({ movie, media }) => {
   return (
     <Link href={`/details/${media}/${movie.id}`}>
-      <div className="keen-slider__slide max-w-xs 2xl:h-[350px] xl:h-[350px] lg:h-[350px] md:h-[350px] h-[650px] overflow-x-hidden group relative w-full">
+      <div className="keen-slider__slide max-w-xs 2xl:h-[350px] xl:h-[350px] lg:h-[350px] md:h-[350px] h-[450px] overflow-x-hidden group relative w-full">
         <Image
-          src={`${IMAGE_URL}/original${movie.poster_path}`}
+          src={`${IMAGE_URL}/w440_and_h660_face${movie.poster_path}`}
           alt=""
-          loading="lazy"
-          className="rounded transition-transform"
+          loading="eager"
+          className="rounded transition-transform group-hover:scale-125"
           fill
           placeholder="blur"
           blurDataURL={BLUR_DATA}
@@ -24,7 +24,6 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({ movie, media }) => {
         (max-width: 1200px) 50vw,
        100vw"
         />
-
         <div className="h-full w-full bg-neutral-900/60  z-10 absolute top-0 left-0 rounded group-hover:bg-neutral-900/10 transition-colors " />
         <div className="absolute h-full w-full z-20 flex items-end">
           <div className="z-20 text-white p-4">
