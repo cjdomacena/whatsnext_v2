@@ -36,7 +36,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
               </Link>
             </>
           )}
-          <div className="border-r border-neutral-700 py-2" />
+          <div className="border-r dark:border-neutral-700 border-neutral-300 py-2" />
           <ThemeToggle />
         </div>
       </div>

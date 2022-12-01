@@ -1,15 +1,19 @@
 import { NextPage } from "next";
 import { useState } from "react";
-import EmailInput from "../../common/input/EmailInput";
-import PasswordInput from "../../common/input/PasswordInput";
+import {
+  FormInput,
+  PasswordInput,
+  EmailInput,
+  UsernameInput,
+} from "../../common/input";
+import { Button, CancelButton } from "./Button";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import {
   AuthError,
   SignInWithPasswordCredentials,
 } from "@supabase/supabase-js";
-import FormInput from "../../common/input";
-import { Button, CancelButton } from "./Button";
+
 const Register: NextPage = () => {
   const supabase = useSupabaseClient();
   const [loading, setLoading] = useState<boolean>(false);
@@ -18,7 +22,7 @@ const Register: NextPage = () => {
   const router = useRouter();
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { email, password, fullName }: any = e.target.elements;
+    const { email, password, fullName, username }: any = e.target.elements;
 
     const data: SignInWithPasswordCredentials = {
       email: email.value,
@@ -26,6 +30,7 @@ const Register: NextPage = () => {
       options: {
         data: {
           full_name: fullName.value,
+          username: username.value,
         },
       },
     };
@@ -40,7 +45,11 @@ const Register: NextPage = () => {
       router.reload();
     } catch (e) {
       if (e instanceof AuthError) {
-        setErrorMessage(e.message);
+        if (e.message.includes("duplicate")) {
+          setErrorMessage("Username already exists");
+        } else {
+          setErrorMessage(e.message);
+        }
       } else {
         alert(e);
       }
@@ -61,8 +70,10 @@ const Register: NextPage = () => {
         placeholder="Enter Full Name"
         disabled={loading}
       />
+      <UsernameInput loading={loading} />
       <EmailInput loading={loading} />
       <PasswordInput loading={loading} textLabel="Create Password" />
+
       <div className="space-y-2">
         <Button type="submit" disabled={loading}>
           Register
