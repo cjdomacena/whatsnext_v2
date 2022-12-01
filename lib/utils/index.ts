@@ -19,3 +19,18 @@ export const getNumSentences = (text: string) => {
   const sentences = text.split(/[\.!?]+/);
   return sentences.length - 1;
 };
+
+export const getDuration = (duration: number) => {
+  let minutes = duration;
+  let hours = 0;
+  while (minutes >= 60) {
+    minutes -= 60;
+    hours++;
+  }
+
+  return `${hours !== 0 ? hours + "h" : ""} ${minutes}m`;
+};
+
+export const getCompactNumberFormat = (num: number) => {
+  return new Intl.NumberFormat("en-US", { notation: "compact" }).format(num);
+};

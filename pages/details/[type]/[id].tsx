@@ -1,12 +1,20 @@
 import { ReviewForm, ReviewContainer } from "@components/common/review";
-import { Backdrop, DetailHeader, Poster } from "@components/ui/detail";
+import Rating from "@components/common/util/Rating";
+import {
+  Backdrop,
+  DetailHeader,
+  Poster,
+  CreditTabs,
+} from "@components/ui/detail";
 import { getDetails } from "@lib/api/getDetails";
 import { QUERY_CONFIG } from "@lib/constants/config";
+import { formatDate, getCompactNumberFormat, getDuration } from "@lib/utils";
 import { useUser } from "@supabase/auth-helpers-react";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
+import { IoBookmarkSharp } from "react-icons/io5";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id, type }: any = context.query;
@@ -29,6 +37,7 @@ const DetailsPage = () => {
   const user = useUser();
   const router = useRouter();
   const query: any = router.query;
+  const [limit, setLimit] = useState<number>(4);
 
   const { data: details } = useQuery(
     [query.type, query.id],
@@ -45,28 +54,79 @@ const DetailsPage = () => {
         <Backdrop backdropPath={details.backdrop_path} />
         <div
           className="2xl:h-[600px] xl:h-[600px] lg:h-[600px] min-h-[500px] w-full  rounded-lg 
-         relative flex 
-         justify-center gap-12 flex-wrap-reverse items-center
+         relative flex flex-wrap
+         gap-12  items-start justify-center
         "
         >
-          <DetailHeader tagline={details.tagline} title={details.title} />
           <Poster posterPath={details.poster_path} />
+
+          <div className="p-4 max-w-xl space-y-4">
+            <div className="space-y-1">
+              <DetailHeader tagline={details.tagline} title={details.title} />
+              <ul className="flex gap-1 justify-start pb-2 dark:text-neutral-300">
+                {details.genres.length > 0
+                  ? details.genres.map(
+                      (genre: { id: number; name: string }, index: number) => (
+                        <li className="text-sm" key={genre.id}>
+                          {genre.name}
+                          {index < details.genres.length - 1 ? "," : null}
+                        </li>
+                      )
+                    )
+                  : null}
+              </ul>
+              <div className="flex items-start text-xs gap-1">
+                <Rating votes={details.vote_average} />{" "}
+                {getCompactNumberFormat(Number(details.vote_count ?? 0)) +
+                  " Reviews"}
+              </div>
+              <div className="text-sm flex items-center gap-2 ">
+                <p>
+                  {details.release_date
+                    ? formatDate(details.release_date, {
+                        year: "numeric",
+                      })
+                    : details.first_air_date
+                    ? formatDate(details.first_air_date, {
+                        year: "numeric",
+                      })
+                    : "NA"}
+                </p>
+                <p>{details.runtime ? <>&#183;</> : null}</p>
+                <p>{details.runtime ? getDuration(details.runtime) : null}</p>
+              </div>
+            </div>
+            <p className="dark:text-neutral-300">{details.overview}</p>
+
+            <div className="flex gap-2 text-xs mt-6 text-white ">
+              <button className="px-4 py-4 bg-blue-900 rounded-sm flex items-center gap-1">
+                <IoBookmarkSharp />
+                Add to Watchlist
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="p-4 w-full border"></div>
+        <div className="ratings-container gap-12  grid grid-cols-8">
+          <div className="w-full h-auto    2xl:col-span-2 xl:col-span-2 lg:col-span-2 col-span-8 2xl:order-1 xl:order-1 lg:order-1 order-2 ">
+            <CreditTabs
+              cast={details.credits.cast}
+              crew={details.credits.crew}
+            />
+          </div>
+          <div className="w-full 2xl:col-span-6 xl:col-span-6 lg:col-span-6 col-span-8 2xl:order-2 xl:order-2 lg:order-2 order-1">
+            {user ? (
+              <ReviewForm user={user} movie_id={query.id as string} />
+            ) : (
+              <div className="p-4 dark:bg-neutral-800 bg-neutral-100 rounded">
+                Log In to create write a review
+              </div>
+            )}
+
+            <ReviewContainer movie_id={query.id as string} />
+          </div>
         </div>
       </Suspense>
-      <div className="ratings-container gap-12  grid grid-cols-8 ">
-        <div className="w-full h-[250px] border 2xl:col-span-3 xl:col-span-3 lg:col-span-3 col-span-8"></div>
-        <div className="w-full 2xl:col-span-5 xl:col-span-5 lg:col-span-5 col-span-8">
-          {user ? (
-            <ReviewForm user={user} movie_id={query.id as string} />
-          ) : (
-            <div className="p-4 dark:bg-neutral-800 bg-neutral-100 rounded">
-              Log In to create write a review
-            </div>
-          )}
-
-          <ReviewContainer movie_id={query.id as string} />
-        </div>
-      </div>
     </div>
   );
 };
