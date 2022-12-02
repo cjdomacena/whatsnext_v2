@@ -1,24 +1,41 @@
 import { ReviewForm, ReviewContainer } from "@components/common/review";
+
 import Rating from "@components/common/util/Rating";
 import {
   Backdrop,
   DetailHeader,
   Poster,
   CreditTabs,
-  AddToWatchList,
 } from "@components/ui/detail";
 import { getDetails } from "@lib/api/getDetails";
+import { getWatchListItem } from "@lib/api/getWatchlist";
 import { QUERY_CONFIG } from "@lib/constants/config";
 import { formatDate, getCompactNumberFormat, getDuration } from "@lib/utils";
+import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { useUser } from "@supabase/auth-helpers-react";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
-import { Suspense } from "react";
+import { Suspense, lazy } from "react";
+
+const AddToWatchList = lazy(
+  () => import("@components/ui/detail/button/AddToWatchlist")
+);
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id, type }: any = context.query;
   const queryClient = new QueryClient();
+  const supabase = createServerSupabaseClient(context);
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const data = await getWatchListItem(
+    user?.user_metadata.username,
+    supabase,
+    id
+  );
+
   if (id && type) {
     await queryClient.prefetchQuery({
       queryKey: [type, id],
@@ -29,11 +46,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
+      isWatchlist: data ? true : false,
     },
   };
 };
 
-const DetailsPage = () => {
+const DetailsPage = (
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) => {
   const user = useUser();
   const router = useRouter();
   const query: any = router.query;
@@ -46,10 +66,11 @@ const DetailsPage = () => {
       ...QUERY_CONFIG,
     }
   );
+  console.log(props);
 
   return (
     <div className="container mx-auto my-12 space-y-12 p-4">
-      <Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
         <Backdrop backdropPath={details.backdrop_path} />
         <div
           className="2xl:h-[600px] xl:h-[600px] lg:h-[600px] min-h-[500px] w-full  rounded-lg 
@@ -102,6 +123,7 @@ const DetailsPage = () => {
               title_id={details.id}
               poster_path={details.poster_path}
               media_type={query.type}
+              isActive={props.isWatchlist}
             />
           </div>
         </div>

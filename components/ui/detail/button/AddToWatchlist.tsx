@@ -9,6 +9,7 @@ type ButtonProps = {
   title: string;
   poster_path: string;
   media_type: "tv" | "movie";
+  isActive: boolean;
 };
 
 const AddToWatchList = ({
@@ -16,47 +17,70 @@ const AddToWatchList = ({
   title,
   poster_path,
   media_type,
+  isActive,
 }: ButtonProps) => {
   const queryClient = useQueryClient();
   const supabase = useSupabaseClient();
   const user = useUser();
   const [loading, setLoading] = useState<boolean>(false);
+  const [localActive, setLocalActive] = useState<boolean>(isActive);
   // username, title_id: movie_id/tv_id,  title: name/title, poster_path
   const handleClick = async () => {
     const toastIdLoading = toast.loading("Loading...");
     setLoading(true);
     try {
-      const { error } = await supabase.from("watchlists").insert({
-        title_id: title_id,
-        title: title,
-        username: user?.user_metadata.username,
-        poster_path: poster_path,
-        media_type: media_type,
-      });
-      if (error) throw error;
+      if (!localActive) {
+        const { error } = await supabase.from("watchlists").insert({
+          title_id: title_id,
+          title: title,
+          username: user?.user_metadata.username,
+          poster_path: poster_path,
+          media_type: media_type,
+        });
+        if (error) throw error;
+      } else {
+        const { error } = await supabase
+          .from("watchlists")
+          .delete()
+          .eq("title_id", title_id)
+          .eq("username", user?.user_metadata.username);
+        if (error) throw error;
+      }
+
       queryClient.invalidateQueries([
         "watchlist",
         user?.user_metadata.username,
       ]);
       toast.dismiss(toastIdLoading);
-      toast.success(`${title} successfully added to your watchlist.`);
+      toast.success(
+        `${title} successfully ${
+          localActive
+            ? "removed from your watchlist"
+            : "added to your watchlist"
+        }`
+      );
     } catch (e) {
       toast.dismiss(toastIdLoading);
       toast.error("Failed to add to watchlist");
     } finally {
       setLoading(false);
+      setLocalActive((prev) => !prev);
     }
   };
 
   return (
     <div className="flex gap-2 text-xs mt-6 text-white ">
       <button
-        className="px-4 py-4 bg-blue-700 hover:bg-blue-800 rounded-sm flex items-center gap-1 disabled:bg-blue-900"
+        className={`px-4 py-4  rounded-sm flex items-center gap-1 disabled:bg-blue-900 ${
+          localActive
+            ? "bg-amber-700 hover:bg-amber-800"
+            : "bg-blue-700 hover:bg-blue-800"
+        }`}
         disabled={loading}
         onClick={handleClick}
       >
         <IoBookmarkSharp />
-        Add to Watchlist
+        {localActive ? "Remove from Watchlist" : "Add to Watchlist"}
       </button>
     </div>
   );
