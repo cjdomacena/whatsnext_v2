@@ -48,7 +48,7 @@ export default function App({ Component, pageProps, ...appProps }: AppProps) {
         toastOptions={{
           className: "dark:bg-neutral-900 bg-white dark:text-white text-sm",
         }}
-        position="bottom-center"
+        position="top-center"
       />
     </main>
   );

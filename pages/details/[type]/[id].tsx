@@ -5,6 +5,7 @@ import {
   DetailHeader,
   Poster,
   CreditTabs,
+  AddToWatchList,
 } from "@components/ui/detail";
 import { getDetails } from "@lib/api/getDetails";
 import { QUERY_CONFIG } from "@lib/constants/config";
@@ -13,8 +14,7 @@ import { useUser } from "@supabase/auth-helpers-react";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import { Suspense, useState } from "react";
-import { IoBookmarkSharp } from "react-icons/io5";
+import { Suspense } from "react";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id, type }: any = context.query;
@@ -37,7 +37,6 @@ const DetailsPage = () => {
   const user = useUser();
   const router = useRouter();
   const query: any = router.query;
-  const [limit, setLimit] = useState<number>(4);
 
   const { data: details } = useQuery(
     [query.type, query.id],
@@ -98,12 +97,12 @@ const DetailsPage = () => {
             </div>
             <p className="dark:text-neutral-300">{details.overview}</p>
 
-            <div className="flex gap-2 text-xs mt-6 text-white ">
-              <button className="px-4 py-4 bg-blue-900 rounded-sm flex items-center gap-1">
-                <IoBookmarkSharp />
-                Add to Watchlist
-              </button>
-            </div>
+            <AddToWatchList
+              title={details.title}
+              title_id={details.id}
+              poster_path={details.poster_path}
+              media_type={query.type}
+            />
           </div>
         </div>
         <div className="p-4 w-full border"></div>

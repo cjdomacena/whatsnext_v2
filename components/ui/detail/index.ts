@@ -2,3 +2,4 @@ export { default as DetailHeader } from "./DetailHeader";
 export { default as Backdrop } from "./Backdrop";
 export { default as Poster } from "./Poster";
 export { default as CreditTabs } from "./credits/CreditTabs";
+export { default as AddToWatchList } from "./button/AddToWatchlist";

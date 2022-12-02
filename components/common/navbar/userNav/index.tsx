@@ -48,7 +48,12 @@ const UserNav = ({ user }: { user: User }) => {
                 </div>
               </MenuItemHeader>
               <MenuItemButton text="Profile" />
-              <MenuItemButton text="Watchlist" />
+              <MenuItemButton
+                text="Watchlist"
+                onClick={() =>
+                  router.push(`/user/${user.user_metadata.username}/watchlist`)
+                }
+              />
               <Separator />
               <MenuItemHeader>
                 <div className="flex gap-1 items-center">
