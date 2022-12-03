@@ -1,4 +1,4 @@
-import { IMAGE_URL } from "@lib/constants/config";
+import { BLUR_DATA, IMAGE_URL } from "@lib/constants/config";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -19,18 +19,24 @@ const Poster = ({
 }: PosterProps) => {
   return (
     <div>
-      <Link href={`/details/${media_type}/${title_id}`} className="space-y-2">
-        <div className=" h-[300px] w-full relative">
+      <Link
+        href={`/details/${media_type}/${title_id}`}
+        className="space-y-2 group"
+      >
+        <div className=" h-[450px] w-full relative">
           <Image
-            src={`${IMAGE_URL}/w300_and_h450_bestv2${poster_path}`}
+            src={`${IMAGE_URL}/original${poster_path}`}
             alt=""
             fill
-            className="rounded"
+            className="rounded object-cover group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:z-20 transition-transform"
+            placeholder="blur"
+            blurDataURL={BLUR_DATA}
+            loading={"eager"}
           />
         </div>
-        <h4 className="font-bold">{title}</h4>
+        <h4 className="font-bold text-xl">{title}</h4>
       </Link>
-      <div className="text-xs">
+      <div className="text-xs text-red-500">
         <button onClick={handler}>Remove</button>
       </div>
     </div>
