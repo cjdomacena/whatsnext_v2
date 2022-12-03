@@ -50,7 +50,8 @@ const WatchList = () => {
             withShareUrl={userProfile.id === user?.id}
           />
 
-          {!userProfile.is_private ? (
+          {!userProfile.is_private ||
+          user?.user_metadata.username === username ? (
             <WatchlistItems username={userProfile.username} />
           ) : (
             <>

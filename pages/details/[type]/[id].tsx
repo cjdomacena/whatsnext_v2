@@ -1,11 +1,13 @@
 import { ReviewForm, ReviewContainer } from "@components/common/review";
 
 import Rating from "@components/common/util/Rating";
+import MetaHeader from "@components/MetaHeader";
 import {
   Backdrop,
   DetailHeader,
   Poster,
   CreditTabs,
+  AddToWatchList,
 } from "@components/ui/detail";
 import { getDetails } from "@lib/api/getDetails";
 import { getWatchListItem } from "@lib/api/getWatchlist";
@@ -16,11 +18,7 @@ import { useUser } from "@supabase/auth-helpers-react";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
-import { Suspense, lazy } from "react";
-
-const AddToWatchList = lazy(
-  () => import("@components/ui/detail/button/AddToWatchlist")
-);
+import { Suspense } from "react";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id, type }: any = context.query;
@@ -66,11 +64,14 @@ const DetailsPage = (
       ...QUERY_CONFIG,
     }
   );
-  console.log(props);
 
   return (
     <div className="container mx-auto my-12 space-y-12 p-4">
       <Suspense fallback={<div>Loading...</div>}>
+        <MetaHeader
+          title={`WhatsNext - ${details.title}`}
+          description={details.overview}
+        />
         <Backdrop backdropPath={details.backdrop_path} />
         <div
           className="2xl:h-[600px] xl:h-[600px] lg:h-[600px] min-h-[500px] w-full  rounded-lg 

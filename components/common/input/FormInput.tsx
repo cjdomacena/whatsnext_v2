@@ -30,18 +30,17 @@ const FormInput: FC<FormInputProps> = ({
       </label>
 
       <div
-        className=" bg-neutral-100 dark:bg-neutral-900/50 ring-1 ring-white/10  rounded w-full dark:placeholder:text-neutral-500 
+        className={` bg-neutral-100 dark:bg-neutral-900/50 ring-1 ring-white/10  rounded w-full dark:placeholder:text-neutral-500 
        dark:focus-within:ring-amber-900/90
-       disabled:bg-neutral-800
         text-xs
         flex items-center gap-2
         group
        focus-within:ring-neutral-200
-        "
+        `}
       >
         <input
-          className={`appearance-none focus:outline-none  px-3 py-3 w-full rounded !bg-transparent       
-          caret-black dark:caret-neutral-500 placeholder:text-neutral-400`}
+          className={`appearance-none focus:outline-none  px-3 py-3 w-full rounded bg-transparent       
+          caret-black dark:caret-neutral-500 placeholder:text-neutral-400 disabled:dark:bg-neutral-800 disabled:cursor-not-allowed disabled:bg-neutral-300`}
           onChange={(e) => setter(e.target.value)}
           value={value}
           id={id}

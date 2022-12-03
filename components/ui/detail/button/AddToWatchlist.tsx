@@ -26,45 +26,49 @@ const AddToWatchList = ({
   const [localActive, setLocalActive] = useState<boolean>(isActive);
   // username, title_id: movie_id/tv_id,  title: name/title, poster_path
   const handleClick = async () => {
-    const toastIdLoading = toast.loading("Loading...");
-    setLoading(true);
-    try {
-      if (!localActive) {
-        const { error } = await supabase.from("watchlists").insert({
-          title_id: title_id,
-          title: title,
-          username: user?.user_metadata.username,
-          poster_path: poster_path,
-          media_type: media_type,
-        });
-        if (error) throw error;
-      } else {
-        const { error } = await supabase
-          .from("watchlists")
-          .delete()
-          .eq("title_id", title_id)
-          .eq("username", user?.user_metadata.username);
-        if (error) throw error;
-      }
+    if (user) {
+      const toastIdLoading = toast.loading("Loading...");
+      setLoading(true);
+      try {
+        if (!localActive) {
+          const { error } = await supabase.from("watchlists").insert({
+            title_id: title_id,
+            title: title,
+            username: user?.user_metadata.username,
+            poster_path: poster_path,
+            media_type: media_type,
+          });
+          if (error) throw error;
+        } else {
+          const { error } = await supabase
+            .from("watchlists")
+            .delete()
+            .eq("title_id", title_id)
+            .eq("username", user?.user_metadata.username);
+          if (error) throw error;
+        }
 
-      queryClient.invalidateQueries([
-        "watchlist",
-        user?.user_metadata.username,
-      ]);
-      toast.dismiss(toastIdLoading);
-      toast.success(
-        `${title} successfully ${
-          localActive
-            ? "removed from your watchlist"
-            : "added to your watchlist"
-        }`
-      );
-    } catch (e) {
-      toast.dismiss(toastIdLoading);
-      toast.error("Failed to add to watchlist");
-    } finally {
-      setLoading(false);
-      setLocalActive((prev) => !prev);
+        queryClient.invalidateQueries([
+          "watchlist",
+          user?.user_metadata.username,
+        ]);
+        toast.dismiss(toastIdLoading);
+        toast.success(
+          `${title} successfully ${
+            localActive
+              ? "removed from your watchlist"
+              : "added to your watchlist"
+          }`
+        );
+      } catch (e) {
+        toast.dismiss(toastIdLoading);
+        toast.error("Failed to add to watchlist");
+      } finally {
+        setLoading(false);
+        setLocalActive((prev) => !prev);
+      }
+    } else {
+      toast.error("Must be logged in");
     }
   };
 
