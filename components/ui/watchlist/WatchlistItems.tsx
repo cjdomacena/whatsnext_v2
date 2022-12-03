@@ -1,6 +1,6 @@
 import { getWatchList } from "@lib/api/getWatchlist";
 import { QUERY_CONFIG } from "@lib/constants/config";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Suspense } from "react";
 import toast from "react-hot-toast";
@@ -9,6 +9,7 @@ import Poster from "./Poster";
 const WatchlistItems = ({ username }: { username: string }) => {
   const supabase = useSupabaseClient();
   const queryClient = useQueryClient();
+  const user = useUser();
   const { data, error } = useQuery(
     ["watchlist", username as string],
     () => getWatchList(username as string, supabase),
@@ -43,6 +44,7 @@ const WatchlistItems = ({ username }: { username: string }) => {
             title_id={title.title_id}
             media_type={title.media_type}
             handler={async () => await handleRemove(title.id)}
+            isDisabled={user?.user_metadata.username !== username}
           />
         ))}
       </div>

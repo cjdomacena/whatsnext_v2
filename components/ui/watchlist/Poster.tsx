@@ -8,6 +8,7 @@ type PosterProps = {
   title_id: number | string;
   media_type: "movie" | "tv";
   handler: () => void;
+  isDisabled: boolean;
 };
 
 const Poster = ({
@@ -16,6 +17,7 @@ const Poster = ({
   title_id,
   media_type,
   handler,
+  isDisabled,
 }: PosterProps) => {
   return (
     <div>
@@ -36,9 +38,11 @@ const Poster = ({
         </div>
         <h4 className="font-bold text-xl">{title}</h4>
       </Link>
-      <div className="text-xs text-red-500">
-        <button onClick={handler}>Remove</button>
-      </div>
+      {isDisabled ? null : (
+        <div className="text-xs text-red-500">
+          <button onClick={handler}>Remove</button>
+        </div>
+      )}
     </div>
   );
 };
