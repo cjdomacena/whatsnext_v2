@@ -8,7 +8,9 @@ export async function middleware(req: NextRequest) {
     req.nextUrl.pathname.includes("/login") ||
     req.nextUrl.pathname.includes("/register");
 
-  const isCheckoutPage = req.nextUrl.pathname.includes("/manage-subscription");
+  const isCheckoutPage =
+    req.nextUrl.pathname.includes("/manage-subscription") ||
+    req.nextUrl.pathname.includes("/profile");
 
   // Create authenticated supabase client
   const supabase = createMiddlewareSupabaseClient({ req, res });
@@ -26,13 +28,20 @@ export async function middleware(req: NextRequest) {
   }
   const redirectUrl = req.nextUrl.clone();
   redirectUrl.pathname = "/";
-  redirectUrl.searchParams.set(
-    `redirectedFrom`,
-    encodeURIComponent(req.nextUrl.pathname)
-  );
+  // redirectUrl.searchParams.set(
+  //   `redirectedFrom`,
+  //   encodeURIComponent(req.nextUrl.pathname)
+  // );
   return NextResponse.redirect(redirectUrl);
 }
 
 export const config = {
-  matcher: ["/auth/:path*", "/settings/:path*"],
+  matcher: [
+    "/auth/:path*",
+    "/settings/:path*",
+    "/auth/login",
+    "/auth/register",
+    "/settings/manage-subscription",
+    "/user/:path*/profile",
+  ],
 };

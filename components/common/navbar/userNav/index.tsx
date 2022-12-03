@@ -14,7 +14,11 @@ const UserNav = ({ user }: { user: User }) => {
   const { data, status, error } = useQuery(
     ["subscription_info", user.id],
     () => subscriptionInfo(user.id, supabase),
-    { refetchOnWindowFocus: true, cacheTime: 5000 * 100, staleTime: 5000 * 10 }
+    {
+      refetchOnWindowFocus: true,
+      cacheTime: 50000 * 100,
+      staleTime: 5000 * 100,
+    }
   );
   if (error) {
     return <div>Something went wrong...</div>;
@@ -47,7 +51,12 @@ const UserNav = ({ user }: { user: User }) => {
                   My Stuff
                 </div>
               </MenuItemHeader>
-              <MenuItemButton text="Profile" />
+              <MenuItemButton
+                text="Profile"
+                onClick={() =>
+                  router.push(`/user/${user.user_metadata.username}/profile`)
+                }
+              />
               <MenuItemButton
                 text="Watchlist"
                 onClick={() =>
@@ -68,8 +77,9 @@ const UserNav = ({ user }: { user: User }) => {
               <MenuItemButton text="Account Settings" />
               <MenuItemButton
                 text="Logout"
-                onClick={() => {
-                  supabase.auth.signOut();
+                onClick={async () => {
+                  await supabase.auth.signOut();
+                  router.reload();
                 }}
                 buttonType="error"
               />

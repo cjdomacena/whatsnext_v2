@@ -1,4 +1,5 @@
 import { UserProfile, WatchlistItems } from "@components/ui/watchlist";
+import { getProfile } from "@lib/api/getProfile";
 import { getWatchList } from "@lib/api/getWatchlist";
 import { QUERY_CONFIG } from "@lib/constants/config";
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
@@ -7,7 +8,7 @@ import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 
-const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const supabase = createServerSupabaseClient(ctx);
   const queryClient = new QueryClient();
   const { username } = ctx.query;
@@ -31,21 +32,8 @@ const WatchList = () => {
   const { username } = router.query;
 
   const { data: userProfile, error } = useQuery(
-    ["watchlist-user", username],
-    async () => {
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("username", username)
-        .single();
-      if (error) {
-        if (error.code === "PGRST116") {
-          return null;
-        }
-        throw error;
-      }
-      return data;
-    },
+    ["profile", username],
+    () => getProfile(username as string, supabase),
     { enabled: !!username || !!user, ...QUERY_CONFIG }
   );
 
@@ -57,7 +45,10 @@ const WatchList = () => {
     <section className="my-12 container mx-auto p-4 flex gap-8 flex-wrap">
       {userProfile ? (
         <>
-          <UserProfile userProfile={userProfile} />
+          <UserProfile
+            userProfile={userProfile}
+            withShareUrl={userProfile.id === user?.id}
+          />
 
           {!userProfile.is_private ? (
             <WatchlistItems username={userProfile.username} />

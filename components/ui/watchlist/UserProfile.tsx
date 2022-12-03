@@ -9,9 +9,13 @@ type UserProfileProps = {
     username: string;
     id: string;
   };
+  withShareUrl?: boolean;
 };
 
-const UserProfile = ({ userProfile }: UserProfileProps) => {
+const UserProfile = ({
+  userProfile,
+  withShareUrl = true,
+}: UserProfileProps) => {
   const user = useUser();
   return (
     <div className="space-y-2 2xl:w-52 xl:w-52 lg:w-52 w-full">
@@ -27,7 +31,7 @@ const UserProfile = ({ userProfile }: UserProfileProps) => {
           <p className="text-xs capitalize text-amber-500  rounded w-fit">
             {userProfile && userProfile.is_subscribed ? "Critic" : "Member"}
           </p>
-          {userProfile.id === user?.id ? (
+          {withShareUrl ? (
             <ClipboardButton username={userProfile.username} />
           ) : null}
         </div>
