@@ -45,7 +45,9 @@ export default function App({ Component, pageProps, ...appProps }: AppProps) {
             {/* <ReactQueryDevtools initialIsOpen={false} /> */}
 
             <Component {...pageProps} />
-            <Footer />
+            {appProps.router.pathname.split("/").includes("auth") ? null : (
+              <Footer />
+            )}
           </Hydrate>
         </QueryClientProvider>
       </SessionContextProvider>
