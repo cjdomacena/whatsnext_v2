@@ -12,7 +12,7 @@ const Privacy = () => {
       <MetaHeader title="Whatsnext — Privacy" />
       <div
         className=" mx-auto my-12 prose prose-headings:text-neutral-300 text-sm leading-loose dark:text-neutral-300 
-        prose-a:dark:text-neutral-50
+        prose-a:dark:text-neutral-50 p-6
       "
       >
         <h1 className="font-black">Privacy Notice</h1>

@@ -1,8 +1,8 @@
 import { useUser } from "@supabase/auth-helpers-react";
 import Link from "next/link";
 import { FC } from "react";
-import { TbClick } from "react-icons/tb";
 import { ThemeToggle } from "../button/ThemeToggle";
+import { Logo } from "../util";
 import UserNav from "./userNav";
 
 type NavbarProps = {};
@@ -12,12 +12,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
     <nav className="p-4 rounded ">
       <div className=" flex justify-between items-center">
         <Link href="/">
-          <div className="flex items-center gap-1 px-1 ">
-            <TbClick className="w-5 h-5 mb-1 " />
-            <p className="text-sm font-black bg-gradient-to-r from-amber-500 to-pink-500 bg-clip-text text-transparent">
-              WHATSNEXT
-            </p>
-          </div>
+          <Logo />
         </Link>
         <div className="flex gap-4 text-xs items-center">
           {user ? (

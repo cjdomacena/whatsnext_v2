@@ -126,7 +126,7 @@ body {
 }
 
 @layer base {
-  ::-webkit-scrollbar {
+  /* ::-webkit-scrollbar {
     height: 5px;
     width: 6px;
     background: transparent;
@@ -140,5 +140,5 @@ body {
 
   ::-webkit-scrollbar-corner {
     background: #fff3;
-  }
+  } */
 }

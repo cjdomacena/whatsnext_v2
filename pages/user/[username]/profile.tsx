@@ -110,7 +110,7 @@ const Profile = () => {
             className="px-6 py-2 bg-amber-500 text-xs font-medium rounded hover:bg-amber-700 transition-colors"
             disabled={mutation.isLoading}
           >
-            Submit
+            Update Profile
           </button>
         </form>
       </div>

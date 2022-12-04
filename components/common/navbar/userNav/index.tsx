@@ -36,7 +36,7 @@ const UserNav = ({ user }: { user: User }) => {
               </p> */}
               <div className="border-r dark:border-neutral-700 border-neutral-300 py-2" />
               <span className="text-xs capitalize  text-green-500 py-1 rounded">
-                {data && data.is_subscribed ? "Critic" : "Member"}
+                {data && data.is_subscribed ? "Pro" : "Member"}
               </span>
             </div>
           </div>
@@ -74,7 +74,7 @@ const UserNav = ({ user }: { user: User }) => {
                 text="Manage Subscription"
                 onClick={() => router.push("/settings/manage-subscription")}
               />
-              <MenuItemButton text="Account Settings" />
+              {/* <MenuItemButton text="Account Settings" /> */}
               <MenuItemButton
                 text="Logout"
                 onClick={async () => {

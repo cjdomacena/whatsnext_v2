@@ -18,9 +18,9 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "keen-slider/keen-slider.min.css";
 import { Toaster } from "react-hot-toast";
+import Footer from "@components/common/footer";
 
 export default function App({ Component, pageProps, ...appProps }: AppProps) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
@@ -37,13 +37,15 @@ export default function App({ Component, pageProps, ...appProps }: AppProps) {
           description="Pick up where you left off. Track your shows!"
         />
         <QueryClientProvider client={queryClient}>
-          {appProps.router.pathname.split("/").includes("auth") ? null : (
-            <Navbar />
-          )}
-
-          <ReactQueryDevtools initialIsOpen={false} />
           <Hydrate state={pageProps.dehydratedState}>
+            {appProps.router.pathname.split("/").includes("auth") ? null : (
+              <Navbar />
+            )}
+
+            {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+
             <Component {...pageProps} />
+            <Footer />
           </Hydrate>
         </QueryClientProvider>
       </SessionContextProvider>
