@@ -45,7 +45,7 @@ const ManageSubscription = () => {
   };
 
   return (
-    <div className="container mx-auto my-12 space-y-4">
+    <div className="container mx-auto my-12 space-y-4 min-h-[60vh]">
       <MetaHeader title="Whatsnext — Manage Subscription" />
       <h1 className="text-6xl font-bold leading-relaxed">
         Manage Subscription

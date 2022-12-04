@@ -13,7 +13,11 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({ movie, media }) => {
     <Link href={`/details/${media}/${movie.id}`}>
       <div className="keen-slider__slide max-w-xs 2xl:h-[350px] xl:h-[350px] lg:h-[350px] md:h-[350px] h-[450px] overflow-x-hidden group relative w-full">
         <Image
-          src={`${IMAGE_URL}/w440_and_h660_face${movie.poster_path}`}
+          src={`${
+            movie.poster_path
+              ? IMAGE_URL + "/w342" + movie.poster_path
+              : "/assets/fallback.png"
+          }`}
           alt=""
           loading="eager"
           className="rounded transition-transform group-hover:scale-125"

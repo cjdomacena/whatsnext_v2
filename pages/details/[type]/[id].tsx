@@ -9,6 +9,8 @@ import {
   CreditTabs,
   AddToWatchList,
 } from "@components/ui/detail";
+import Recommended from "@components/ui/detail/Recommended";
+import Similar from "@components/ui/detail/Similar";
 import { getDetails } from "@lib/api/getDetails";
 import { getWatchListItem } from "@lib/api/getWatchlist";
 import { QUERY_CONFIG } from "@lib/constants/config";
@@ -129,7 +131,7 @@ const DetailsPage = (
             />
           </div>
         </div>
-        <div className="p-4 w-full border"></div>
+
         <div className="ratings-container gap-12  grid grid-cols-8">
           <div className="w-full h-auto    2xl:col-span-2 xl:col-span-2 lg:col-span-2 col-span-8 2xl:order-1 xl:order-1 lg:order-1 order-2 ">
             <CreditTabs
@@ -150,6 +152,12 @@ const DetailsPage = (
           </div>
         </div>
       </Suspense>
+      <div className="p-4 w-full">
+        <Similar />
+      </div>
+      <div className="p-4 w-full">
+        <Recommended />
+      </div>
     </div>
   );
 };

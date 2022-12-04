@@ -8,7 +8,11 @@ const Poster: React.FC<PosterProps> = ({ posterPath }) => {
   return (
     <div className="w-[300px] h-[450px] relative">
       <Image
-        src={`${IMAGE_URL}/w300_and_h450_bestv2${posterPath}`}
+        src={`${
+          posterPath
+            ? IMAGE_URL + "/w300_and_h450_bestv2" + posterPath
+            : "/assets/fallback.png"
+        }`}
         fill
         alt=""
         sizes="(max-width: 768px) 50vw,

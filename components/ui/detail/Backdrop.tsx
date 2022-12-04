@@ -17,7 +17,7 @@ const Backdrop: React.FC<BackdropProps> = ({ backdropPath }) => {
       <div className="max-h-full h-full absolute -z-10 -top-12 w-full left-0  dark:bg-neutral-900/90 bg-white/50 backdrop-blur" />
     </>
   ) : (
-    <div className="max-h-[50vh] h-full absolute z-0 top-0 w-full left-0 max-w-screen blur-[50px] dark:bg-neutral-900/50" />
+    <div className="max-h-[50vh] h-full absolute -z-10 top-0 w-full left-0 max-w-screen blur-[50px] dark:bg-neutral-900/50" />
   );
 };
 

@@ -9,7 +9,7 @@ import { Logo } from "../util";
 
 const Footer = () => {
   return (
-    <footer className="w-full  dark:bg-neutral-800 bg-neutral-100 border-t dark:border-t-neutral-700 py-4">
+    <footer className="w-full  dark:bg-neutral-800 bg-neutral-100 border-t dark:border-t-neutral-700 py-8">
       <div className="container mx-auto py-8 flex flex-wrap items-start gap-8 border-b dark:border-b-neutral-700 justify-center">
         <div className="text-2xl space-y-2  w-[300px]">
           <div>
