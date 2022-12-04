@@ -1,3 +1,4 @@
+import MetaHeader from "@components/MetaHeader";
 import { UserProfile, WatchlistItems } from "@components/ui/watchlist";
 import { getProfile } from "@lib/api/getProfile";
 import { getWatchList } from "@lib/api/getWatchlist";
@@ -43,6 +44,11 @@ const WatchList = () => {
 
   return (
     <section className="my-12 container mx-auto p-4 flex gap-8 flex-wrap">
+      <MetaHeader
+        title={`Whatsnext — ${username}'s Watchlist`}
+        description={`${username}'s watchlist`}
+        pathname={`user/${username}/watchlist`}
+      />
       {userProfile ? (
         <>
           <UserProfile

@@ -1,4 +1,5 @@
 import { BLUR_DATA, IMAGE_URL } from "@lib/constants/config";
+import { formatDate } from "@lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -9,6 +10,7 @@ type PosterProps = {
   media_type: "movie" | "tv";
   handler: () => void;
   isDisabled: boolean;
+  created_at: string;
 };
 
 const Poster = ({
@@ -18,16 +20,17 @@ const Poster = ({
   media_type,
   handler,
   isDisabled,
+  created_at,
 }: PosterProps) => {
   return (
     <div>
       <Link
         href={`/details/${media_type}/${title_id}`}
-        className="space-y-2 group"
+        className="space-y-2 group "
       >
-        <div className=" h-[450px] w-full relative">
+        <div className="min-h-[450px] w-full relative ">
           <Image
-            src={`${IMAGE_URL}/original${poster_path}`}
+            src={`${IMAGE_URL}/w500${poster_path}`}
             alt=""
             fill
             className="rounded object-cover group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:z-20 transition-transform"
@@ -36,10 +39,20 @@ const Poster = ({
             loading={"eager"}
           />
         </div>
-        <h4 className="font-bold text-xl">{title}</h4>
+        <div>
+          <h4 className="font-bold text-xl line-clamp-1">{title}</h4>
+          <p className="text-xs">
+            Added:{" "}
+            {formatDate(created_at, {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })}
+          </p>
+        </div>
       </Link>
       {isDisabled ? null : (
-        <div className="text-xs text-red-500">
+        <div className="text-xs text-red-500 mt-4">
           <button onClick={handler}>Remove</button>
         </div>
       )}

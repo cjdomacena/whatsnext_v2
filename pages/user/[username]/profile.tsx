@@ -1,5 +1,6 @@
 import { FormInput } from "@components/common/input";
 import SwitchInput from "@components/common/input/SwitchInput";
+import MetaHeader from "@components/MetaHeader";
 import { UserProfile } from "@components/ui/watchlist";
 import { getProfile } from "@lib/api/getProfile";
 import { QUERY_CONFIG } from "@lib/constants/config";
@@ -74,6 +75,7 @@ const Profile = () => {
 
   return (
     <section className="my-12 container mx-auto p-4 flex gap-8 flex-wrap">
+      <MetaHeader title={`Whatsnext — Update Profile`} />
       {userProfile ? (
         <UserProfile userProfile={userProfile} withShareUrl={false} />
       ) : null}

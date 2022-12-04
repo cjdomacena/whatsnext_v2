@@ -32,7 +32,10 @@ export default function App({ Component, pageProps, ...appProps }: AppProps) {
         supabaseClient={supabaseClient}
         initialSession={pageProps.initialSession}
       >
-        <MetaHeader title="WhatsNext" description="Something something" />
+        <MetaHeader
+          title="WhatsNext"
+          description="Pick up where you left off. Track your shows!"
+        />
         <QueryClientProvider client={queryClient}>
           {appProps.router.pathname.split("/").includes("auth") ? null : (
             <Navbar />

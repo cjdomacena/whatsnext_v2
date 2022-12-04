@@ -2,11 +2,16 @@ import Link from "next/link";
 import { Login } from "@components/ui/auth";
 import { BackButton } from "@components/common/button";
 import { useRouter } from "next/router";
+import MetaHeader from "@components/MetaHeader";
 
 const UserLogin = () => {
   const router = useRouter();
   return (
     <div className="absolute top-0 min-h-screen grid place-items-center w-full z-10">
+      <MetaHeader
+        title="Whatsnext — Login"
+        description="Whatsnext is a platform to share and track your favorite shows! Register Now!"
+      />
       <div className="container max-w-sm">
         <div className="space-y-1 text-center">
           <h1 className="text-4xl font-bold">Welcome Back!</h1>

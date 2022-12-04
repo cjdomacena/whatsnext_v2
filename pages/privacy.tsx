@@ -1,3 +1,4 @@
+import MetaHeader from "@components/MetaHeader";
 import { getTrendingTV } from "@lib/api/tv/getTrendingTV";
 import { useQuery } from "@tanstack/react-query";
 
@@ -8,6 +9,7 @@ const Privacy = () => {
 
   return (
     <div>
+      <MetaHeader title="Whatsnext — Privacy" />
       <div
         className=" mx-auto my-12 prose prose-headings:text-neutral-300 text-sm leading-loose dark:text-neutral-300 
         prose-a:dark:text-neutral-50

@@ -69,8 +69,9 @@ const DetailsPage = (
     <div className="container mx-auto my-12 space-y-12 p-4">
       <Suspense fallback={<div>Loading...</div>}>
         <MetaHeader
-          title={`WhatsNext - ${details.title}`}
+          title={`WhatsNext — ${details.title}`}
           description={details.overview}
+          pathname={`details/${router.query.type}/${router.query.id}`}
         />
         <Backdrop backdropPath={details.backdrop_path} />
         <div

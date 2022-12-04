@@ -2,10 +2,15 @@ import Link from "next/link";
 import { Register } from "@components/ui/auth";
 import { BackButton } from "@components/common/button";
 import router from "next/router";
+import MetaHeader from "@components/MetaHeader";
 
 const UserRegistration = () => {
   return (
     <div className="absolute top-0 min-h-screen grid place-items-center w-full">
+      <MetaHeader
+        title="Whatsnext — Login"
+        description="Whatsnext is a platform to share and track your favorite shows! Register Now!"
+      />
       <div className="container max-w-sm">
         <div className="space-y-1 text-center">
           <h1 className="text-4xl font-bold">Registration</h1>

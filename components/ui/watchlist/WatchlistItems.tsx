@@ -45,6 +45,7 @@ const WatchlistItems = ({ username }: { username: string }) => {
             media_type={title.media_type}
             handler={async () => await handleRemove(title.id)}
             isDisabled={user?.user_metadata.username !== username}
+            created_at={title.created_at.toString()}
           />
         ))}
       </div>

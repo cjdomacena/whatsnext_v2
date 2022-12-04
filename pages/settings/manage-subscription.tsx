@@ -1,3 +1,4 @@
+import MetaHeader from "@components/MetaHeader";
 import { subscriptionInfo } from "@lib/api/getSubscriptionInfo";
 import { QUERY_CONFIG } from "@lib/constants/config";
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
@@ -45,6 +46,7 @@ const ManageSubscription = () => {
 
   return (
     <div className="container mx-auto my-12 space-y-4">
+      <MetaHeader title="Whatsnext — Manage Subscription" />
       <h1 className="text-6xl font-bold leading-relaxed">
         Manage Subscription
       </h1>{" "}
