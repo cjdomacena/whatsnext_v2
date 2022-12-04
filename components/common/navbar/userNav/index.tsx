@@ -34,8 +34,8 @@ const UserNav = ({ user }: { user: User }) => {
               {/* <p className="text-xs dark:text-neutral-400">
                 @{user.user_metadata.username}
               </p> */}
-              <div className="border-r dark:border-neutral-700 border-neutral-300 py-2" />
-              <span className="text-xs capitalize  text-green-500 py-1 rounded">
+              <div className="border-r dark:border-neutral-700 border-neutral-300 py-2 2xl:block xl:block lg:block md:block hidden" />
+              <span className="text-xs capitalize  text-green-500 py-1 rounded 2xl:block xl:block lg:block md:block hidden">
                 {data && data.is_subscribed ? "Pro" : "Member"}
               </span>
             </div>
@@ -43,7 +43,7 @@ const UserNav = ({ user }: { user: User }) => {
         </Popover.Trigger>
         {/* <Popover.Anchor className="" /> */}
         <Popover.Portal className="relative">
-          <Popover.Content className="absolute text-sm  ring-1 ring-amber-900/10  space-y-1 py-1 text-neutral-300 -right-20 top-2 w-52 rounded dark:bg-neutral-800 bg-white">
+          <Popover.Content className="absolute text-sm  ring-1 ring-amber-900/10  space-y-1 py-1 text-neutral-300  top-2 w-52 rounded dark:bg-neutral-800 bg-white 2xl:-right-20 xl:-right-20 lg:-right-20 md:-right-20 -right-12">
             <ul>
               <MenuItemHeader>
                 <div className="flex gap-1 items-center">
