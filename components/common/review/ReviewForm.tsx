@@ -85,7 +85,14 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ user, movie_id }) => {
   return (
     <form
       className="flex-grow dark:bg-white/5 bg-neutral-100 text-sm rounded h-fit p-3 space-y-2 "
-      onSubmit={mutation.mutate}
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (!activeRating || activeRating == -1) {
+          toast.error("Must Add a rating");
+        } else {
+          mutation.mutate(e);
+        }
+      }}
     >
       <div className="flex items-start space-y-2">
         <textarea

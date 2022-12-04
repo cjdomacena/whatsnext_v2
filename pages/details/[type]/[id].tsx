@@ -77,7 +77,7 @@ const DetailsPage = (
         />
         <Backdrop backdropPath={details.backdrop_path} />
         <div
-          className="2xl:h-[600px] xl:h-[600px] lg:h-[600px] min-h-[500px] w-full  rounded-lg 
+          className="2xl:min-h-[600px] xl:min-h-[600px] lg:min-h-[600px] min-h-[500px] w-full  rounded-lg 
          relative flex flex-wrap
          gap-12  items-start justify-center
         "
@@ -120,7 +120,9 @@ const DetailsPage = (
                 <p>{details.runtime ? getDuration(details.runtime) : null}</p>
               </div>
             </div>
-            <p className="dark:text-neutral-300">{details.overview}</p>
+            <p className="dark:text-neutral-300 leading-relaxed">
+              {details.overview}
+            </p>
 
             <AddToWatchList
               title={details.title}

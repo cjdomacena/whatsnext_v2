@@ -16,7 +16,7 @@ const RadioButtons = ({ activeRating, setActiveRating }: Props) => {
     <RadioGroup.Root
       value={activeRating + ""}
       className="flex gap-4 text-xs"
-      required
+      required={true}
       onValueChange={(e) => handleClick(e)}
     >
       {ratings.map((value) => (
