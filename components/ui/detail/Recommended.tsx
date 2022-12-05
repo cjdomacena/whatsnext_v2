@@ -15,7 +15,14 @@ const Recommended = () => {
   );
 
   if (status === "error") {
-    return <div>Something went wrong..</div>;
+    return (
+      <div className=" space-y-4">
+        <h4 className="text-lg font-bold uppercase">Recommended {type}s</h4>
+        <div>
+          <p>Not Available</p>
+        </div>
+      </div>
+    );
   } else if (status === "loading") {
     return (
       <div className="w-full h-64 grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-2">
