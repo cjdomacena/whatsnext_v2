@@ -13,7 +13,7 @@ export default async function handler(
 
     const results = await data.json();
     if (results.hasOwnProperty("success") && !results.success) {
-      return res.status(500).json({ error: "Something went wrong..." });
+      throw new Error(results.status_message);
     }
     return res.status(200).json(results);
   } catch (e) {
