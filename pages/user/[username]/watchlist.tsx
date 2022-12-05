@@ -9,6 +9,7 @@ import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
+import { Suspense } from "react";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const supabase = createServerSupabaseClient(ctx);
@@ -45,30 +46,32 @@ const WatchList = () => {
 
   return (
     <section className="my-12 container mx-auto p-4 flex gap-8 flex-wrap min-h-[80vh]">
-      <MetaHeader
-        title={`Whatsnext — ${username}'s Watchlist`}
-        description={`${username}'s watchlist`}
-        pathname={`user/${username}/watchlist`}
-      />
-      {userProfile ? (
-        <>
-          <UserProfile
-            userProfile={userProfile}
-            withShareUrl={user ? userProfile.id === user.id : false}
-          />
+      <Suspense>
+        <MetaHeader
+          title={`Whatsnext — ${username}'s Watchlist`}
+          description={`${username}'s watchlist`}
+          pathname={`user/${username}/watchlist`}
+        />
+        {userProfile ? (
+          <>
+            <UserProfile
+              userProfile={userProfile}
+              withShareUrl={user ? userProfile.id === user.id : false}
+            />
 
-          {!userProfile.is_private ||
-          user?.user_metadata.username === username ? (
-            <WatchlistItems username={userProfile.username} />
-          ) : (
-            <>
-              {userProfile.is_private
-                ? `${username}'s profile is private`
-                : "User not found"}
-            </>
-          )}
-        </>
-      ) : null}
+            {!userProfile.is_private ||
+            user?.user_metadata.username === username ? (
+              <WatchlistItems username={userProfile.username} />
+            ) : (
+              <>
+                {userProfile.is_private
+                  ? `${username}'s profile is private`
+                  : "User not found"}
+              </>
+            )}
+          </>
+        ) : null}
+      </Suspense>
     </section>
   );
 };

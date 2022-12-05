@@ -1,11 +1,11 @@
 import Rating from "@components/common/util/Rating";
 import { BLUR_DATA, IMAGE_URL } from "@lib/constants/config";
-import { TrendingMovie } from "@lib/types/movies";
+import { IQueryResult } from "@lib/types/movies";
 import Image from "next/image";
 import Link from "next/link";
 
 type CarouselSlideProps = {
-  movie: TrendingMovie;
+  movie: IQueryResult;
   media: "tv" | "movie";
 };
 const CarouselSlide: React.FC<CarouselSlideProps> = ({ movie, media }) => {
