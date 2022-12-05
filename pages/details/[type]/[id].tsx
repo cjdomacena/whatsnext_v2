@@ -65,6 +65,8 @@ const DetailsPage = (
     }
   );
 
+  const enabled = details ? true : false;
+
   return (
     <div className="container mx-auto my-12 space-y-12 p-4">
       <Suspense fallback={<div>Loading...</div>}>
@@ -153,10 +155,10 @@ const DetailsPage = (
         </div>
       </Suspense>
       <div className="p-4 w-full">
-        <Similar />
+        <Similar enable={enabled} />
       </div>
       <div className="p-4 w-full">
-        <Recommended />
+        <Recommended enable={enabled} />
       </div>
     </div>
   );

@@ -4,13 +4,13 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { Carousel } from "../home";
 
-const Similar = () => {
+const Similar = ({ enable }: { enable: boolean }) => {
   const router = useRouter();
   const { type, id } = router.query;
   const { data, status } = useQuery(
     ["similar", type, id],
     () => getSimilar(type as any, id as string),
-    { enabled: !!router.isReady, ...QUERY_CONFIG }
+    { enabled: enable, ...QUERY_CONFIG }
   );
   if (status === "error") {
     return <div>Something went wrong..</div>;

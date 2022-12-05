@@ -20,11 +20,17 @@ const Home: NextPage = () => {
   const { data: trendingTV, isLoading: loadingTV } = useQuery<
     QueryResult<IQueryResult>,
     Error
-  >(["trending", "tv"], getTrendingTV, { ...QUERY_CONFIG });
+  >(["trending", "tv"], getTrendingTV, {
+    enabled: !!trendingMovie,
+    ...QUERY_CONFIG,
+  });
   const { data: popularMovie, isLoading: loadingPopular } = useQuery<
     QueryResult<IQueryResult>,
     Error
-  >(["popular", "movie"], getPopularMovie, { ...QUERY_CONFIG });
+  >(["popular", "movie"], getPopularMovie, {
+    enabled: !!trendingTV,
+    ...QUERY_CONFIG,
+  });
 
   return (
     <section className="h-auto my-8 container mx-auto space-y-12 p-4">
