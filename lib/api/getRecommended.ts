@@ -1,4 +1,5 @@
 import { BASE_URL } from "@lib/constants/config";
+import * as Sentry from "@sentry/nextjs";
 
 export const getRecommended = async (
   media: "tv" | "movie",
@@ -23,6 +24,7 @@ export const getRecommended = async (
 
     return res;
   } catch (e) {
+    Sentry.captureException(e);
     console.log(e);
   }
 };

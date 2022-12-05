@@ -1,5 +1,4 @@
 import { ReviewForm, ReviewContainer } from "@components/common/review";
-
 import Rating from "@components/common/util/Rating";
 import MetaHeader from "@components/MetaHeader";
 import {
@@ -8,9 +7,9 @@ import {
   Poster,
   CreditTabs,
   AddToWatchList,
+  Recommended,
+  Similar,
 } from "@components/ui/detail";
-import Recommended from "@components/ui/detail/Recommended";
-import Similar from "@components/ui/detail/Similar";
 import { getDetails } from "@lib/api/getDetails";
 import { getWatchListItem } from "@lib/api/getWatchlist";
 import { QUERY_CONFIG } from "@lib/constants/config";
