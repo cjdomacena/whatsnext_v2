@@ -1,13 +1,13 @@
-import { ReviewThread } from "@lib/types/common";
 import { formatDate, getNumSentences } from "@lib/utils";
 import { MdVerified } from "react-icons/md";
 import { AiFillPushpin } from "react-icons/ai";
 import Avatar from "../avatar";
 import { useState } from "react";
 import { Tooltip } from "../util";
+import { IReview } from "@lib/types/supabase/database";
 
 type ReviewProps = {
-  review: ReviewThread;
+  review: IReview;
 };
 
 const Review: React.FC<ReviewProps> = ({ review }) => {

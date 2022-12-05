@@ -7,7 +7,7 @@ import {
   SpokenLanguage,
 } from "./common";
 
-export interface TrendingMovie {
+export interface IQueryResult {
   adult: boolean;
   backdrop_path: string;
   id: number;

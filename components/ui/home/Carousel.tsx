@@ -1,9 +1,9 @@
-import { TrendingMovie } from "@lib/types/movies";
+import { IQueryResult } from "@lib/types/movies";
 import CarouselSlide from "./CarouselSlide";
 import { useKeenSlider } from "keen-slider/react";
 import { motion } from "framer-motion";
 type CarouselProps = {
-  data: TrendingMovie[];
+  data: IQueryResult[];
   media: "tv" | "movie";
 };
 const Carousel: React.FC<CarouselProps> = ({ data, media }) => {

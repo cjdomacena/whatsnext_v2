@@ -3,6 +3,7 @@ import { UserProfile, WatchlistItems } from "@components/ui/watchlist";
 import { getProfile } from "@lib/api/getProfile";
 import { getWatchList } from "@lib/api/getWatchlist";
 import { QUERY_CONFIG } from "@lib/constants/config";
+import { IProfile } from "@lib/types/supabase/database";
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
@@ -32,7 +33,7 @@ const WatchList = () => {
   const user = useUser();
   const { username } = router.query;
 
-  const { data: userProfile, error } = useQuery(
+  const { data: userProfile, error } = useQuery<IProfile>(
     ["profile", username],
     () => getProfile(username as string, supabase),
     { enabled: !!username || !!user, ...QUERY_CONFIG }
@@ -53,7 +54,7 @@ const WatchList = () => {
         <>
           <UserProfile
             userProfile={userProfile}
-            withShareUrl={userProfile.id === user?.id}
+            withShareUrl={user ? userProfile.id === user.id : false}
           />
 
           {!userProfile.is_private ||

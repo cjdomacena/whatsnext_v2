@@ -1,5 +1,6 @@
 import { getWatchList } from "@lib/api/getWatchlist";
 import { QUERY_CONFIG } from "@lib/constants/config";
+import { IWatchlist } from "@lib/types/supabase/database";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Suspense } from "react";
@@ -36,7 +37,7 @@ const WatchlistItems = ({ username }: { username: string }) => {
   return (
     <Suspense fallback={<p>Loading...</p>}>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] h-auto gap-4 my-4 flex-grow">
-        {data?.map((title) => (
+        {data?.map((title: IWatchlist) => (
           <Poster
             key={title.id}
             poster_path={title.poster_path}

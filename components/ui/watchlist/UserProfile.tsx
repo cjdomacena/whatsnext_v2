@@ -1,13 +1,9 @@
 import Avatar from "@components/common/avatar";
+import { IProfile } from "@lib/types/supabase/database";
 import ClipboardButton from "./ClipboardButton";
 
 type UserProfileProps = {
-  userProfile: {
-    full_name: string;
-    is_subscribed: boolean;
-    username: string;
-    id: string;
-  };
+  userProfile: IProfile;
   withShareUrl?: boolean;
 };
 
