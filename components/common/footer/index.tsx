@@ -84,7 +84,7 @@ const Footer = () => {
                     alt="TMDB Logo"
                     width="80"
                     height="80"
-                    className="mt-2"
+                    className="mt-2 w-auto h-auto"
                   />
                 </a>
               </div>
