@@ -28,28 +28,29 @@ export default function App({ Component, pageProps, ...appProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
 
   useEffect(() => {
-    const routeEventStart = (url: string) => {
-      console.log(url);
-      if (url.includes("/details")) {
-        toast.loading("Loading...", {
-          position: "top-right",
-        });
-      }
-    };
-    const routeEventEnd = (url: string) => {
-      if (url.includes("/details")) {
-        toast.dismiss();
-      }
-    };
+    if (Router && Router !== undefined) {
+      const routeEventStart = (url: string | undefined | null) => {
+        if (url && url.includes("/details")) {
+          toast.loading("Loading...", {
+            position: "top-right",
+          });
+        }
+      };
+      const routeEventEnd = (url: string | undefined | null) => {
+        if (url && url.includes("/details")) {
+          toast.dismiss();
+        }
+      };
 
-    Router.events.on("routeChangeStart", routeEventStart);
-    Router.events.on("routeChangeComplete", routeEventEnd);
-    Router.events.on("routeChangeError", routeEventEnd);
-    return () => {
-      Router.events.off("routeChangeStart", routeEventStart);
-      Router.events.off("routeChangeComplete", routeEventEnd);
-      Router.events.off("routeChangeError", routeEventEnd);
-    };
+      Router.events.on("routeChangeStart", routeEventStart);
+      Router.events.on("routeChangeComplete", routeEventEnd);
+      Router.events.on("routeChangeError", routeEventEnd);
+      return () => {
+        Router.events.off("routeChangeStart", routeEventStart);
+        Router.events.off("routeChangeComplete", routeEventEnd);
+        Router.events.off("routeChangeError", routeEventEnd);
+      };
+    }
   }, []);
   return (
     <main className="min-w-screen transition-colors overflow-x-hidden">

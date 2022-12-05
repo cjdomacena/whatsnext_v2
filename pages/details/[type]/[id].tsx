@@ -61,7 +61,6 @@ const DetailsPage = (
     [query.type, query.id],
     () => getDetails(query.id as string, query.type),
     {
-      enabled: !!router.isReady,
       ...QUERY_CONFIG,
     }
   );
