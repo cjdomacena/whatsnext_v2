@@ -16,7 +16,7 @@ const Login: NextPage = () => {
   const router = useRouter();
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { email, password, fullName }: any = e.target.elements;
+    const { email, password }: any = e.target.elements;
 
     const data: SignInWithPasswordCredentials = {
       email: email.value,

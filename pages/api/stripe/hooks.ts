@@ -24,12 +24,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   );
   switch (event?.type) {
     case "customer.subscription.created":
-      const { error } = await supabase
+      await supabase
         .from("profiles")
         .update({ is_subscribed: true })
         //@ts-ignore
         .eq("stripe_id", event.data.object.customer);
-      console.log(error);
       break;
 
     case "customer.subscription.deleted":

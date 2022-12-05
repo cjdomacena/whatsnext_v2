@@ -1,5 +1,4 @@
 import * as Tooltip from "@radix-ui/react-tooltip";
-
 type TooltipProps = {
   trigger: JSX.Element | JSX.Element[];
   portal: JSX.Element | JSX.Element[];

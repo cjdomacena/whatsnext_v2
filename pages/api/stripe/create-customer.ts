@@ -17,6 +17,7 @@ export default async function handler(
       apiVersion: "2022-11-15",
     });
     const { data } = await stripe.customers.search({
+      // eslint-disable-next-line no-useless-escape
       query: `email:\'xjohnx@testing.com\'`,
     });
     if (data.length === 0) {

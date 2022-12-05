@@ -41,10 +41,10 @@ const CreditTabs = ({ cast, crew }: CreditTabsProps) => {
       >
         <div className="grid grid-cols-1 p-4 gap-4 items-start justify-center relative">
           {cast.length > 0
-            ? cast.map((castUser: any, index: number) => (
+            ? cast.map((castUser: any) => (
                 <div
                   className=" flex gap-4 items-center z-10"
-                  key={`cast-${index}`}
+                  key={`cast-${castUser.id}`}
                 >
                   <Avatar
                     name={castUser.original_name ?? ""}
@@ -67,7 +67,7 @@ const CreditTabs = ({ cast, crew }: CreditTabsProps) => {
       >
         <div className="grid grid-cols-1 p-4 gap-4 items-start justify-center relative">
           {crew.length > 0
-            ? crew.map((crewUser: any, index: number) => (
+            ? crew.map((crewUser: any) => (
                 <div
                   className=" flex gap-4 items-center z-10"
                   key={`cast-${crewUser.id}`}

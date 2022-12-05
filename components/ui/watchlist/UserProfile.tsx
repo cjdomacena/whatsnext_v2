@@ -1,5 +1,4 @@
 import Avatar from "@components/common/avatar";
-import { useUser } from "@supabase/auth-helpers-react";
 import ClipboardButton from "./ClipboardButton";
 
 type UserProfileProps = {
@@ -16,7 +15,6 @@ const UserProfile = ({
   userProfile,
   withShareUrl = true,
 }: UserProfileProps) => {
-  const user = useUser();
   return (
     <div className="space-y-2 2xl:w-52 xl:w-52 lg:w-52 w-full">
       <div className="flex gap-2 p-2 ">

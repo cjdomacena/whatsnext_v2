@@ -5,8 +5,7 @@ import { ThemeToggle } from "../button/ThemeToggle";
 import { Logo } from "../util";
 import UserNav from "./userNav";
 
-type NavbarProps = {};
-const Navbar: FC<NavbarProps> = ({}) => {
+const Navbar: FC = () => {
   const user = useUser();
   return (
     <nav className="p-4 rounded ">

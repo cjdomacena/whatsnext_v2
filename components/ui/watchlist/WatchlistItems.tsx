@@ -10,7 +10,7 @@ const WatchlistItems = ({ username }: { username: string }) => {
   const supabase = useSupabaseClient();
   const queryClient = useQueryClient();
   const user = useUser();
-  const { data, error } = useQuery(
+  const { data } = useQuery(
     ["watchlist", username as string],
     () => getWatchList(username as string, supabase),
     {

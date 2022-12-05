@@ -10,8 +10,8 @@ export const getRecommended = async (
       `${BASE_URL}/api/list/${media}/recommended?id=${id}`
     );
     const res = await req.json();
-
-    if (res.hasOwnProperty("error")) {
+    const hasError = Object.prototype.hasOwnProperty.call(res, "error");
+    if (hasError) {
       throw new Error(res.error);
     }
     // Rename object key for tv

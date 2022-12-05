@@ -11,7 +11,9 @@ export default async function handler(
       `${process.env.TMDB_URL}/${type}/${id}?api_key=${process.env.TMDB_API_KEY}&append_to_response=credits`
     );
     const results = await data.json();
-    if (results.hasOwnProperty("success") && !results.success) {
+    const hasError = Object.prototype.hasOwnProperty.call(results, "success");
+
+    if (hasError && !results.success) {
       throw new Error(results.status_message);
     }
     return res.status(200).json(results);

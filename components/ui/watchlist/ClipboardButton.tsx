@@ -1,11 +1,8 @@
 import { BASE_URL } from "@lib/constants/config";
-import { useRef } from "react";
 import toast from "react-hot-toast";
 import { IoCopyOutline } from "react-icons/io5";
 
 const ClipboardButton = ({ username }: { username: string }) => {
-  const ref = useRef<HTMLParagraphElement>(null);
-
   const handleCopy = () => {
     navigator.clipboard.writeText(`${BASE_URL}/user/${username}/watchlist`);
     toast.success("Succefully copied to clipboard");

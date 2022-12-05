@@ -4,8 +4,8 @@ export const getPopularMovie = async () => {
   try {
     const req = await fetch(`${BASE_URL}/api/list/movie/popular`);
     const res = await req.json();
-
-    if (res.hasOwnProperty("error")) {
+    const hasError = Object.prototype.hasOwnProperty.call(res, "error");
+    if (hasError) {
       throw new Error(res.error);
     }
 

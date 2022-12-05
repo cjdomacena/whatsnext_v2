@@ -15,7 +15,7 @@ const Profile = () => {
   const supabase = useSupabaseClient();
   const queryClient = useQueryClient();
   const { username } = router.query;
-  const { data: userProfile, error } = useQuery(
+  const { data: userProfile } = useQuery(
     ["profile", username],
     () => getProfile(username as string, supabase),
     {

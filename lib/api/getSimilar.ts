@@ -7,8 +7,8 @@ export const getSimilar = async (
   try {
     const req = await fetch(`${BASE_URL}/api/list/${media}/similar?id=${id}`);
     const res = await req.json();
-
-    if (res.hasOwnProperty("error")) {
+    const hasError = Object.prototype.hasOwnProperty.call(res, "error");
+    if (hasError) {
       throw new Error(res.error);
     }
     // Rename object key for tv

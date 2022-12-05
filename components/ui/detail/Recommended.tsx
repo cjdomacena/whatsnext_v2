@@ -8,7 +8,7 @@ const Recommended = () => {
   const router = useRouter();
   const { type, id } = router.query;
 
-  const { data, status, error } = useQuery(
+  const { data, status } = useQuery(
     ["recommendations", type, id],
     () => getRecommended(type as any, id as string),
     { ...QUERY_CONFIG }

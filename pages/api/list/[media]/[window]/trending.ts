@@ -13,7 +13,9 @@ export default async function handler(
     );
 
     const results = await data.json();
-    if (results.hasOwnProperty("success") && !results.success) {
+    const hasError = Object.prototype.hasOwnProperty.call(results, "success");
+
+    if (hasError && !results.success) {
       throw new Error(results.status_message);
     }
     return res.status(200).json(results);
