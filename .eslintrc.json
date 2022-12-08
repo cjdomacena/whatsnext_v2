@@ -6,6 +6,7 @@
   },
   "rules": {
     "no-unused-vars": [1, {"args": "after-used", "argsIgnorePattern": "^_"}],
-    "no-useless-escape":"warn"
+    "no-useless-escape":"warn",
+    "@next/next/no-img-element": "off"
   }
 }

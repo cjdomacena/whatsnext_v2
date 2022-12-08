@@ -10,7 +10,7 @@ const moduleExports = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ["image.tmdb.org"],
+    domains: ["image.tmdb.org", "www.themoviedb.org"],
   },
   sentry: {
     // Use `hidden-source-map` rather than `source-map` as the Webpack `devtool`
