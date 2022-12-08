@@ -1,20 +1,33 @@
 import { MOVIE_GENRES, TV_GENRES } from "@lib/constants/genres";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
+import { useRouter } from "next/router";
+import { IoCaretDownOutline } from "react-icons/io5";
 import NavLink from "./NavLink";
 
 const NavExpanded = () => {
+  const router = useRouter();
+
   return (
     <NavigationMenu.Root
       className="relative transition-all text-xs 2xl:block xl:block hidden z-50"
       orientation="horizontal"
     >
       <NavigationMenu.List className="flex items-center gap-2">
-        <NavigationMenu.Item className="text-xs uppercase">
+        {/* <NavigationMenu.Item className="text-xs uppercase">
           <NavLink href="/browse/discover/">Discover</NavLink>
-        </NavigationMenu.Item>
+        </NavigationMenu.Item> */}
         <NavigationMenu.Item className="relative">
           <NavigationMenu.Trigger className="uppercase">
-            <NavLink href="/browse/movies/">Movies</NavLink>
+            <p
+              className={`px-3 py-2 uppercase ${
+                router.asPath.includes("/browse/movie")
+                  ? "  dark:hover:bg-neutral-700/20 px-3 py-2 rounded dark:bg-white/10 bg-neutral-200"
+                  : "dark:text-neutral-300 text-neutral-500  hover:bg-neutral-700 hover:text-neutral-100 px-3 py-2 rounded"
+              } transition-colors flex items-center gap-2`}
+            >
+              Movies
+              <IoCaretDownOutline />
+            </p>
           </NavigationMenu.Trigger>
           <NavigationMenu.Content
             className="NavigationMenuContent 
@@ -51,12 +64,7 @@ const NavExpanded = () => {
                 <ul className="text-xs dark:text-neutral-300  whitespace-nowrap grid grid-flow-col grid-rows-4 ">
                   {MOVIE_GENRES.map((genre) => (
                     <li key={genre.id}>
-                      <NavLink
-                        href={`/browse/movie/${genre.name
-                          .split(" ")
-                          .join("-")
-                          .toLowerCase()}`}
-                      >
+                      <NavLink href={`/browse/movie/genre/${genre.id}`}>
                         {genre.name}
                       </NavLink>
                     </li>
@@ -70,7 +78,16 @@ const NavExpanded = () => {
 
         <NavigationMenu.Item className="relative">
           <NavigationMenu.Trigger className="uppercase">
-            <NavLink href="/browse/tv">TV Shows</NavLink>
+            <p
+              className={`px-3 py-2 uppercase ${
+                router.asPath.includes("/browse/tv")
+                  ? "  dark:hover:bg-neutral-700/20 px-3 py-2 rounded dark:bg-white/10 bg-neutral-200"
+                  : "dark:text-neutral-300 text-neutral-500  hover:bg-neutral-700 hover:text-neutral-100 px-3 py-2 rounded"
+              } transition-colors flex items-center gap-2`}
+            >
+              TV Shows
+              <IoCaretDownOutline />
+            </p>
           </NavigationMenu.Trigger>
           <NavigationMenu.Content
             className="NavigationMenuContent 
@@ -103,12 +120,7 @@ const NavExpanded = () => {
                 <ul className="text-xs dark:text-neutral-300  whitespace-nowrap grid grid-flow-col grid-rows-4 ">
                   {TV_GENRES.map((genre) => (
                     <li key={genre.id}>
-                      <NavLink
-                        href={`/browse/tv/${genre.name
-                          .split(" ")
-                          .join("-")
-                          .toLowerCase()}`}
-                      >
+                      <NavLink href={`/browse/tv/${genre.id}`}>
                         {genre.name}
                       </NavLink>
                     </li>

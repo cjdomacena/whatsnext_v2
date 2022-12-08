@@ -34,3 +34,12 @@ export const getDuration = (duration: number) => {
 export const getCompactNumberFormat = (num: number) => {
   return new Intl.NumberFormat("en-US", { notation: "compact" }).format(num);
 };
+
+export const getGenreName = (
+  id: number,
+  list: { id: number; name: string }[]
+) => {
+  const genre = list.filter(({ id, name }) => id === id);
+
+  return genre[0] ?? null;
+};
