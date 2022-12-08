@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FC } from "react";
 import { ThemeToggle } from "../button/ThemeToggle";
 import { Logo } from "../util";
+import NavExpanded from "./pills/Expanded";
 import UserNav from "./userNav";
 
 const Navbar: FC = () => {
@@ -10,9 +11,12 @@ const Navbar: FC = () => {
   return (
     <nav className="p-4 rounded ">
       <div className=" flex justify-between items-center">
-        <Link href="/">
-          <Logo />
-        </Link>
+        <div className="flex gap-4 items-center">
+          <Link href="/">
+            <Logo />
+          </Link>
+          <NavExpanded />
+        </div>
         <div className="flex gap-4 text-xs items-center">
           {user ? (
             <UserNav user={user} />
