@@ -22,6 +22,7 @@ import "keen-slider/keen-slider.min.css";
 import toast, { Toaster } from "react-hot-toast";
 import Footer from "@components/common/footer";
 import { Router } from "next/router";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 export default function App({ Component, pageProps, ...appProps }: AppProps) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
@@ -68,7 +69,7 @@ export default function App({ Component, pageProps, ...appProps }: AppProps) {
               <Navbar />
             )}
 
-            {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+            <ReactQueryDevtools initialIsOpen={false} />
 
             <Component {...pageProps} />
             {appProps.router.pathname.split("/").includes("auth") ? null : (

@@ -13,9 +13,6 @@ const NavExpanded = () => {
       orientation="horizontal"
     >
       <NavigationMenu.List className="flex items-center gap-2">
-        {/* <NavigationMenu.Item className="text-xs uppercase">
-          <NavLink href="/browse/discover/">Discover</NavLink>
-        </NavigationMenu.Item> */}
         <NavigationMenu.Item className="relative">
           <NavigationMenu.Trigger className="uppercase">
             <p
@@ -31,13 +28,13 @@ const NavExpanded = () => {
           </NavigationMenu.Trigger>
           <NavigationMenu.Content
             className="NavigationMenuContent 
-          absolute top-12 left-0 dark:bg-neutral-800 bg-neutral-100 w-auto rounded flex gap-1 items-center h-auto p-3"
+          absolute top-12 left-0 dark:bg-neutral-800 bg-neutral-100 w-auto rounded  gap-1 items-center h-auto px-2 pt-6 pb-4"
           >
-            <div className="relative flex gap-8 items-center">
+            <div className="relative space-y-2">
               <div className="h-full">
                 <div className=" whitespace-nowrap dark:text-neutral-300 text-neutral-500 ">
                   <h4 className="text-sm dark:text-neutral-400 px-3">Movies</h4>
-                  <ul className="mt-3">
+                  <ul className="flex p-2">
                     <li>
                       <NavLink href={`/browse/movie/popular`}>Popular</NavLink>
                     </li>
@@ -59,9 +56,9 @@ const NavExpanded = () => {
                   </ul>
                 </div>
               </div>
-              <div className="px-4 border-l dark:border-l-neutral-700/40">
-                <h4 className="p-3 text-sm dark:text-neutral-400">Genres</h4>
-                <ul className="text-xs dark:text-neutral-300  whitespace-nowrap grid grid-flow-col grid-rows-4 ">
+              <div className="">
+                <h4 className="px-3 text-sm dark:text-neutral-400">Genres</h4>
+                <ul className="text-xs dark:text-neutral-300  whitespace-nowrap grid grid-flow-col grid-rows-4 gap-1 p-2">
                   {MOVIE_GENRES.map((genre) => (
                     <li key={genre.id}>
                       <NavLink href={`/browse/movie/genre/${genre.id}`}>
@@ -91,15 +88,15 @@ const NavExpanded = () => {
           </NavigationMenu.Trigger>
           <NavigationMenu.Content
             className="NavigationMenuContent 
-          absolute top-12 left-0 dark:bg-neutral-800 bg-neutral-100 w-auto h-auto rounded flex gap-4 p-3"
+            absolute top-12 left-0 dark:bg-neutral-800 bg-neutral-100 w-auto rounded px-2 pt-6 pb-4"
           >
-            <div className=" relative flex gap-8 items-center">
-              <div className="h-full ">
+            <div className="relative space-y-2">
+              <div className="h-full">
                 <div className=" whitespace-nowrap dark:text-neutral-300 text-neutral-500 ">
-                  <h4 className="text-sm dark:text-neutral-400 p-3">
+                  <h4 className="text-sm dark:text-neutral-400 px-3">
                     TV Shows
                   </h4>
-                  <ul>
+                  <ul className="flex p-2">
                     <li>
                       <NavLink href={`/browse/tv/popular`}>Popular</NavLink>
                     </li>
@@ -115,12 +112,12 @@ const NavExpanded = () => {
                   </ul>
                 </div>
               </div>
-              <div className="px-4 border-l dark:border-l-neutral-700/40">
-                <h4 className="p-3 text-sm dark:text-neutral-400">Genres</h4>
-                <ul className="text-xs dark:text-neutral-300  whitespace-nowrap grid grid-flow-col grid-rows-4 ">
+              <div className="">
+                <h4 className="px-3 text-sm dark:text-neutral-400">Genres</h4>
+                <ul className="text-xs dark:text-neutral-300  whitespace-nowrap grid grid-flow-col grid-rows-4 gap-1 p-2">
                   {TV_GENRES.map((genre) => (
                     <li key={genre.id}>
-                      <NavLink href={`/browse/tv/${genre.id}`}>
+                      <NavLink href={`/browse/tv/genre/${genre.id}`}>
                         {genre.name}
                       </NavLink>
                     </li>

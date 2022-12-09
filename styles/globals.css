@@ -124,21 +124,3 @@ body {
     transform: translateX(-200px);
   }
 }
-
-@layer base {
-  /* ::-webkit-scrollbar {
-    height: 5px;
-    width: 6px;
-    background: transparent;
-    -webkit-border-radius: 1ex;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #262626;
-    -webkit-border-radius: 1ex;
-  }
-
-  ::-webkit-scrollbar-corner {
-    background: #fff3;
-  } */
-}

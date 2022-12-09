@@ -4,7 +4,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { media, id } = req.query;
+  const { media, id, page } = req.query;
   const hasWatchProviderFilter = Object.prototype.hasOwnProperty.call(
     req.query,
     "providers"
@@ -15,7 +15,11 @@ export default async function handler(
 
   try {
     const data = await fetch(
-      `${process.env.TMDB_URL}/discover/${media}?api_key=${process.env.TMDB_API_KEY}&with_genre=${id}&sort_by=popularity.desc${watchRegionFilter}`
+      `${process.env.TMDB_URL}/discover/${media}?api_key=${
+        process.env.TMDB_API_KEY
+      }&with_genres=${id}&sort_by=popularity.desc${watchRegionFilter}&page=${
+        page ?? 1
+      }`
     );
 
     const results = await data.json();

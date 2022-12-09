@@ -85,6 +85,7 @@ const Footer = () => {
                     width="80"
                     height="80"
                     className="mt-2 w-auto h-auto"
+                    loading="lazy"
                   />
                 </a>
               </div>
