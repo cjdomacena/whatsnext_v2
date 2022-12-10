@@ -70,7 +70,7 @@ const SearchPage = () => {
                   <div className=" flex items-center gap-1">
                     <button
                       type="button"
-                      className="text-sm px-2 py-1 dark:bg-neutral-800 my-2 rounded font-medium dark:text-neutral-300 flex items-center gap-1 whitespace-nowrap bg-neutral-200 dark:hover:bg-neutral-700 hover:bg-neutral-300"
+                      className="text-sm px-2 py-1 dark:bg-neutral-800 my-2 rounded dark:text-neutral-300 flex items-center gap-1 whitespace-nowrap bg-neutral-200 dark:hover:bg-neutral-700 hover:bg-neutral-300"
                       onClick={() => {
                         setIsAdult((prev) => !prev);
                         if (query.length > 2) {
@@ -79,13 +79,13 @@ const SearchPage = () => {
                       }}
                     >
                       <p className="">
-                        NSFW:{" "}
+                        nswf:{" "}
                         <span
                           className={
                             isAdult ? "text-green-500" : "text-red-500"
                           }
                         >
-                          {isAdult ? "ON" : "OFF"}
+                          {isAdult ? "on" : "off"}
                         </span>
                       </p>
                     </button>
@@ -130,12 +130,6 @@ const SearchPage = () => {
             : null}
         </GridContainer>
         <div className="grid place-items-center my-12">
-          {/* <button
-            disabled={isFetching || !hasNextPage}
-            className="px-3 py-2 dark:bg-neutral-800 rounded bg-neutral-100 text-xs"
-          >
-            {hasNextPage ? "Load More" : "Load More"}
-          </button> */}
           {data && data.pages[0].results.length > 0 ? (
             <button
               disabled={isFetching || !hasNextPage}

@@ -34,7 +34,7 @@ const UserNav = ({ user }: { user: User }) => {
               <h4 className="text-xs">{user.user_metadata.full_name}</h4>
               <div className="border-r dark:border-neutral-700 border-neutral-300 py-2 " />
               <span className="text-xs capitalize  text-green-500 py-1 rounded 2xl:block xl:block lg:block md:block hidden">
-                {data && data.is_subscribed ? "Pro" : "Member"}
+                {data && data.is_subscribed ? "Critic" : "Member"}
               </span>
             </div>
             <div className="2xl:hidden xl:hidden lg:hidden md:hidden block">

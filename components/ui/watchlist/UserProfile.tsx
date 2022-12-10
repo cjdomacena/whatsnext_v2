@@ -22,7 +22,7 @@ const UserProfile = ({
               @{userProfile.username}
             </p>
           </div>
-          <p className="text-xs capitalize text-amber-500  rounded w-fit">
+          <p className="text-xs capitalize text-green-500  rounded w-fit">
             {userProfile && userProfile.is_subscribed ? "Critic" : "Member"}
           </p>
           {withShareUrl ? (

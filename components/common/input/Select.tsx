@@ -26,7 +26,7 @@ const SelectRadix = ({
       disabled={isLoading}
     >
       <Select.Trigger
-        className="text-sm flex items-center gap-1 dark:bg-neutral-800 p-1 rounded whitespace-nowrap px-2 min-w-[90px] justify-between bg-neutral-200 font-medium"
+        className="text-sm flex items-center gap-1 dark:bg-neutral-800 p-1 rounded whitespace-nowrap px-2 min-w-[90px] justify-between bg-neutral-200 dark:text-neutral-300"
         aria-label="Filter"
       >
         <Select.Value placeholder="All" />
