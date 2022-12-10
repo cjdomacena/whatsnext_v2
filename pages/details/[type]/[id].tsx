@@ -18,6 +18,7 @@ import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { useUser } from "@supabase/auth-helpers-react";
 import { useQuery } from "@tanstack/react-query";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { Suspense } from "react";
 import { IoConstructOutline } from "react-icons/io5";
@@ -96,10 +97,15 @@ const DetailsPage = (
                             genre: { id: number; name: string },
                             index: number
                           ) => (
-                            <li className="text-sm" key={genre.id}>
-                              {genre.name}
-                              {index < details.genres.length - 1 ? "," : null}
-                            </li>
+                            <Link
+                              href={`/browse/${router.query.type}/genre/${genre.id}`}
+                              key={genre.id}
+                            >
+                              <li className="text-sm hover:underline">
+                                {genre.name}
+                                {index < details.genres.length - 1 ? "," : null}
+                              </li>
+                            </Link>
                           )
                         )
                       : null}

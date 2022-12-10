@@ -39,11 +39,6 @@ const NavExpanded = () => {
                       <NavLink href={`/browse/movie/popular`}>Popular</NavLink>
                     </li>
                     <li>
-                      <NavLink href={`/browse/movie/upcoming`}>
-                        Upcoming
-                      </NavLink>
-                    </li>
-                    <li>
                       <NavLink href={`/browse/movie/trending`}>
                         Trending
                       </NavLink>
@@ -99,9 +94,6 @@ const NavExpanded = () => {
                   <ul className="flex p-2">
                     <li>
                       <NavLink href={`/browse/tv/popular`}>Popular</NavLink>
-                    </li>
-                    <li>
-                      <NavLink href={`/browse/tv/upcoming`}>Upcoming</NavLink>
                     </li>
                     <li>
                       <NavLink href={`/browse/tv/trending`}>Trending</NavLink>

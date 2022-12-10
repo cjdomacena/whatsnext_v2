@@ -6,13 +6,13 @@ import { getTrendingTV } from "@lib/api/tv/getTrendingTV";
 import { QUERY_CONFIG } from "@lib/constants/config";
 import { QueryResult } from "@lib/types/common";
 import { IQueryResult } from "@lib/types/movies";
-
 import { useQuery } from "@tanstack/react-query";
-
 import { NextPage } from "next";
+import { useRouter } from "next/router";
 import { AiOutlineSwapRight } from "react-icons/ai";
 
 const Home: NextPage = () => {
+  const router = useRouter();
   const { data: trendingMovie, isLoading: loadingMovie } = useQuery<
     QueryResult<IQueryResult>,
     Error
@@ -48,7 +48,10 @@ const Home: NextPage = () => {
           <h2 className="font-black text-2xl uppercase dark:text-neutral-300 -tracking-wider">
             Trending Movies
           </h2>
-          <button className="flex items-center gap-1 text-xs opacity-90">
+          <button
+            className="flex items-center gap-1 text-xs opacity-90"
+            onClick={() => router.push("/browse/movie/trending")}
+          >
             MORE <AiOutlineSwapRight className="w-4 h-4" />
           </button>
         </div>
@@ -65,7 +68,10 @@ const Home: NextPage = () => {
           <h2 className="font-black text-2xl uppercase dark:text-neutral-300 -tracking-wider">
             Trending TV
           </h2>
-          <button className="flex items-center gap-1 text-xs opacity-90">
+          <button
+            className="flex items-center gap-1 text-xs opacity-90"
+            onClick={() => router.push("/browse/tv/trending")}
+          >
             MORE <AiOutlineSwapRight className="w-4 h-4" />
           </button>
         </div>
@@ -79,7 +85,10 @@ const Home: NextPage = () => {
           <h2 className="font-black text-2xl uppercase dark:text-neutral-300 -tracking-wider">
             Popular Movies Today
           </h2>
-          <button className="flex items-center gap-1 text-xs opacity-90">
+          <button
+            className="flex items-center gap-1 text-xs opacity-90"
+            onClick={() => router.push("/browse/movie/popular")}
+          >
             MORE <AiOutlineSwapRight className="w-4 h-4" />
           </button>
         </div>

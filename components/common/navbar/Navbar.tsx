@@ -22,9 +22,9 @@ const Navbar: FC = () => {
           <div className="dark:bg-neutral-800 rounded">
             <Link
               href={"/browse/search"}
-              className="flex gap-1 items-center px-2 py-2"
+              className="flex gap-1 items-center px-2 py-2 ring-1 dark:ring-neutral-800 rounded ring-neutral-200"
             >
-              <IoSearchOutline className="w-5 h-5" />
+              <IoSearchOutline className="w-4 h-4" />
               Search
             </Link>
           </div>
