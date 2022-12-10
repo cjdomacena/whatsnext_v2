@@ -1,5 +1,6 @@
 import { Search } from "@components/common/input";
 import SelectRadix from "@components/common/input/Select";
+import MetaHeader from "@components/MetaHeader";
 import GridCell from "@components/ui/browse/GridCell";
 import GridCellLoader from "@components/ui/browse/GridCellLoader";
 import GridContainer from "@components/ui/browse/GridContainer";
@@ -31,9 +32,9 @@ const SearchPage = () => {
         ...QUERY_CONFIG,
       }
     );
-  console.log(data);
   return (
     <div className="container mx-auto my-12 min-h-[80vh] p-4">
+      <MetaHeader title={"Whatsnext — Search"} />
       <div className="flex items-center flex-wrap">
         <TitleHeader name={"Search"} media={""} />
         <div className=" flex-grow w-full flex gap-2 my-4">
@@ -122,6 +123,7 @@ const SearchPage = () => {
                     ratings={res.media_type === "person" ? 0 : res.vote_average}
                     media={res.media_type}
                     id={res.id}
+                    withMedia={true}
                   />
                 ))
               )

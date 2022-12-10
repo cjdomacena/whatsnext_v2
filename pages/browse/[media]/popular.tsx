@@ -1,3 +1,4 @@
+import MetaHeader from "@components/MetaHeader";
 import GridCell from "@components/ui/browse/GridCell";
 import GridCellLoader from "@components/ui/browse/GridCellLoader";
 import GridContainer from "@components/ui/browse/GridContainer";
@@ -37,6 +38,7 @@ const Popular = () => {
 
   return (
     <div className="container mx-auto my-12 min-h-[80vh] p-4">
+      <MetaHeader title={"Whatsnext — Popular"} />
       <div className="flex items-center justify-between">
         <TitleHeader name={"Popular"} media={router.query.media as string} />
       </div>

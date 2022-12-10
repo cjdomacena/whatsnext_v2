@@ -8,6 +8,7 @@ type GridCellProps = {
   ratings: number;
   media: string;
   id: string | number;
+  withMedia?: boolean;
 };
 
 const GridCell = ({
@@ -16,11 +17,12 @@ const GridCell = ({
   ratings,
   media,
   id,
+  withMedia = false,
 }: GridCellProps) => {
   return (
-    <div className=" space-y-2 w-fit mx-auto">
-      <div className="w-full min-h-[350px] rounded relative flex">
-        <Link href={`/details/${media}/${id}`}>
+    <div className=" space-y-2 w-full mx-auto">
+      <Link href={`/details/${media}/${id}`}>
+        <div className="w-full h-full max-h-[350px] rounded relative flex overflow-hidden group cursor-pointer">
           <img
             src={
               poster_path
@@ -30,11 +32,14 @@ const GridCell = ({
             alt={title}
             className="2xl:object-cover xl:object-cover lg:object-cover md:object-cover object-contain 
             2xl:w-full xl:w-full lg:w-full md:w-full sm:w-full max-w-[320px]
+            group-hover:scale-110 transition-transform h-full
             "
             loading="eager"
           />
-        </Link>
-      </div>
+
+          <div className="h-full w-full bg-neutral-900/40  z-10 absolute top-0 left-0 rounded group-hover:bg-neutral-900/10 transition-colors " />
+        </div>
+      </Link>
 
       <div className="2xl:w-full xl:w-full lg:w-full md:w-full max-w-[320px]">
         {media !== "person" ? (
@@ -47,7 +52,7 @@ const GridCell = ({
           <Link href={`/details/${media}/${id}`}>
             <h4 className=" -tracking-wider font-medium w-fit">{title}</h4>
           </Link>
-          <p className="text-xs uppercase">{media}</p>
+          {withMedia ? <p className="text-xs uppercase">{media}</p> : null}
         </div>
       </div>
     </div>

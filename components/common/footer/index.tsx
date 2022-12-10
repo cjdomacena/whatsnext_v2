@@ -5,7 +5,62 @@ import {
   IoLogoInstagram,
   IoLogoTwitter,
 } from "react-icons/io5";
+import { ThemeToggle } from "../button/ThemeToggle";
 import { Logo } from "../util";
+
+const items = [
+  {
+    title: "Website",
+    links: [
+      {
+        text: "Home",
+        href: "/",
+      },
+      {
+        text: "Login",
+        href: "/auth/login",
+      },
+      {
+        text: "Register",
+        href: "/auth/register",
+      },
+    ],
+  },
+  {
+    title: "Quick Links",
+    links: [
+      {
+        text: "Trending Movies",
+        href: "/browse/movie/trending",
+      },
+      {
+        text: "Trending TV",
+        href: "/browse/tv/trending",
+      },
+      {
+        text: "Popular Movies",
+        href: "/browse/movie/popular",
+      },
+      {
+        text: "Popular TV",
+        href: "/browse/tv/popular",
+      },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      {
+        text: "Privacy",
+        href: "/privacy",
+      },
+      {
+        text: "Terms",
+        href: "/terms",
+      },
+    ],
+  },
+];
 
 const Footer = () => {
   return (
@@ -33,45 +88,13 @@ const Footer = () => {
           </div>
         </div>
         <div className="flex-grow 2xl:w-auto xl:w-auto lg:w-auto md:w-auto w-full grid grid-cols-2 gap-8 md:grid-cols-4">
-          <div className="flex justify-center">
-            <div>
-              <h4 className="font-bold">Website</h4>
-              <ul className="text-sm space-y-2 mt-2 dark:text-neutral-400 font-medium">
-                <li>
-                  <Link href="/">Home</Link>
-                </li>
-                <li>
-                  <Link href="/auth/login">Login</Link>
-                </li>
-                <li>
-                  <Link href="/auth/register">Register</Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="flex justify-center">
-            <div>
-              <h4 className="font-bold">Quick Links</h4>
-              <ul className="text-sm space-y-2 mt-2 dark:text-neutral-400 font-medium">
-                <li>Browse</li>
-                <li>Movies</li>
-                <li>TV</li>
-                <li>People</li>
-              </ul>
-            </div>
-          </div>
-          <div className="flex justify-center">
-            <div>
-              <h4 className="font-bold">Company</h4>
-              <ul className="text-sm space-y-2 mt-2 dark:text-neutral-400 font-medium">
-                <li>Privacy</li>
-                <li>Terms</li>
-                <li>About Us</li>
-                <li>Contact</li>
-              </ul>
-            </div>
-          </div>
+          {items.map((item, index) => (
+            <FooterColumn
+              links={item.links}
+              title={item.title}
+              key={item.title + "-" + index}
+            />
+          ))}
           <div className="flex justify-center">
             <div>
               <h4 className="text-sm dark:text-neutral-400 font-medium">
@@ -93,10 +116,37 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="container mx-auto my-4 text-sm dark:text-neutral-400 font-medium">
+      <div className="container mx-auto my-4 text-sm dark:text-neutral-400 font-medium flex justify-between">
         <p className="px-4">&copy; Whatsnext — 2022.</p>
+        <ThemeToggle />
       </div>
     </footer>
+  );
+};
+
+const FooterColumn = ({
+  links,
+  title,
+}: {
+  links: { text: string; href: string }[];
+  title: string;
+}) => {
+  return (
+    <div className="flex justify-center">
+      <div>
+        <h4 className="font-medium dark:text-neutral-400">{title}</h4>
+        <ul className="text-sm space-y-2 mt-2 dark:text-neutral-500 text-neutral-500 font-medium ">
+          {links.map((link, index) => (
+            <li
+              key={`${link.text}-${index}`}
+              className="dark:hover:text-neutral-300 hover:text-neutral-900 "
+            >
+              <Link href={link.href}>{link.text}</Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 };
 

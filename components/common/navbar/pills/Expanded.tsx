@@ -9,7 +9,7 @@ const NavExpanded = () => {
 
   return (
     <NavigationMenu.Root
-      className="relative transition-all text-xs 2xl:block xl:block hidden z-50"
+      className="relative transition-all text-xs 2xl:block xl:block lg:block md:block hidden z-50"
       orientation="horizontal"
     >
       <NavigationMenu.List className="flex items-center gap-2">
@@ -34,7 +34,7 @@ const NavExpanded = () => {
               <div className="h-full">
                 <div className=" whitespace-nowrap dark:text-neutral-300 text-neutral-500 ">
                   <h4 className="text-sm dark:text-neutral-400 px-3">Movies</h4>
-                  <ul className="flex p-2">
+                  <ul className="flex p-2 gap-4 px-3 text-xs">
                     <li>
                       <NavLink href={`/browse/movie/popular`}>Popular</NavLink>
                     </li>
@@ -51,9 +51,9 @@ const NavExpanded = () => {
                   </ul>
                 </div>
               </div>
-              <div className="">
+              <div className="space-y-2">
                 <h4 className="px-3 text-sm dark:text-neutral-400">Genres</h4>
-                <ul className="text-xs dark:text-neutral-300  whitespace-nowrap grid grid-flow-col grid-rows-4 gap-1 p-2">
+                <ul className="text-xs dark:text-neutral-300  whitespace-nowrap grid grid-flow-col grid-rows-4 gap-2 px-3">
                   {MOVIE_GENRES.map((genre) => (
                     <li key={genre.id}>
                       <NavLink href={`/browse/movie/genre/${genre.id}`}>
@@ -91,7 +91,7 @@ const NavExpanded = () => {
                   <h4 className="text-sm dark:text-neutral-400 px-3">
                     TV Shows
                   </h4>
-                  <ul className="flex p-2">
+                  <ul className="flex p-2 gap-4 px-3 text-xs">
                     <li>
                       <NavLink href={`/browse/tv/popular`}>Popular</NavLink>
                     </li>
@@ -104,9 +104,9 @@ const NavExpanded = () => {
                   </ul>
                 </div>
               </div>
-              <div className="">
+              <div className="space-y-2">
                 <h4 className="px-3 text-sm dark:text-neutral-400">Genres</h4>
-                <ul className="text-xs dark:text-neutral-300  whitespace-nowrap grid grid-flow-col grid-rows-4 gap-1 p-2">
+                <ul className="text-xs dark:text-neutral-300  whitespace-nowrap grid grid-flow-col grid-rows-4 gap-2 px-3">
                   {TV_GENRES.map((genre) => (
                     <li key={genre.id}>
                       <NavLink href={`/browse/tv/genre/${genre.id}`}>

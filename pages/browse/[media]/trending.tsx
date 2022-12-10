@@ -1,3 +1,4 @@
+import MetaHeader from "@components/MetaHeader";
 import GridCell from "@components/ui/browse/GridCell";
 import GridCellLoader from "@components/ui/browse/GridCellLoader";
 import GridContainer from "@components/ui/browse/GridContainer";
@@ -12,7 +13,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 const Trending = () => {
-  const [window, setWindow] = useState<"day" | "week">("day");
+  const [window, setWindow] = useState<"day" | "week">("week");
   const router = useRouter();
   // So it resets every mount.
   const page = 1;
@@ -40,11 +41,12 @@ const Trending = () => {
 
   return (
     <div className="container mx-auto my-12 min-h-[80vh] p-4">
-      <div className="flex items-center justify-between">
+      <MetaHeader title={"Whatsnext — Trending"} />
+      <div className="flex items-center justify-between flex-wrap">
         <TitleHeader name={"Trending"} media={router.query.media as string} />
         <div className="text-sm flex dark:bg-neutral-800 bg-neutral-200 rounded">
           <button
-            className={`p-2 ${
+            className={`px-2 py-1 ${
               window === "day" ? "dark:bg-neutral-600 bg-neutral-300" : ""
             } rounded transition-colors`}
             onClick={() => setWindow("day")}
@@ -53,7 +55,7 @@ const Trending = () => {
             Day
           </button>
           <button
-            className={`p-2 ${
+            className={`px-2 py-1 ${
               window === "week" ? "dark:bg-neutral-600 bg-neutral-200" : ""
             } rounded transition-colors`}
             onClick={() => setWindow("week")}

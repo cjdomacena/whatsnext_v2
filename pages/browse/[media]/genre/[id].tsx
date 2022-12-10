@@ -1,3 +1,4 @@
+import MetaHeader from "@components/MetaHeader";
 import GridCell from "@components/ui/browse/GridCell";
 import GridCellLoader from "@components/ui/browse/GridCellLoader";
 import GridContainer from "@components/ui/browse/GridContainer";
@@ -57,6 +58,11 @@ const Genre = () => {
 
   return (
     <div className="container mx-auto my-12 min-h-[80vh] p-4">
+      <MetaHeader
+        title={`Whatsnext — ${
+          String(router.query.media).toUpperCase() ?? ""
+        } • ${title ? title.name : ""}`}
+      />
       <div className="flex items-center justify-between">
         {router.isReady ? (
           <TitleHeader
