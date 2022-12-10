@@ -4,12 +4,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { media, window } = req.query;
+  const { media, window, page } = req.query;
   try {
     const data = await fetch(
       `${process.env.TMDB_URL}/trending/${media}/${window ?? "week"}?api_key=${
         process.env.TMDB_API_KEY
-      }`
+      }&page=${page ?? 1}&region=US`
     );
 
     const results = await data.json();

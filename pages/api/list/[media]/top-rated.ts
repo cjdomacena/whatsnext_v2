@@ -7,7 +7,7 @@ export default async function handler(
   const { media, page } = req.query;
   try {
     const data = await fetch(
-      `${process.env.TMDB_URL}/${media}/popular?api_key=${
+      `${process.env.TMDB_URL}/${media}/top_rated?api_key=${
         process.env.TMDB_API_KEY
       }&page=${page ?? 1}&region=US`
     );
