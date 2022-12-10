@@ -16,12 +16,16 @@ const Home: NextPage = () => {
   const { data: trendingMovie, isLoading: loadingMovie } = useQuery<
     QueryResult<IQueryResult>,
     Error
-  >(["trending", "movie"], getTrendingMovie, { ...QUERY_CONFIG });
+  >(["trending", "movie"], getTrendingMovie, {
+    keepPreviousData: true,
+    ...QUERY_CONFIG,
+  });
   const { data: trendingTV, isLoading: loadingTV } = useQuery<
     QueryResult<IQueryResult>,
     Error
   >(["trending", "tv"], getTrendingTV, {
     enabled: !!trendingMovie,
+    keepPreviousData: true,
     ...QUERY_CONFIG,
   });
   const { data: popularMovie, isLoading: loadingPopular } = useQuery<
@@ -29,6 +33,7 @@ const Home: NextPage = () => {
     Error
   >(["popular", "movie"], getPopularMovie, {
     enabled: !!trendingTV,
+    keepPreviousData: true,
     ...QUERY_CONFIG,
   });
 

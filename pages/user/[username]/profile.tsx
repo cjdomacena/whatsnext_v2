@@ -15,12 +15,12 @@ const Profile = () => {
   const supabase = useSupabaseClient();
   const queryClient = useQueryClient();
   const { username } = router.query;
-  const { data: userProfile } = useQuery(
+  const { data: userProfile, isLoading } = useQuery(
     ["profile", username],
     () => getProfile(username as string, supabase),
     {
       enabled: username ? true : false,
-      suspense: true,
+
       ...QUERY_CONFIG,
     }
   );
@@ -71,7 +71,7 @@ const Profile = () => {
       setFullname(userProfile.full_name);
       setPrivate(userProfile.is_private);
     }
-  }, [userProfile]);
+  }, [userProfile, isLoading]);
 
   return (
     <section className="my-12 container mx-auto p-4 flex gap-8 flex-wrap min-h-[80vh]">

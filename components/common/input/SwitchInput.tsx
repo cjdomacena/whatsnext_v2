@@ -16,7 +16,7 @@ const SwitchInput = ({ setter, value, loading }: SwitchInputProps) => {
       <Switch.Root
         id="toggle"
         className=" w-10 h-6 bg-amber-800/50 dark:bg-amber-500/30 relative  rounded-full data-[state='checked']:dark:bg-amber-500 data-[state='checked']:bg-amber-500"
-        value={value ? "on" : "off"}
+        checked={value}
         onCheckedChange={(checked) => setter(checked)}
         disabled={loading}
       >

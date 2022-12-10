@@ -1,6 +1,7 @@
 import { useUser } from "@supabase/auth-helpers-react";
 import Link from "next/link";
 import { FC } from "react";
+import { IoSearchOutline } from "react-icons/io5";
 import { ThemeToggle } from "../button/ThemeToggle";
 import { Logo } from "../util";
 import NavExpanded from "./pills/Expanded";
@@ -18,6 +19,15 @@ const Navbar: FC = () => {
           <NavExpanded />
         </div>
         <div className="flex gap-4 text-xs items-center">
+          <div className="dark:bg-neutral-800 rounded">
+            <Link
+              href={"/browse/search"}
+              className="flex gap-1 items-center px-2 py-2"
+            >
+              <IoSearchOutline className="w-5 h-5" />
+              Search
+            </Link>
+          </div>
           {user ? (
             <UserNav user={user} />
           ) : (

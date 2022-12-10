@@ -7,11 +7,11 @@ import TitleHeader from "@components/ui/browse/TitleHeader";
 import { getSearchResult } from "@lib/api/getSearchResult";
 import { QUERY_CONFIG } from "@lib/constants/config";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const SearchPage = () => {
   const [isAdult, setIsAdult] = useState<boolean>(true);
-  const [filter, setFilter] = useState<string>("movie");
+  const [filter, setFilter] = useState<string>("multi");
   const [query, setQuery] = useState<string>("");
   const [enabled, setEnabled] = useState<boolean>(false);
 
