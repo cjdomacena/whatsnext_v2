@@ -18,26 +18,37 @@ const GridCell = ({
   id,
 }: GridCellProps) => {
   return (
-    <div className=" space-y-2">
-      <div className="w-full min-h-[320px] rounded relative">
+    <div className=" space-y-2 w-fit mx-auto">
+      <div className="w-full min-h-[350px] rounded relative flex">
         <Link href={`/details/${media}/${id}`}>
           <img
-            src={`${IMAGE_URL}/w342${poster_path}`}
+            src={
+              poster_path
+                ? `${IMAGE_URL}/w342${poster_path}`
+                : "/assets/fallback.png"
+            }
             alt={title}
-            className="2xl:object-cover xl:object-cover lg:object-cover md:object-cover object-contain"
+            className="2xl:object-cover xl:object-cover lg:object-cover md:object-cover object-contain 
+            2xl:w-full xl:w-full lg:w-full md:w-full sm:w-full max-w-[320px]
+            "
             loading="eager"
           />
         </Link>
       </div>
 
-      <div>
-        <div className="flex gap-1 items-start">
-          <p className="text-xs">{Math.floor((ratings / 2) * 10) / 10}</p>
-          <Rating votes={ratings} />
+      <div className="2xl:w-full xl:w-full lg:w-full md:w-full max-w-[320px]">
+        {media !== "person" ? (
+          <div className="flex gap-1 items-start">
+            <p className="text-xs">{Math.floor((ratings / 2) * 10) / 10}</p>
+            <Rating votes={ratings} />
+          </div>
+        ) : null}
+        <div className="w-fit">
+          <Link href={`/details/${media}/${id}`}>
+            <h4 className=" -tracking-wider font-medium w-fit">{title}</h4>
+          </Link>
+          <p className="text-xs uppercase">{media}</p>
         </div>
-        <Link href={`/details/${media}/${id}`}>
-          <h4 className=" -tracking-wider font-medium">{title}</h4>
-        </Link>
       </div>
     </div>
   );

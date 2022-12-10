@@ -42,7 +42,7 @@ const Genre = () => {
         getNextPageParam: (lastPage) => {
           const totalPages = lastPage.total_pages ?? 1;
           const nextPage = lastPage.page + 1;
-          return nextPage > totalPages ? totalPages : nextPage;
+          return nextPage > totalPages ? undefined : nextPage;
         },
         ...QUERY_CONFIG,
       }
