@@ -13,12 +13,12 @@ const NavLink: React.FC<PropsWithChildren<Props>> = ({
   const { isReady, asPath } = useRouter();
   const className: string =
     isReady && asPath === props.href
-      ? ""
-      : "dark:hover:bg-neutral-600 hover:bg-neutral-300  bg-neutral-400 dark:bg-neutral-700";
+      ? "dark:text-white text-black"
+      : "dark:hover:text-neutral-400 hover:text-neutral-300  text-neutral-700 dark:text-neutral-300";
 
   return (
     <Link href={props.href}>
-      <p className={className + " transition-colors  p-1 rounded w-fit "}>
+      <p className={className + " transition-colors  rounded w-fit "}>
         {children}
       </p>
     </Link>
