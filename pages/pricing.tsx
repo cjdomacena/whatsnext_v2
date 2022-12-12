@@ -26,7 +26,12 @@ const Pricing = () => {
           <p className="uppercase tracking-widest font-semibold">Paid</p>
           <h4 className="text-4xl font-bold">Premium</h4>
           <p>Get access to reviews from verified critics and curated titles.</p>
-          <button className="p-2 bg-neutral-900 w-full rounded text-center text-white">
+          <button
+            className="p-2 bg-neutral-900 w-full rounded text-center text-white"
+            onClick={() => {
+              throw new Error("test error");
+            }}
+          >
             Subscribe - $2.99 / month
           </button>
         </div>

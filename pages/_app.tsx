@@ -19,17 +19,20 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import "keen-slider/keen-slider.min.css";
-import toast, { Toaster } from "react-hot-toast";
 import Footer from "@components/common/footer";
-import { Router } from "next/router";
+
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import * as Sentry from "@sentry/nextjs";
+import { toast, Toaster } from "react-hot-toast";
+import { Fallback } from "@components/common/util";
+import { Router } from "next/router";
 
 export default function App({ Component, pageProps, ...appProps }: AppProps) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
   const [queryClient] = useState(() => new QueryClient());
 
   useEffect(() => {
-    if (Router && Router !== undefined) {
+    if (Router && Router !== undefined && window !== undefined) {
       const routeEventStart = (url: string | undefined | null) => {
         if (url && url.includes("/details")) {
           toast.loading("Loading...", {
@@ -53,37 +56,44 @@ export default function App({ Component, pageProps, ...appProps }: AppProps) {
       };
     }
   }, []);
+
   return (
-    <main className="min-w-screen transition-colors overflow-x-hidden">
-      <MetaHeader
-        title="WhatsNext"
-        description="Pick up where you left off. Track your shows!"
-      />
-      <SessionContextProvider
-        supabaseClient={supabaseClient}
-        initialSession={pageProps.initialSession}
-      >
-        <QueryClientProvider client={queryClient}>
-          <Hydrate state={pageProps.dehydratedState}>
-            {appProps.router.pathname.split("/").includes("auth") ? null : (
-              <Navbar />
-            )}
+    <Sentry.ErrorBoundary
+      showDialog
+      fallback={(props) => <Fallback {...props} />}
+    >
+      <main className="min-w-screen transition-colors overflow-x-hidden">
+        <MetaHeader
+          title="WhatsNext"
+          description="Pick up where you left off. Track your shows!"
+        />
+        <SessionContextProvider
+          supabaseClient={supabaseClient}
+          initialSession={pageProps.initialSession}
+        >
+          <QueryClientProvider client={queryClient}>
+            <Hydrate state={pageProps.dehydratedState}>
+              {appProps.router.pathname.split("/").includes("auth") ? null : (
+                <Navbar />
+              )}
 
-            <ReactQueryDevtools initialIsOpen={false} />
+              <ReactQueryDevtools initialIsOpen={false} />
 
-            <Component {...pageProps} />
-            {appProps.router.pathname.split("/").includes("auth") ? null : (
-              <Footer />
-            )}
-          </Hydrate>
-        </QueryClientProvider>
-      </SessionContextProvider>
+              <Component {...pageProps} />
+              {appProps.router.pathname.split("/").includes("auth") ? null : (
+                <Footer />
+              )}
+            </Hydrate>
+          </QueryClientProvider>
+        </SessionContextProvider>
+      </main>
       <Toaster
         toastOptions={{
           className: "dark:bg-neutral-900 bg-white dark:text-white text-sm",
         }}
         position="top-center"
       />
-    </main>
+    </Sentry.ErrorBoundary>
   );
 }
+
