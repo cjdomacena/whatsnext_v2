@@ -1,5 +1,6 @@
 import Rating from "@components/common/util/Rating";
 import { IMAGE_URL } from "@lib/constants/config";
+import { motion } from "framer-motion";
 import Link from "next/link";
 
 type GridCellProps = {
@@ -20,7 +21,13 @@ const GridCell = ({
   withMedia = false,
 }: GridCellProps) => {
   return (
-    <div className=" space-y-2 w-full mx-auto">
+    <motion.div
+      className=" space-y-2 w-full mx-auto"
+      variants={{
+        hidden: { opacity: 0 },
+        show: { opacity: 1 },
+      }}
+    >
       <Link href={`/details/${media}/${id}`}>
         <div className="w-full h-full max-h-[350px] rounded relative flex overflow-hidden group cursor-pointer">
           <img
@@ -32,7 +39,7 @@ const GridCell = ({
             alt={title}
             className="2xl:object-cover xl:object-cover lg:object-cover md:object-cover object-contain 
             2xl:w-full xl:w-full lg:w-full md:w-full sm:w-full max-w-[320px]
-            group-hover:scale-110 transition-transform h-full
+            group-hover:scale-110 transition-transform h-full mx-auto
             "
             loading="eager"
           />
@@ -41,7 +48,7 @@ const GridCell = ({
         </div>
       </Link>
 
-      <div className="2xl:w-full xl:w-full lg:w-full md:w-full max-w-[320px]">
+      <div className="2xl:w-full xl:w-full lg:w-full md:w-full max-w-[220px] mx-auto">
         {media !== "person" ? (
           <div className="flex gap-1 items-start">
             <p className="text-xs">{Math.floor((ratings / 2) * 10) / 10}</p>
@@ -55,7 +62,7 @@ const GridCell = ({
           {withMedia ? <p className="text-xs uppercase">{media}</p> : null}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

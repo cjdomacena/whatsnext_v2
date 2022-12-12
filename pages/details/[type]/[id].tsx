@@ -73,12 +73,12 @@ const DetailsPage = (
   );
 
   const enabled = details ? true : false;
-  console.log(router.isReady);
+
   if (query.type !== "person") {
     return (
       <div className="container mx-auto my-12 space-y-12 p-4">
         <MetaHeader
-          title={`WhatsNext — ${details.title}`}
+          title={`WhatsNext — ${details.title ?? ""}`}
           description={details.overview}
           pathname={`details/${router.query.type}/${router.query.id}`}
         />

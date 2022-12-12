@@ -1,4 +1,8 @@
+import { useUser } from "@supabase/auth-helpers-react";
+
 const Pricing = () => {
+  const user = useUser();
+
   return (
     <div className="container mx-auto my-12 p-4 min-h-[80vh]">
       <div className="w-full text-center max-w-2xl mx-auto">
@@ -26,12 +30,7 @@ const Pricing = () => {
           <p className="uppercase tracking-widest font-semibold">Paid</p>
           <h4 className="text-4xl font-bold">Premium</h4>
           <p>Get access to reviews from verified critics and curated titles.</p>
-          <button
-            className="p-2 bg-neutral-900 w-full rounded text-center text-white"
-            onClick={() => {
-              throw new Error("test error");
-            }}
-          >
+          <button className="p-2 bg-neutral-900 w-full rounded text-center text-white">
             Subscribe - $2.99 / month
           </button>
         </div>

@@ -58,11 +58,14 @@ const Genre = () => {
 
   return (
     <div className="container mx-auto my-12 min-h-[80vh] p-4">
-      <MetaHeader
-        title={`Whatsnext — ${
-          String(router.query.media).toUpperCase() ?? ""
-        } • ${title ? title.name : ""}`}
-      />
+      {router.isReady ? (
+        <MetaHeader
+          title={`Whatsnext — ${
+            String(router.query.media).toUpperCase() ?? ""
+          } • ${title ? title.name : ""}`}
+        />
+      ) : null}
+
       <div className="flex items-center justify-between">
         {router.isReady ? (
           <TitleHeader
