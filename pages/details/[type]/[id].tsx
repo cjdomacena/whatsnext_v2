@@ -128,7 +128,7 @@ const DetailsPage = (
                       })
                     : "NA"}
                 </p>
-                <p>{details.runtime ? <>&#183;</> : null}</p>
+                <p>{details.runtime ? <span>&#183;</span> : null}</p>
                 <p>{details.runtime ? getDuration(details.runtime) : null}</p>
               </div>
             </div>
