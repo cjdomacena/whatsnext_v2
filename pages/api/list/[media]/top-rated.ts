@@ -17,6 +17,10 @@ export default async function handler(
     if (hasError && !results.success) {
       throw new Error(results.status_message);
     }
+    res.setHeader(
+      "Cache-Control",
+      "public, s-maxage=3600, stale-while-revalidate=3600"
+    );
     return res.status(200).json(results);
   } catch (e) {
     if (e instanceof Error) {
