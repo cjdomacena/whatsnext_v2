@@ -13,6 +13,7 @@ import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import MetaHeader from "@components/MetaHeader";
 import { Navbar } from "@components/common/navbar";
+import { Analytics } from "@vercel/analytics/react";
 import {
   Hydrate,
   QueryClient,
@@ -93,6 +94,7 @@ export default function App({ Component, pageProps, ...appProps }: AppProps) {
         }}
         position="top-center"
       />
+      <Analytics />
     </Sentry.ErrorBoundary>
   );
 }
