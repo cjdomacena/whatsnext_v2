@@ -17,6 +17,7 @@ const Fallback: React.FC<FallbackProps> = ({
         <h1 className="text-4xl font-bold">Oops.. Something went wrong...</h1>
         <p>Error: {error.message}</p>
         <p>Event Id: {eventId}</p>
+        <div>{componentStack}</div>
         <button
           className="px-6 py-3 bg-neutral-600 rounded"
           onClick={() => resetError()}

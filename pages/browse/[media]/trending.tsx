@@ -3,7 +3,6 @@ import GridCell from "@components/ui/browse/GridCell";
 import GridCellLoader from "@components/ui/browse/GridCellLoader";
 import GridContainer from "@components/ui/browse/GridContainer";
 import TitleHeader from "@components/ui/browse/TitleHeader";
-import { getPopular } from "@lib/api/getPopular";
 import { getTrending } from "@lib/api/getTrending";
 import { QUERY_CONFIG } from "@lib/constants/config";
 import { QueryResult } from "@lib/types/common";

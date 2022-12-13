@@ -20,7 +20,6 @@ import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Suspense } from "react";
 import { IoConstructOutline } from "react-icons/io5";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

@@ -39,7 +39,7 @@ export const getGenreName = (
   id: number,
   list: { id: number; name: string }[]
 ) => {
-  const genre = list.filter(({ id, name }) => id === id);
+  const genre = list.filter(({ id: lId }) => id === lId);
 
   return genre[0] ?? null;
 };

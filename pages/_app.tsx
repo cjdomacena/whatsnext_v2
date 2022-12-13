@@ -27,6 +27,7 @@ import * as Sentry from "@sentry/nextjs";
 import { toast, Toaster } from "react-hot-toast";
 import { Fallback } from "@components/common/util";
 import { Router } from "next/router";
+import SubscriptionProvider from "@components/context/SubscriptionContext";
 
 export default function App({ Component, pageProps, ...appProps }: AppProps) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
@@ -74,16 +75,18 @@ export default function App({ Component, pageProps, ...appProps }: AppProps) {
         >
           <QueryClientProvider client={queryClient}>
             <Hydrate state={pageProps.dehydratedState}>
-              {appProps.router.pathname.split("/").includes("auth") ? null : (
-                <Navbar />
-              )}
+              <SubscriptionProvider>
+                {appProps.router.pathname.split("/").includes("auth") ? null : (
+                  <Navbar />
+                )}
 
-              <ReactQueryDevtools initialIsOpen={false} />
+                <ReactQueryDevtools initialIsOpen={false} />
 
-              <Component {...pageProps} />
-              {appProps.router.pathname.split("/").includes("auth") ? null : (
-                <Footer />
-              )}
+                <Component {...pageProps} />
+                {appProps.router.pathname.split("/").includes("auth") ? null : (
+                  <Footer />
+                )}
+              </SubscriptionProvider>
             </Hydrate>
           </QueryClientProvider>
         </SessionContextProvider>

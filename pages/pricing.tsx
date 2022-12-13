@@ -1,8 +1,4 @@
-import { useUser } from "@supabase/auth-helpers-react";
-
 const Pricing = () => {
-  const user = useUser();
-
   return (
     <div className="container mx-auto my-12 p-4 min-h-[80vh]">
       <div className="w-full text-center max-w-2xl mx-auto">

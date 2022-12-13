@@ -23,13 +23,13 @@ const Genre = () => {
   const getGenre = useCallback(
     (genre_id: number) => {
       let list = router.query.media === "tv" ? TV_GENRES : MOVIE_GENRES;
-      const res = list.filter(({ id, name }) => id === genre_id);
+      const res = list.filter(({ id }) => id === genre_id);
       return res[0] ?? { id: -1, name: null };
     },
     [router.query.media]
   );
 
-  const { data, isLoading, isError, fetchNextPage, hasNextPage, isFetching } =
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetching } =
     useInfiniteQuery<QueryResult<IMovie>>(
       ["genres", router.query.media, router.query.id],
       ({ pageParam = page }) =>
