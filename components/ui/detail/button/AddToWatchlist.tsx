@@ -1,6 +1,6 @@
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { IoBookmarkSharp } from "react-icons/io5";
 
@@ -23,7 +23,7 @@ const AddToWatchList = ({
   const supabase = useSupabaseClient();
   const user = useUser();
   const [loading, setLoading] = useState<boolean>(false);
-  const [localActive, setLocalActive] = useState<boolean>(isActive);
+  const [localActive, setLocalActive] = useState<boolean>(false);
   // username, title_id: movie_id/tv_id,  title: name/title, poster_path
   const handleClick = async () => {
     if (user) {
@@ -71,6 +71,10 @@ const AddToWatchList = ({
       toast.error("Must be logged in");
     }
   };
+
+  useEffect(() => {
+    setLocalActive(isActive);
+  }, [isActive]);
 
   return (
     <div className="flex gap-2 text-xs mt-6 text-white ">
