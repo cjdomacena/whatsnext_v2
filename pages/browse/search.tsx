@@ -8,9 +8,11 @@ import TitleHeader from "@components/ui/browse/TitleHeader";
 import { getSearchResult } from "@lib/api/getSearchResult";
 import { QUERY_CONFIG } from "@lib/constants/config";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 const SearchPage = () => {
+  const router = useRouter();
   const [isAdult, setIsAdult] = useState<boolean>(true);
   const [filter, setFilter] = useState<string>("multi");
   const [query, setQuery] = useState<string>("");
@@ -32,6 +34,22 @@ const SearchPage = () => {
         ...QUERY_CONFIG,
       }
     );
+
+  useEffect(() => {
+    if (router.isReady) {
+      if (router.query.query) {
+        setQuery(router.query.query as string);
+        setEnabled(true);
+      } else {
+        setQuery("");
+      }
+      if (router.query.type) {
+        setFilter(router.query.type as string);
+        setEnabled(true);
+      }
+    }
+  }, [router]);
+
   return (
     <div className="container mx-auto my-12 min-h-[80vh] p-4">
       <MetaHeader title={"Whatsnext — Search"} />
