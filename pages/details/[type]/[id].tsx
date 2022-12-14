@@ -14,55 +14,20 @@ import { getDetails } from "@lib/api/getDetails";
 import { getWatchListItem } from "@lib/api/getWatchlist";
 import { QUERY_CONFIG } from "@lib/constants/config";
 import { formatDate, getCompactNumberFormat, getDuration } from "@lib/utils";
-import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
-import { useUser } from "@supabase/auth-helpers-react";
-import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { IoConstructOutline } from "react-icons/io5";
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id, type }: any = context.query;
-  if (type === "person") {
-    return {
-      props: {},
-    };
-  }
-  const supabase = createServerSupabaseClient(context);
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  const data = await getWatchListItem(
-    user?.user_metadata.username,
-    supabase,
-    id
-  );
-
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery({
-    queryKey: [type, id],
-    queryFn: () => getDetails(id, type),
-  });
-
-  return {
-    props: {
-      isWatchlist: data ? true : false,
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-};
-
-const DetailsPage = (
-  props: InferGetServerSidePropsType<typeof getServerSideProps>
-) => {
+const DetailsPage = () => {
   const user = useUser();
   const router = useRouter();
   const query: any = router.query;
-
-  const { data: details } = useQuery(
+  const supabase = useSupabaseClient();
+  const [isWatchlist, setIsWatchlist] = useState<boolean>(false);
+  const { data: details, isLoading } = useQuery(
     [query.type, query.id],
     () => getDetails(query.id as string, query.type),
     {
@@ -73,8 +38,22 @@ const DetailsPage = (
 
   const enabled = details ? true : false;
 
+  useEffect(() => {
+    async function isWatchList() {
+      const data = await getWatchListItem(
+        user?.user_metadata.username,
+        supabase,
+        router.query.id as string
+      );
+      if (data) {
+        setIsWatchlist(true);
+      }
+    }
+    if (user && router.query.id) isWatchList();
+  }, [router.query.id, supabase, user]);
+
   if (query.type !== "person") {
-    return (
+    return details && !isLoading ? (
       <div className="container mx-auto my-12 space-y-12 p-4">
         <MetaHeader
           title={`WhatsNext — ${details.title ?? ""}`}
@@ -85,8 +64,7 @@ const DetailsPage = (
         <div
           className="2xl:min-h-[600px] xl:min-h-[600px] lg:min-h-[600px] min-h-[500px] w-full  rounded-lg 
          relative flex flex-wrap
-         gap-12  items-start justify-center
-        "
+         gap-12  items-start justify-center"
         >
           <Poster posterPath={details.poster_path} />
 
@@ -94,7 +72,7 @@ const DetailsPage = (
             <div className="space-y-1">
               <DetailHeader tagline={details.tagline} title={details.title} />
               <ul className="flex gap-1 justify-start pb-2 dark:text-neutral-300">
-                {details.genres.length > 0
+                {details.genres && details.genres.length > 0
                   ? details.genres.map(
                       (genre: { id: number; name: string }, index: number) => (
                         <Link
@@ -140,17 +118,19 @@ const DetailsPage = (
               title_id={details.id}
               poster_path={details.poster_path}
               media_type={query.type}
-              isActive={props.isWatchlist}
+              isActive={isWatchlist}
             />
           </div>
         </div>
 
         <div className="ratings-container gap-12  grid grid-cols-8">
           <div className="w-full h-auto    2xl:col-span-2 xl:col-span-2 lg:col-span-2 col-span-8 2xl:order-1 xl:order-1 lg:order-1 order-2 ">
-            <CreditTabs
-              cast={details.credits.cast}
-              crew={details.credits.crew}
-            />
+            {details.credits ? (
+              <CreditTabs
+                cast={details.credits.cast}
+                crew={details.credits.crew}
+              />
+            ) : null}
           </div>
           <div className="w-full 2xl:col-span-6 xl:col-span-6 lg:col-span-6 col-span-8 2xl:order-2 xl:order-2 lg:order-2 order-1">
             {user ? (
@@ -175,6 +155,17 @@ const DetailsPage = (
         </div>
         <div className="p-4 w-full">
           <Recommended enable={enabled} />
+        </div>
+      </div>
+    ) : (
+      <div className="container mx-auto my-12 space-y-12 p-4">
+        <div
+          className="2xl:min-h-[600px] xl:min-h-[600px] lg:min-h-[600px] min-h-[500px] w-full  rounded-lg 
+         dark:bg-neutral-800 animate-pulse bg-neutral-100"
+        ></div>
+        <div className="ratings-container gap-12  grid grid-cols-8 h-[500px]">
+          <div className="w-full h-auto 2xl:col-span-2 xl:col-span-2 lg:col-span-2 col-span-8 2xl:order-1 xl:order-1 lg:order-1 order-2 dark:bg-neutral-800 animate-pulse bg-neutral-100"></div>
+          <div className="w-full 2xl:col-span-6 xl:col-span-6 lg:col-span-6 col-span-8 2xl:order-2 xl:order-2 lg:order-2 order-1"></div>
         </div>
       </div>
     );
