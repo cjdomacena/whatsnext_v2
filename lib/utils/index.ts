@@ -1,3 +1,5 @@
+import { WatchProviders } from "@lib/types/common.type";
+
 export const formatDate = (
   date: string,
   options: Intl.DateTimeFormatOptions = {
@@ -42,4 +44,25 @@ export const getGenreName = (
   const genre = list.filter(({ id: lId }) => id === lId);
 
   return genre[0] ?? null;
+};
+
+export const filterWatchProvider = ({
+  region,
+  results,
+}: {
+  region: string;
+  results?: any;
+}): WatchProviders | null => {
+  if (!results) {
+    return null;
+  }
+  const defaultRegion = region ? region : "US";
+  const hasRegion = Object.prototype.hasOwnProperty.call(
+    results,
+    defaultRegion
+  );
+  if (!hasRegion) {
+    return null;
+  }
+  return results[defaultRegion] ? results[defaultRegion] : null;
 };

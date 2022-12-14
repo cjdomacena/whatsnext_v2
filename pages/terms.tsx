@@ -4,6 +4,7 @@ const Terms = () => {
   return (
     <div>
       <MetaHeader title="Whatsnext — Terms" />
+
       <div
         className=" mx-auto my-12 prose prose-headings:text-neutral-300 text-sm leading-loose dark:text-neutral-300 
         prose-a:dark:text-neutral-50 p-6

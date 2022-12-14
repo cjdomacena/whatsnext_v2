@@ -2,16 +2,22 @@ import { getSimilar } from "@lib/api/getSimilar";
 import { QUERY_CONFIG } from "@lib/constants/config";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { Carousel } from "../home";
 
 const Similar = ({ enable }: { enable: boolean }) => {
   const router = useRouter();
   const { type, id } = router.query;
-  const { data, status } = useQuery(
+  const { data, status, refetch } = useQuery(
     ["similar", type, id],
     () => getSimilar(type as any, id as string),
-    { enabled: enable, ...QUERY_CONFIG }
+    { enabled: false, ...QUERY_CONFIG }
   );
+  useEffect(() => {
+    if (router.isReady && enable) {
+      refetch();
+    }
+  }, [refetch, router, enable]);
   if (status === "error") {
     return <div>Something went wrong..</div>;
   } else if (status === "loading") {

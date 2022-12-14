@@ -10,6 +10,7 @@ import {
   Recommended,
   Similar,
 } from "@components/ui/detail";
+import WatchProviders from "@components/ui/detail/WatchProviders";
 import { getDetails } from "@lib/api/getDetails";
 import { getWatchListItem } from "@lib/api/getWatchlist";
 import { QUERY_CONFIG } from "@lib/constants/config";
@@ -27,17 +28,25 @@ const DetailsPage = () => {
   const query: any = router.query;
   const supabase = useSupabaseClient();
   const [isWatchlist, setIsWatchlist] = useState<boolean>(false);
-  const { data: details, isLoading } = useQuery(
+  const {
+    data: details,
+    isLoading,
+    refetch,
+  } = useQuery(
     [query.type, query.id],
     () => getDetails(query.id as string, query.type),
     {
-      enabled: query.type === "person" ? false : true,
+      enabled: false,
       ...QUERY_CONFIG,
     }
   );
 
   const enabled = details ? true : false;
-
+  useEffect(() => {
+    if (router.isReady) {
+      refetch();
+    }
+  }, [router, refetch]);
   useEffect(() => {
     async function isWatchList() {
       const data = await getWatchListItem(
@@ -120,6 +129,12 @@ const DetailsPage = () => {
               media_type={query.type}
               isActive={isWatchlist}
             />
+            {details["watch/providers"] &&
+            details["watch/providers"].results ? (
+              <WatchProviders
+                watchProviders={details["watch/providers"].results}
+              />
+            ) : null}
           </div>
         </div>
 

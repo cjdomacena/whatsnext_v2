@@ -2,17 +2,24 @@ import { getRecommended } from "@lib/api/getRecommended";
 import { QUERY_CONFIG } from "@lib/constants/config";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { Carousel } from "../home";
 
 const Recommended = ({ enable }: { enable: boolean }) => {
   const router = useRouter();
   const { type, id } = router.query;
 
-  const { data, status } = useQuery(
+  const { data, status, refetch } = useQuery(
     ["recommendations", type, id],
     () => getRecommended(type as any, id as string),
-    { enabled: !!enable, ...QUERY_CONFIG }
+    { enabled: false, ...QUERY_CONFIG }
   );
+
+  useEffect(() => {
+    if (router.isReady && enable) {
+      refetch();
+    }
+  }, [refetch, router, enable]);
 
   if (status === "error") {
     return (

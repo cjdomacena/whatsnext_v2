@@ -19,6 +19,7 @@ const Poster: React.FC<PosterProps> = ({ posterPath }) => {
       (max-width: 1200px) 50vw,
      50vw"
         className="rounded  dark:drop-shadow-[0_5px_35px_rgba(32,32,32,0.6)] drop-shadow-2xl"
+        priority={true}
       />
     </div>
   );
