@@ -5,7 +5,7 @@ import {
   ProductionCompany,
   ProductionCountry,
   SpokenLanguage,
-} from "./common";
+} from "./common.type";
 
 export interface IQueryResult {
   adult: boolean;

@@ -1,6 +1,6 @@
 import Rating from "@components/common/util/Rating";
 import { IMAGE_URL } from "@lib/constants/config";
-import { IQueryResult } from "@lib/types/movies";
+import { IQueryResult } from "@lib/types/movies.type";
 import Link from "next/link";
 
 type CarouselSlideProps = {

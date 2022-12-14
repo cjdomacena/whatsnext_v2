@@ -71,3 +71,16 @@ export interface Cast {
   department?: string;
   job?: string;
 }
+
+export interface WatchProviders {
+  link: string;
+  buy?: WatchProvidersObj[];
+  flatrate: WatchProvidersObj[];
+}
+
+export interface WatchProvidersObj {
+  logo_path?: string;
+  provider_id: number;
+  provider_name: string;
+  display_priority: number;
+}

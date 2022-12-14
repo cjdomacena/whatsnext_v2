@@ -8,7 +8,7 @@ export default async function handler(
 
   try {
     const data = await fetch(
-      `${process.env.TMDB_URL}/${type}/${id}?api_key=${process.env.TMDB_API_KEY}&append_to_response=credits`
+      `${process.env.TMDB_URL}/${type}/${id}?api_key=${process.env.TMDB_API_KEY}&append_to_response=credits,watch/providers`
     );
     const results = await data.json();
     const hasError = Object.prototype.hasOwnProperty.call(results, "success");

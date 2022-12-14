@@ -1,4 +1,4 @@
-import { Review } from "@lib/types/common";
+import { Review } from "@lib/types/common.type";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { PostgrestError, User } from "@supabase/supabase-js";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

@@ -1,4 +1,4 @@
-import { IQueryResult } from "@lib/types/movies";
+import { IQueryResult } from "@lib/types/movies.type";
 import CarouselSlide from "./CarouselSlide";
 import { useKeenSlider } from "keen-slider/react";
 import { motion } from "framer-motion";
