@@ -40,7 +40,7 @@ export default async function handler(
         );
         const jsonData = await data.json();
         if (jsonData && jsonData.results.length > 0) {
-          const url = new URL(BASE_URL);
+          const url = new URL(BASE_URL + "/browse/search");
           url.searchParams.set("type", media_type);
           url.searchParams.set("query", query);
           return res.status(200).send({
