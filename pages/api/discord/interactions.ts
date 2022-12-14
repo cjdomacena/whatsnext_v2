@@ -34,14 +34,7 @@ export default async function handler(
       case SEARCH_COMMAND.name.toLowerCase(): {
         const media_type = message.data.options[0].value;
         const query = message.data.options[1].value;
-        if (media_type !== "movie" || media_type !== "tv") {
-          return res.status(200).send({
-            type: 4,
-            data: {
-              content: 'type must be "movie" or "tv"',
-            },
-          });
-        }
+
         const data = await fetch(
           `${BASE_URL}/api/list/search?type=${media_type}&include_adult&query=${query}&page=1`
         );
