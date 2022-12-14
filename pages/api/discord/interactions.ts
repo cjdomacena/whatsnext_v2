@@ -23,7 +23,7 @@ export default async function handler(
     process.env.DISCORD_PUBLIC_KEY as string
   );
   if (!isValidRequest) {
-    return res.status(401).end("Bad request signature");
+    return res.status(401).end("Unauthorized Access");
   }
 
   const message = req.body;
@@ -34,11 +34,22 @@ export default async function handler(
       case SEARCH_COMMAND.name.toLowerCase(): {
         const media_type = message.data.options[0].value;
         const query = message.data.options[1].value;
+        if (media_type !== "movie" || media_type !== "tv") {
+          return res.status(200).send({
+            type: 4,
+            data: {
+              content: 'type must be "movie" or "tv"',
+            },
+          });
+        }
         const data = await fetch(
           `${BASE_URL}/api/list/search?type=${media_type}&include_adult&query=${query}&page=1`
         );
         const jsonData = await data.json();
         if (jsonData && jsonData.results.length > 0) {
+          const url = new URL(BASE_URL);
+          url.searchParams.set("type", media_type);
+          url.searchParams.set("query", query);
           return res.status(200).send({
             type: 4,
             data: {
@@ -46,7 +57,7 @@ export default async function handler(
                 message.member.user.id
               }> I found ${media_type} | ${query.toUpperCase()} with ${
                 jsonData.results.length
-              } results. ${BASE_URL}/browse/search?type=${media_type}&query=${query}`,
+              } results. ${url}`,
             },
           });
         } else if (jsonData.results === 0) {
