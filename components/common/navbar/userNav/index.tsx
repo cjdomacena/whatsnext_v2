@@ -41,6 +41,12 @@ const UserNav = ({ user }: { user: User }) => {
               </div>
             </MenuItemHeader>
             <MenuItemButton
+              text="Dashboard"
+              onClick={() =>
+                router.push(`/user/${user.user_metadata.username}/dashboard`)
+              }
+            />
+            <MenuItemButton
               text="Profile"
               onClick={() =>
                 router.push(`/user/${user.user_metadata.username}/profile`)

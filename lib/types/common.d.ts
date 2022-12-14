@@ -10,6 +10,8 @@ export interface Review {
   review: string;
   rating: number;
   movie_id: number;
+  movie_title: string;
+  type: string;
 }
 
 export interface ReviewThread {

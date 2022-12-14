@@ -1,4 +1,4 @@
-import { useUser } from "@supabase/auth-helpers-react";
+import { useSession, useUser } from "@supabase/auth-helpers-react";
 import Link from "next/link";
 import { FC } from "react";
 import { IoSearchOutline } from "react-icons/io5";
@@ -9,6 +9,7 @@ import UserNav from "./userNav";
 
 const Navbar: FC = () => {
   const user = useUser();
+  const session = useSession();
   return (
     <nav className="p-4 rounded ">
       <div className=" flex justify-between items-center">
@@ -27,7 +28,7 @@ const Navbar: FC = () => {
               <IoSearchOutline className="w-4 h-4" />
             </Link>
           </div>
-          {user ? (
+          {user && session ? (
             <UserNav user={user} />
           ) : (
             <>

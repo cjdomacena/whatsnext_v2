@@ -10,14 +10,14 @@ export async function middleware(req: NextRequest) {
 
   const isCheckoutPage =
     req.nextUrl.pathname.includes("/manage-subscription") ||
-    req.nextUrl.pathname.includes("/profile");
+    req.nextUrl.pathname.includes("/profile") ||
+    req.nextUrl.pathname.includes("/dashboard");
 
   // Create authenticated supabase client
   const supabase = createMiddlewareSupabaseClient({ req, res });
   const {
     data: { session },
   } = await supabase.auth.getSession();
-
   if (isAuthPage) {
     if (!session?.user) {
       return res;
@@ -43,5 +43,6 @@ export const config = {
     "/auth/register",
     "/settings/manage-subscription",
     "/user/:path*/profile",
+    "/user/:path*/dashboard",
   ],
 };

@@ -32,7 +32,7 @@ const SubscriptionProvider = ({ children }: PropsWithChildren) => {
 
       setSubscriptionInfo(data);
     };
-    if (user || session) loadSubscriptionInfo();
+    if (user && session) loadSubscriptionInfo();
   }, [user, session, supabase]);
 
   return (

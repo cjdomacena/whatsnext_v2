@@ -11,10 +11,17 @@ import RadioButtons from "./RadioButtons";
 
 type ReviewFormProps = {
   movie_id: number | string | undefined;
+  movie_title: string;
   user: User;
+  media_type: string;
 };
 
-const ReviewForm: React.FC<ReviewFormProps> = ({ user, movie_id }) => {
+const ReviewForm: React.FC<ReviewFormProps> = ({
+  user,
+  movie_id,
+  movie_title,
+  media_type,
+}) => {
   const supabase = useSupabaseClient();
   const ref = useRef<HTMLTextAreaElement>(null);
   const [review, setReview] = useState<string>("");
@@ -38,6 +45,8 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ user, movie_id }) => {
         review: review,
         rating: activeRating,
         movie_id: Number(movie_id),
+        movie_title: movie_title,
+        type: media_type,
       };
       try {
         const { error } = await supabase.from("reviews").insert({ ...data });
@@ -132,7 +141,6 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ user, movie_id }) => {
             Reset Rating
           </button>
         </div>
-        {/* INSERT CHARACTER COUNTER WITH PROPS REVIEW.TEXT */}
         <CharacterCounter text={review} />
       </div>
     </form>

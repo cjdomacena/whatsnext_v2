@@ -154,7 +154,12 @@ const DetailsPage = (
           </div>
           <div className="w-full 2xl:col-span-6 xl:col-span-6 lg:col-span-6 col-span-8 2xl:order-2 xl:order-2 lg:order-2 order-1">
             {user ? (
-              <ReviewForm user={user} movie_id={query.id as string} />
+              <ReviewForm
+                user={user}
+                movie_id={query.id as string}
+                movie_title={details.title}
+                media_type={query.type as string}
+              />
             ) : (
               <div className="p-4 dark:bg-neutral-800 bg-neutral-100 rounded">
                 Log In to create write a review
