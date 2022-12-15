@@ -10,7 +10,11 @@ export const getTrendingTV = async () => {
     }
     // Rename object key for tv
     const modifiedResults = res.results.map(
-      ({ name: title, ...rest }: any) => ({ title, ...rest })
+      ({ name: title, ...rest }: any) => ({
+        title,
+        media_type: "movie",
+        ...rest,
+      })
     );
     res["results"] = modifiedResults;
 

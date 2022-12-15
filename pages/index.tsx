@@ -1,41 +1,39 @@
-import { Loader } from "@components/common/util";
 import { Carousel, HeroText } from "@components/ui/home";
 import { getPopularMovie } from "@lib/api/movies/getPopularMovie";
 import { getTrendingMovie } from "@lib/api/movies/getTrendingMovie";
 import { getTrendingTV } from "@lib/api/tv/getTrendingTV";
-import { QUERY_CONFIG } from "@lib/constants/config";
-import { QueryResult } from "@lib/types/common.type";
 import { IQueryResult } from "@lib/types/movies.type";
-import { useQuery } from "@tanstack/react-query";
-import { NextPage } from "next";
+import { GetStaticProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import { AiOutlineSwapRight } from "react-icons/ai";
 
-const Home: NextPage = () => {
+interface HomeProps {
+  trendingTV: IQueryResult[];
+  trendingMovie: IQueryResult[];
+  popularMovie: IQueryResult[];
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  const { results: trendingTV } = await getTrendingTV();
+  let { results: trendingMovie } = await getTrendingMovie();
+  let { results: popularMovie } = await getPopularMovie();
+
+  return {
+    props: {
+      trendingTV,
+      trendingMovie,
+      popularMovie,
+    },
+    revalidate: 3600,
+  };
+};
+
+const Home: NextPage<HomeProps> = ({
+  trendingMovie,
+  trendingTV,
+  popularMovie,
+}) => {
   const router = useRouter();
-  const { data: trendingMovie, isLoading: loadingMovie } = useQuery<
-    QueryResult<IQueryResult>,
-    Error
-  >(["trending", "movie"], getTrendingMovie, {
-    keepPreviousData: true,
-    ...QUERY_CONFIG,
-  });
-  const { data: trendingTV, isLoading: loadingTV } = useQuery<
-    QueryResult<IQueryResult>,
-    Error
-  >(["trending", "tv"], getTrendingTV, {
-    enabled: !!trendingMovie,
-    keepPreviousData: true,
-    ...QUERY_CONFIG,
-  });
-  const { data: popularMovie, isLoading: loadingPopular } = useQuery<
-    QueryResult<IQueryResult>,
-    Error
-  >(["popular", "movie"], getPopularMovie, {
-    enabled: !!trendingTV,
-    keepPreviousData: true,
-    ...QUERY_CONFIG,
-  });
 
   return (
     <section className="h-auto my-8 container mx-auto space-y-12 p-4">
@@ -56,10 +54,7 @@ const Home: NextPage = () => {
           </button>
         </div>
 
-        {loadingMovie ? <Loader /> : null}
-        {trendingMovie && !loadingMovie ? (
-          <Carousel data={trendingMovie?.results} media="movie" />
-        ) : null}
+        <Carousel data={trendingMovie} media="movie" />
       </div>
 
       {/* Trending TV */}
@@ -75,8 +70,8 @@ const Home: NextPage = () => {
             MORE <AiOutlineSwapRight className="w-4 h-4" />
           </button>
         </div>
-        {loadingTV ? <Loader /> : null}
-        {trendingTV ? <Carousel data={trendingTV?.results} media="tv" /> : null}
+
+        <Carousel data={trendingTV} media="tv" />
       </div>
 
       {/* Popular Movies Today */}
@@ -92,10 +87,8 @@ const Home: NextPage = () => {
             MORE <AiOutlineSwapRight className="w-4 h-4" />
           </button>
         </div>
-        {loadingPopular ? <Loader /> : null}
-        {popularMovie ? (
-          <Carousel data={popularMovie?.results} media="movie" />
-        ) : null}
+
+        <Carousel data={popularMovie} media="movie" />
       </div>
     </section>
   );

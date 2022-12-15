@@ -13,41 +13,66 @@ import {
 import WatchProviders from "@components/ui/detail/WatchProviders";
 import { getDetails } from "@lib/api/getDetails";
 import { getWatchListItem } from "@lib/api/getWatchlist";
+import { getPopularMovie } from "@lib/api/movies/getPopularMovie";
+import { getTrendingMovie } from "@lib/api/movies/getTrendingMovie";
+import { getTrendingTV } from "@lib/api/tv/getTrendingTV";
 import { QUERY_CONFIG } from "@lib/constants/config";
+import { QueryResult } from "@lib/types/common.type";
 import { formatDate, getCompactNumberFormat, getDuration } from "@lib/utils";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { useQuery } from "@tanstack/react-query";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { IoConstructOutline } from "react-icons/io5";
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { type, id }: any = context.params;
-  const data = await getDetails(id as string, type as any);
-  if (data) {
-    context.res.setHeader(
-      "Cache-Control",
-      "public, s-maxage=3600, stale-while-revalidate=5400"
-    );
-    return {
-      props: {
-        details: data,
-      },
-    };
-  }
+export const getStaticPaths: GetStaticPaths = async () => {
+  const data: QueryResult<any>[] = await Promise.all([
+    getTrendingTV(),
+    getTrendingMovie(),
+    getPopularMovie(),
+  ]);
+  const results = await data
+    .flat()
+    .map((result) => result.results)
+    .flat();
+
+  const paths: any = results.map((title) => {
+    if (
+      title.id !== undefined ||
+      (title.id !== null && title.media_type !== undefined) ||
+      title.media_type !== null
+    ) {
+      return { params: { id: title.id + "", type: title.media_type + "" } };
+    } else {
+      return { params: { id: null, type: null } };
+    }
+  });
+
   return {
-    props: {
-      details: null,
-    },
-    redirect: "/404",
+    paths,
+    fallback: "blocking",
   };
 };
-const DetailsPage = (
-  props: InferGetServerSidePropsType<typeof getServerSideProps>
-) => {
-  const { details } = props;
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { id, type }: any = context.params;
+  try {
+    const data = await getDetails(String(id), String(type) as any);
+    const res = await data;
+
+    return {
+      props: {
+        details: res,
+      },
+      revalidate: 3600,
+    };
+  } catch (err: any) {
+    return { notFound: true };
+  }
+};
+const DetailsPage = ({ details }: any) => {
   const user = useUser();
   const router = useRouter();
   const query: any = router.query;
@@ -67,14 +92,14 @@ const DetailsPage = (
     { ...QUERY_CONFIG }
   );
 
-  const enabled = props.details ? true : false;
+  const enabled = details ? true : false;
 
   useEffect(() => {
     if (user && router.query.id) refetch();
   }, [router.query.id, supabase, user, refetch]);
 
   if (query.type !== "person") {
-    return (
+    return !router.isFallback ? (
       <div className="container mx-auto my-12 space-y-12 p-4">
         <MetaHeader
           title={`WhatsNext — ${details.title ?? ""}`}
@@ -182,6 +207,17 @@ const DetailsPage = (
         </div>
         <div className="p-4 w-full">
           <Recommended enable={enabled} />
+        </div>
+      </div>
+    ) : (
+      <div className="container mx-auto my-12 space-y-12 p-4">
+        <div
+          className="2xl:min-h-[600px] xl:min-h-[600px] lg:min-h-[600px] min-h-[500px] w-full  rounded-lg 
+     dark:bg-neutral-800 animate-pulse bg-neutral-100"
+        ></div>
+        <div className="ratings-container gap-12  grid grid-cols-8 h-[500px]">
+          <div className="w-full h-auto 2xl:col-span-2 xl:col-span-2 lg:col-span-2 col-span-8 2xl:order-1 xl:order-1 lg:order-1 order-2 dark:bg-neutral-800 animate-pulse bg-neutral-100"></div>
+          <div className="w-full 2xl:col-span-6 xl:col-span-6 lg:col-span-6 col-span-8 2xl:order-2 xl:order-2 lg:order-2 order-1"></div>
         </div>
       </div>
     );

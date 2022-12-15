@@ -10,7 +10,7 @@ export const getTrendingMovie = async () => {
       throw new Error(res.error);
     }
 
-    return res;
+    return { media_type: "movie", ...res };
   } catch (e) {
     console.log(e);
     return e;

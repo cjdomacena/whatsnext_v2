@@ -8,7 +8,7 @@ import "@fontsource/work-sans/700.css";
 import "@fontsource/work-sans/800.css";
 import "@fontsource/work-sans/900.css";
 import type { AppProps } from "next/app";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import MetaHeader from "@components/MetaHeader";
@@ -24,40 +24,13 @@ import Footer from "@components/common/footer";
 
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import * as Sentry from "@sentry/nextjs";
-import { toast, Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import { Fallback } from "@components/common/util";
-import { Router } from "next/router";
 import SubscriptionProvider from "@components/context/SubscriptionContext";
 
 export default function App({ Component, pageProps, ...appProps }: AppProps) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
   const [queryClient] = useState(() => new QueryClient());
-
-  useEffect(() => {
-    if (Router && Router !== undefined && window !== undefined) {
-      const routeEventStart = (url: string | undefined | null) => {
-        if (url && url.includes("/watchlist")) {
-          toast.loading("Loading...", {
-            position: "top-right",
-          });
-        }
-      };
-      const routeEventEnd = (url: string | undefined | null) => {
-        if (url && url.includes("/watchlist")) {
-          toast.dismiss();
-        }
-      };
-
-      Router.events.on("routeChangeStart", routeEventStart);
-      Router.events.on("routeChangeComplete", routeEventEnd);
-      Router.events.on("routeChangeError", routeEventEnd);
-      return () => {
-        Router.events.off("routeChangeStart", routeEventStart);
-        Router.events.off("routeChangeComplete", routeEventEnd);
-        Router.events.off("routeChangeError", routeEventEnd);
-      };
-    }
-  }, []);
 
   return (
     <Sentry.ErrorBoundary

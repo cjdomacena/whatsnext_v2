@@ -9,7 +9,7 @@ export const getPopularMovie = async () => {
       throw new Error(res.error);
     }
 
-    return res;
+    return { media_type: "movie", ...res };
   } catch (e) {
     console.log(e);
   }
