@@ -17,52 +17,60 @@ import { QUERY_CONFIG } from "@lib/constants/config";
 import { formatDate, getCompactNumberFormat, getDuration } from "@lib/utils";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { useQuery } from "@tanstack/react-query";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { IoConstructOutline } from "react-icons/io5";
 
-const DetailsPage = () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { type, id }: any = context.params;
+  const data = await getDetails(id as string, type as any);
+  if (data) {
+    return {
+      props: {
+        details: data,
+      },
+    };
+  }
+  return {
+    props: {
+      details: null,
+    },
+    redirect: "/404",
+  };
+};
+const DetailsPage = (
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) => {
+  const { details } = props;
   const user = useUser();
   const router = useRouter();
   const query: any = router.query;
   const supabase = useSupabaseClient();
-  const [isWatchlist, setIsWatchlist] = useState<boolean>(false);
   const {
-    data: details,
-    isLoading,
+    data: isWatchList,
     refetch,
+    isLoading,
   } = useQuery(
-    [query.type, query.id],
-    () => getDetails(query.id as string, query.type),
-    {
-      enabled: false,
-      ...QUERY_CONFIG,
-    }
-  );
-
-  const enabled = details ? true : false;
-  useEffect(() => {
-    if (router.isReady) {
-      refetch();
-    }
-  }, [router, refetch]);
-  useEffect(() => {
-    async function isWatchList() {
-      const data = await getWatchListItem(
+    ["watchlist-status", user?.user_metadata.username],
+    () =>
+      getWatchListItem(
         user?.user_metadata.username,
         supabase,
         router.query.id as string
-      );
-      if (data) {
-        setIsWatchlist(true);
-      }
-    }
-    if (user && router.query.id) isWatchList();
-  }, [router.query.id, supabase, user]);
+      ),
+    { ...QUERY_CONFIG }
+  );
+
+  const enabled = props.details ? true : false;
+
+  useEffect(() => {
+    if (user && router.query.id) refetch();
+  }, [router.query.id, supabase, user, refetch]);
 
   if (query.type !== "person") {
-    return details && !isLoading ? (
+    return (
       <div className="container mx-auto my-12 space-y-12 p-4">
         <MetaHeader
           title={`WhatsNext — ${details.title ?? ""}`}
@@ -127,7 +135,7 @@ const DetailsPage = () => {
               title_id={details.id}
               poster_path={details.poster_path}
               media_type={query.type}
-              isActive={isWatchlist}
+              isActive={isLoading || isWatchList ? true : false}
             />
             {details["watch/providers"] &&
             details["watch/providers"].results ? (
@@ -170,17 +178,6 @@ const DetailsPage = () => {
         </div>
         <div className="p-4 w-full">
           <Recommended enable={enabled} />
-        </div>
-      </div>
-    ) : (
-      <div className="container mx-auto my-12 space-y-12 p-4">
-        <div
-          className="2xl:min-h-[600px] xl:min-h-[600px] lg:min-h-[600px] min-h-[500px] w-full  rounded-lg 
-         dark:bg-neutral-800 animate-pulse bg-neutral-100"
-        ></div>
-        <div className="ratings-container gap-12  grid grid-cols-8 h-[500px]">
-          <div className="w-full h-auto 2xl:col-span-2 xl:col-span-2 lg:col-span-2 col-span-8 2xl:order-1 xl:order-1 lg:order-1 order-2 dark:bg-neutral-800 animate-pulse bg-neutral-100"></div>
-          <div className="w-full 2xl:col-span-6 xl:col-span-6 lg:col-span-6 col-span-8 2xl:order-2 xl:order-2 lg:order-2 order-1"></div>
         </div>
       </div>
     );

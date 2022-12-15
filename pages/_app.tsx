@@ -36,14 +36,14 @@ export default function App({ Component, pageProps, ...appProps }: AppProps) {
   useEffect(() => {
     if (Router && Router !== undefined && window !== undefined) {
       const routeEventStart = (url: string | undefined | null) => {
-        if (url && url.includes("/details")) {
+        if (url && url.includes("/watchlist")) {
           toast.loading("Loading...", {
             position: "top-right",
           });
         }
       };
       const routeEventEnd = (url: string | undefined | null) => {
-        if (url && url.includes("/details")) {
+        if (url && url.includes("/watchlist")) {
           toast.dismiss();
         }
       };
@@ -101,4 +101,3 @@ export default function App({ Component, pageProps, ...appProps }: AppProps) {
     </Sentry.ErrorBoundary>
   );
 }
-
