@@ -27,6 +27,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { type, id }: any = context.params;
   const data = await getDetails(id as string, type as any);
   if (data) {
+    context.res.setHeader(
+      "Cache-Control",
+      "public, s-maxage=3600, stale-while-revalidate=5400"
+    );
     return {
       props: {
         details: data,
