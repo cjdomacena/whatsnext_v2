@@ -20,7 +20,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     queryKey: ["watchlist", username],
     queryFn: () => getWatchList(username as string, supabase),
   });
-
+  ctx.res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=120, stale-while-revalidate=360"
+  );
   return {
     props: {
       dehydratedState: dehydrate(queryClient),

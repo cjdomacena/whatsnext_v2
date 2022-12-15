@@ -25,7 +25,10 @@ export default async function handler(
         display_priority: result.display_priority,
       };
     });
-
+    res.setHeader(
+      "Cache-Control",
+      "public, s-maxage=3600, stale-while-revalidate=5400"
+    );
     return res.status(200).json(formatResult);
   } catch (e) {
     if (e instanceof Error) {
