@@ -3,16 +3,26 @@ export const SEARCH_COMMAND = {
   description: "search for your favorite movie or something",
   options: [
     {
-      name: "type",
-      description: "type either a movie or tv",
-      type: 3,
-      required: true,
-    },
-    {
       name: "query",
       description: "query string",
       type: 3,
       required: true,
+    },
+    {
+      name: "type",
+      description: "type either a movie or tv",
+      type: 3,
+      required: false,
+      choices: [
+        {
+          name: "Movie",
+          value: "movie",
+        },
+        {
+          name: "TV",
+          value: "tv",
+        },
+      ],
     },
   ],
 };

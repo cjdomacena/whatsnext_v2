@@ -32,39 +32,44 @@ export default async function handler(
   } else if (message.type === InteractionType.APPLICATION_COMMAND) {
     switch (message.data.name.toLowerCase()) {
       case SEARCH_COMMAND.name.toLowerCase(): {
-        const media_type = message.data.options[0].value;
-        const query = message.data.options[1].value;
+        const query = message.data.options[0].value;
+        const media_type = message.data.options[1]
+          ? message.data.options[1].value
+          : null;
 
-        const data = await fetch(
-          `${BASE_URL}/api/list/search?type=${media_type}&include_adult&query=${query}&page=1`
-        );
+        const constructFetchUrl = `${BASE_URL}/api/list/search?type=${
+          media_type ?? "multi"
+        }&query=${query}`;
+        const data = await fetch(constructFetchUrl);
         const jsonData = await data.json();
         if (jsonData && jsonData.results.length > 0) {
           const url = new URL(BASE_URL + "/browse/search");
-          url.searchParams.set("type", media_type);
+          if (media_type) {
+            url.searchParams.set("type", media_type);
+          }
           url.searchParams.set("query", query);
           return res.status(200).send({
             type: 4,
             data: {
-              content: `*<@${
-                message.member.user.id
-              }> I found ${media_type} | ${query.toUpperCase()} with ${
-                jsonData.results.length
-              } results. ${url}`,
+              content: `<@${message.member.user.id}> I found ${
+                media_type ? `[${media_type}]` : ""
+              } [${query}] with ${jsonData.results.length} results. ${url}`,
             },
           });
         } else if (jsonData.results === 0) {
           return res.status(200).send({
             type: 4,
             data: {
-              content: `0 results found for: Type = ${media_type} | Query = ${query} `,
+              content: `0 results found for: Query = ${query} `,
             },
           });
         } else {
           return res.status(200).send({
             type: 4,
             data: {
-              content: `0 results found for: Type = ${media_type} | Query = ${query}`,
+              content: `0 results found for: ${
+                media_type ? `[${media_type}]` : null
+              } [query=${query}]`,
             },
           });
         }
