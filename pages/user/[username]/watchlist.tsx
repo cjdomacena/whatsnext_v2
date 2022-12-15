@@ -49,32 +49,30 @@ const WatchList = () => {
 
   return (
     <section className="my-12 container mx-auto p-4 flex gap-8 flex-wrap min-h-[80vh]">
-      <Suspense>
-        <MetaHeader
-          title={`Whatsnext — ${username}'s Watchlist`}
-          description={`${username}'s watchlist`}
-          pathname={`user/${username}/watchlist`}
-        />
-        {userProfile ? (
-          <>
-            <UserProfile
-              userProfile={userProfile}
-              withShareUrl={user ? userProfile.id === user.id : false}
-            />
+      <MetaHeader
+        title={`Whatsnext — ${username}'s Watchlist`}
+        description={`${username}'s watchlist`}
+        pathname={`user/${username}/watchlist`}
+      />
+      {userProfile ? (
+        <>
+          <UserProfile
+            userProfile={userProfile}
+            withShareUrl={user ? userProfile.id === user.id : false}
+          />
 
-            {!userProfile.is_private ||
-            user?.user_metadata.username === username ? (
-              <WatchlistItems username={userProfile.username} />
-            ) : (
-              <>
-                {userProfile.is_private
-                  ? `${username}'s profile is private`
-                  : "User not found"}
-              </>
-            )}
-          </>
-        ) : null}
-      </Suspense>
+          {!userProfile.is_private ||
+          user?.user_metadata.username === username ? (
+            <WatchlistItems username={userProfile.username} />
+          ) : (
+            <>
+              {userProfile.is_private
+                ? `${username}'s profile is private`
+                : "User not found"}
+            </>
+          )}
+        </>
+      ) : null}
     </section>
   );
 };
