@@ -61,7 +61,7 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <section className="my-12 container mx-auto p-4 flex gap-8 flex-wrap min-h-[80vh]">
+    <section className="my-12 container mx-auto p-4 flex gap-8 flex-wrap min-h-[80vh] justify-between">
       <MetaHeader title={`Whatsnext — Dashboard`} />
       {userProfile && !isLoading ? (
         <UserProfile userProfile={userProfile} withShareUrl={false} />
