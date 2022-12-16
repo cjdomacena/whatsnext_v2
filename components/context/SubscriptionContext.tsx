@@ -26,7 +26,7 @@ const SubscriptionProvider = ({ children }: PropsWithChildren) => {
     const loadSubscriptionInfo = async () => {
       const { data }: { data: ISubscriptionContext | null } = await supabase
         .from("profiles")
-        .select("is_subscribed, stripe_id")
+        .select("is_subscribed, stripe_id, roles")
         .eq("id", user?.id)
         .single();
 

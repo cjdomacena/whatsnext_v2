@@ -1,11 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next";
-
-import {
-  InteractionResponseType,
-  InteractionType,
-  verifyKey,
-} from "discord-interactions";
-
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 
 export default async function handler(

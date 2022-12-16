@@ -108,7 +108,7 @@ const SearchPage = () => {
                       </p>
                     </button>
                   </div>
-                  <div className="relative">
+                  <div className="relative z-50">
                     <SelectRadix
                       setter={setFilter}
                       value={filter}
@@ -139,7 +139,7 @@ const SearchPage = () => {
                     }
                     title={res.title}
                     ratings={res.media_type === "person" ? 0 : res.vote_average}
-                    media={res.media_type}
+                    media={res.media_type ?? filter}
                     id={res.id}
                     withMedia={true}
                   />

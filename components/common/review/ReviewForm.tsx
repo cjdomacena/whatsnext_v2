@@ -56,6 +56,9 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
         queryClient.invalidateQueries({
           queryKey: ["reviews", { id: movie_id }],
         });
+        if (ref.current) {
+          ref.current.style.height = "50px";
+        }
       } catch (e: any) {
         let error: PostgrestError | Error = e;
         console.log(error);
@@ -126,8 +129,8 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
           )}
         </button>
       </div>
-      <div className="flex items-end justify-between px-2 border-t pt-3 dark:border-t-neutral-700">
-        <div className="flex items-center gap-2">
+      <div className="flex items-end justify-between px-2 border-t pt-3 dark:border-t-neutral-700 flex-wrap">
+        <div className="flex items-center gap-2 flex-wrap">
           <h4 className="text-xs">Rating: </h4>
           <RadioButtons
             activeRating={activeRating}
