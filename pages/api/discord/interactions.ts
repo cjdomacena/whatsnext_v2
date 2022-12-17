@@ -9,6 +9,10 @@ import {
 import { SEARCH_COMMAND } from "@lib/constants/commands";
 import { BASE_URL } from "@lib/constants/config";
 
+export const config = {
+  runtime: "experimental-edge",
+};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
