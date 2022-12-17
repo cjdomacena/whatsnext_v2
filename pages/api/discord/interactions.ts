@@ -9,10 +9,6 @@ import {
 import { SEARCH_COMMAND } from "@lib/constants/commands";
 import { BASE_URL } from "@lib/constants/config";
 
-export const config = {
-  runtime: "experimental-edge",
-};
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -40,40 +36,48 @@ export default async function handler(
         const media_type = message.data.options[1]
           ? message.data.options[1].value
           : null;
-
-        const constructFetchUrl = `${BASE_URL}/api/list/search?type=${
-          media_type ?? "multi"
-        }&query=${query}`;
-        const data = await fetch(constructFetchUrl);
-        const jsonData = await data.json();
-        if (jsonData && jsonData.results.length > 0) {
-          const url = new URL(BASE_URL + "/browse/search");
-          if (media_type) {
-            url.searchParams.set("type", media_type);
+        try {
+          const constructFetchUrl = `${BASE_URL}/api/list/search?type=${
+            media_type ?? "multi"
+          }&query=${query}`;
+          const data = await fetch(constructFetchUrl);
+          const jsonData = await data.json();
+          if (jsonData && jsonData.results.length > 0) {
+            const url = new URL(BASE_URL + "/browse/search");
+            if (media_type) {
+              url.searchParams.set("type", media_type);
+            }
+            url.searchParams.set("query", query);
+            return res.status(200).send({
+              type: 4,
+              data: {
+                content: `<@${message.member.user.id}> I found ${
+                  media_type ? `[${media_type}]` : ""
+                } [${query}] with ${jsonData.results.length} results. ${url}`,
+              },
+            });
+          } else if (jsonData.results === 0) {
+            return res.status(200).send({
+              type: 4,
+              data: {
+                content: `0 results found for: Query = ${query} `,
+              },
+            });
+          } else {
+            return res.status(200).send({
+              type: 4,
+              data: {
+                content: `0 results found for: ${
+                  media_type ? `[${media_type}]` : null
+                } [query=${query}]`,
+              },
+            });
           }
-          url.searchParams.set("query", query);
-          return res.status(200).send({
+        } catch (error) {
+          res.status(401).send({
             type: 4,
             data: {
-              content: `<@${message.member.user.id}> I found ${
-                media_type ? `[${media_type}]` : ""
-              } [${query}] with ${jsonData.results.length} results. ${url}`,
-            },
-          });
-        } else if (jsonData.results === 0) {
-          return res.status(200).send({
-            type: 4,
-            data: {
-              content: `0 results found for: Query = ${query} `,
-            },
-          });
-        } else {
-          return res.status(200).send({
-            type: 4,
-            data: {
-              content: `0 results found for: ${
-                media_type ? `[${media_type}]` : null
-              } [query=${query}]`,
+              content: "Oops! Something went wrong.. Please try again",
             },
           });
         }

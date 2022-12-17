@@ -4,32 +4,10 @@ import { getProfile } from "@lib/api/getProfile";
 import { getWatchList } from "@lib/api/getWatchlist";
 import { QUERY_CONFIG } from "@lib/constants/config";
 import { IProfile } from "@lib/types/supabase/database";
-import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
-import { GetServerSideProps } from "next";
+import { useQuery } from "@tanstack/react-query";
+
 import { useRouter } from "next/router";
-import { Suspense } from "react";
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const supabase = createServerSupabaseClient(ctx);
-  const queryClient = new QueryClient();
-  const { username } = ctx.query;
-
-  queryClient.prefetchQuery({
-    queryKey: ["watchlist", username],
-    queryFn: () => getWatchList(username as string, supabase),
-  });
-  ctx.res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=120, stale-while-revalidate=360"
-  );
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-};
 
 const WatchList = () => {
   const router = useRouter();
@@ -40,7 +18,16 @@ const WatchList = () => {
   const { data: userProfile, error } = useQuery<IProfile>(
     ["profile", username],
     () => getProfile(username as string, supabase),
-    { enabled: !!username || !!user, ...QUERY_CONFIG }
+    { enabled: (router.isReady && !!username) || !!user, ...QUERY_CONFIG }
+  );
+
+  const { data: watchLists } = useQuery(
+    ["watchlist", username as string],
+    () => getWatchList(username as string, supabase),
+    {
+      enabled: !!userProfile,
+      ...QUERY_CONFIG,
+    }
   );
 
   if (error) {
@@ -63,7 +50,12 @@ const WatchList = () => {
 
           {!userProfile.is_private ||
           user?.user_metadata.username === username ? (
-            <WatchlistItems username={userProfile.username} />
+            watchLists ? (
+              <WatchlistItems
+                username={userProfile.username}
+                watchlists={watchLists}
+              />
+            ) : null
           ) : (
             <>
               {userProfile.is_private

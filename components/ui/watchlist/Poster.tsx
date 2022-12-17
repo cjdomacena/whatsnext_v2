@@ -31,12 +31,15 @@ const Poster = ({
         <div className="min-h-[450px] w-full relative ">
           <Image
             src={`${IMAGE_URL}/w500${poster_path}`}
-            alt=""
+            alt={title}
             fill
             className="rounded object-cover group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:z-20 transition-transform"
             placeholder="blur"
             blurDataURL={BLUR_DATA}
             loading={"eager"}
+            sizes="(max-width: 768px) 50vw,
+            (max-width: 1200px) 50vw,
+           50vw"
           />
         </div>
         <div>
