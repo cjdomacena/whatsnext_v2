@@ -8,7 +8,6 @@ export const getReviews = async (
     .from("reviews")
     .select("*,profiles(full_name,is_subscribed)")
     .eq("movie_id", movieId)
-    .order("is_featured", { ascending: false })
     .order("created_at", { ascending: false });
   if (error) {
     throw error;

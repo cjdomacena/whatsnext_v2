@@ -1,5 +1,9 @@
 import { ReviewForm, ReviewContainer } from "@components/common/review";
+import VerifiedReview, {
+  VerifiedReviewBlurred,
+} from "@components/common/review/VerifiedReview";
 import Rating from "@components/common/util/Rating";
+import { useSubscription } from "@components/context/SubscriptionContext";
 import MetaHeader from "@components/MetaHeader";
 import {
   Backdrop,
@@ -12,6 +16,7 @@ import {
 } from "@components/ui/detail";
 import WatchProviders from "@components/ui/detail/WatchProviders";
 import { getDetails } from "@lib/api/getDetails";
+import { getVerifiedReview } from "@lib/api/getVerifiedReview";
 import { getWatchListItem } from "@lib/api/getWatchlist";
 import { getPopularMovie } from "@lib/api/movies/getPopularMovie";
 import { getTrendingMovie } from "@lib/api/movies/getTrendingMovie";
@@ -91,8 +96,17 @@ const DetailsPage = ({ details }: any) => {
       ),
     { ...QUERY_CONFIG }
   );
+  const subscriptionInfo = useSubscription();
 
   const enabled = details ? true : false;
+  const { data: verifiedReview } = useQuery(
+    ["verifiedReview", query.id],
+    () => getVerifiedReview(query.id as string, query.type as string, supabase),
+    {
+      enabled: !!user || !!subscriptionInfo?.is_subscribed,
+      ...QUERY_CONFIG,
+    }
+  );
 
   useEffect(() => {
     if (user && router.query.id) refetch();
@@ -174,7 +188,13 @@ const DetailsPage = ({ details }: any) => {
             ) : null}
           </div>
         </div>
-
+        <div className="">
+          {verifiedReview ? (
+            <VerifiedReview {...verifiedReview} />
+          ) : (
+            <VerifiedReviewBlurred />
+          )}
+        </div>
         <div className="ratings-container gap-12  grid grid-cols-8">
           <div className="w-full h-auto    2xl:col-span-2 xl:col-span-2 lg:col-span-2 col-span-8 2xl:order-1 xl:order-1 lg:order-1 order-2 ">
             {details.credits ? (

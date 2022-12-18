@@ -12,6 +12,7 @@ type CommentProps = {
 
 const ReviewContainer: React.FC<CommentProps> = ({ movie_id }) => {
   const supabase = useSupabaseClient();
+
   const { data: reviews, error } = useQuery<IReview[], PostgrestError | Error>(
     ["reviews", { id: movie_id }],
     async () => getReviews(movie_id as string, supabase),
@@ -19,6 +20,7 @@ const ReviewContainer: React.FC<CommentProps> = ({ movie_id }) => {
       refetchOnWindowFocus: true,
     }
   );
+
   if (error) {
     return <h4>Something went wrong...</h4>;
   }
