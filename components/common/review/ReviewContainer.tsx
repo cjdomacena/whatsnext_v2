@@ -15,30 +15,25 @@ const ReviewContainer: React.FC<CommentProps> = ({ movie_id }) => {
   const supabase = useSupabaseClient();
   const [isHydrated, setIsHydrated] = useState<boolean>(false);
 
-  const {
-    data: reviews,
-    error,
-    refetch,
-  } = useQuery<IReview[], PostgrestError | Error>(
+  const { data: reviews, error } = useQuery<IReview[], PostgrestError | Error>(
     ["reviews", { id: movie_id }],
     async () => getReviews(movie_id as string, supabase),
     {
-      enabled: false,
+      enabled: isHydrated,
       refetchOnWindowFocus: true,
     }
   );
 
   useEffect(() => {
     if (!isHydrated) {
-      refetch();
       setIsHydrated(true);
     }
-  }, [isHydrated, refetch]);
+  }, [isHydrated]);
 
   if (error) {
     return <h4>Something went wrong...</h4>;
   }
-  return reviews ? (
+  return reviews && isHydrated ? (
     <ul className="space-y-4 mt-4">
       {reviews.length === 0 ? (
         <p className="text-xs text-center pt-4">
