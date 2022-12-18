@@ -1,4 +1,5 @@
 import MetaHeader from "@components/MetaHeader";
+import Link from "next/link";
 
 const Terms = () => {
   return (
@@ -115,7 +116,7 @@ const Terms = () => {
           </li>
           {/* Links */}
           <li>
-            <p>Links</p>
+            <p>Site Terms of Use Modifications</p>
             <p>
               whatsnext may revise these Terms of Use for its Website at any
               time without prior notice. By using this Website, you are agreeing
@@ -123,9 +124,15 @@ const Terms = () => {
               of Use.
             </p>
           </li>
+          <li>
+            <p>Your Privacy</p>
+            <p>
+              Please read our <Link href={"/privacy"}>Privacy Policy</Link>.
+            </p>
+          </li>
           {/* Governing Law */}
           <li>
-            <p>Links</p>
+            <p>Governing Law</p>
             <p>
               Any claim related to whatsnext&apos;s Website shall be governed by
               the laws of Country without regards to its conflict of law
