@@ -1,4 +1,4 @@
-import { ReviewForm, ReviewContainer } from "@components/common/review";
+import { ReviewForm } from "@components/common/review";
 import VerifiedReview, {
   VerifiedReviewBlurred,
 } from "@components/common/review/VerifiedReview";
@@ -27,6 +27,7 @@ import { formatDate, getCompactNumberFormat, getDuration } from "@lib/utils";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { useQuery } from "@tanstack/react-query";
 import { GetStaticPaths, GetStaticProps } from "next";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -77,6 +78,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
     return { notFound: true };
   }
 };
+
+const ReviewContainer = dynamic(
+  () => import("@components/common/review/ReviewContainer"),
+  {
+    ssr: false,
+  }
+);
+
 const DetailsPage = ({ details }: any) => {
   const user = useUser();
   const router = useRouter();
