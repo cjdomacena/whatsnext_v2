@@ -99,7 +99,7 @@ const DetailsPage = ({ details }: any) => {
   const subscriptionInfo = useSubscription();
 
   const enabled = details ? true : false;
-  const { data: verifiedReview } = useQuery(
+  const { data: verifiedReview, refetch: refetchVerifiedReviews } = useQuery(
     ["verifiedReview", query.id],
     () => getVerifiedReview(query.id as string, query.type as string, supabase),
     {
@@ -109,8 +109,11 @@ const DetailsPage = ({ details }: any) => {
   );
 
   useEffect(() => {
-    if (user && router.query.id) refetch();
-  }, [router.query.id, supabase, user, refetch]);
+    if (user && router.query.id) {
+      refetch();
+      refetchVerifiedReviews();
+    }
+  }, [router.query.id, supabase, user, refetch, refetchVerifiedReviews]);
 
   if (query.type !== "person") {
     return !router.isFallback ? (
