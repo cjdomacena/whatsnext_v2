@@ -29,23 +29,21 @@ const VerifiedReview: React.FC<VerifiedReviewProps> = ({
     <div className="my-12 container mx-auto">
       <div className="p-6 dark:bg-neutral-800 bg-neutral-100 rounded space-y-2  mx-auto  relative">
         <div className="text-sm ">
-          <div className="p-4">
-            <div className="flex gap-2">
-              <Avatar name={profiles.full_name} />
-              <div>
-                <div className="flex items-center">
-                  <MdVerified className="text-amber-500 w-4 h-4 mr-1" />
-                  <p>{profiles.full_name}</p>
-                </div>
-
-                <p>
-                  {formatDate(created_at, {
-                    dateStyle: "medium",
-                    timeStyle: "short",
-                  })}
-                </p>
-                <Rating votes={8} />
+          <div className="flex gap-2 p-4">
+            <Avatar name={profiles.full_name} />
+            <div>
+              <div className="flex items-center">
+                <MdVerified className="text-amber-500 w-4 h-4 mr-1" />
+                <p>{profiles.full_name}</p>
               </div>
+
+              <p>
+                {formatDate(created_at, {
+                  dateStyle: "medium",
+                  timeStyle: "short",
+                })}
+              </p>
+              <Rating votes={8} />
             </div>
           </div>
           <div className=" whitespace-pre-wrap  text-sm px-2 ">
@@ -82,16 +80,14 @@ export const VerifiedReviewBlurred = () => {
     <div className="my-12 container mx-auto">
       <div className="p-6 dark:bg-neutral-800 bg-neutral-100 rounded space-y-2  mx-auto  relative">
         <div className="select-none text-sm blur-md">
-          <div className="p-4">
-            <div className="flex gap-2">
-              <Avatar name={"User Critic"} />
-              <div>
-                <p>User Critic</p>
-                <p>
-                  {formatDate(new Date().toString(), { dateStyle: "medium" })}
-                </p>
-                <Rating votes={8} />
-              </div>
+          <div className="flex gap-2 p-4">
+            <Avatar name={"User Critic"} />
+            <div>
+              <p>User Critic</p>
+              <p>
+                {formatDate(new Date().toString(), { dateStyle: "medium" })}
+              </p>
+              <Rating votes={8} />
             </div>
           </div>
           <p className="  whitespace-pre-wrap">

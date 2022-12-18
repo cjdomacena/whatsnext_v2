@@ -36,9 +36,9 @@ const ReviewContainer: React.FC<CommentProps> = ({ movie_id }) => {
   return reviews && isHydrated ? (
     <ul className="space-y-4 mt-4">
       {reviews.length === 0 ? (
-        <p className="text-xs text-center pt-4">
+        <li className="text-xs text-center pt-4">
           Be the first to add a review!
-        </p>
+        </li>
       ) : (
         reviews.map((review) => <Review key={review.id} review={review} />)
       )}

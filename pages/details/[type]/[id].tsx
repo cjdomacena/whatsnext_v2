@@ -221,7 +221,9 @@ const DetailsPage = ({ details }: any) => {
               </div>
             )}
 
-            <ReviewContainer movie_id={query.id as string} />
+            {router.isReady ? (
+              <ReviewContainer movie_id={query.id as string} />
+            ) : null}
           </div>
         </div>
 
