@@ -10,7 +10,7 @@ const NavExpanded = () => {
 
   return (
     <NavigationMenu.Root
-      className="relative transition-all text-xs 2xl:block xl:block lg:block md:block hidden z-50"
+      className="relative transition-all text-xs 2xl:block xl:block lg:block hidden z-50"
       orientation="horizontal"
     >
       <NavigationMenu.List className="flex items-center gap-2">
