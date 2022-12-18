@@ -1,8 +1,6 @@
-import { getWatchList } from "@lib/api/getWatchlist";
-import { QUERY_CONFIG } from "@lib/constants/config";
 import { IWatchlist } from "@lib/types/supabase/database";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import Poster from "./Poster";
 

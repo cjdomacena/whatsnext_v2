@@ -1,7 +1,6 @@
 import { useSession, useUser } from "@supabase/auth-helpers-react";
 import Link from "next/link";
 import { FC } from "react";
-import { AiOutlineMenu } from "react-icons/ai";
 import { IoSearchOutline } from "react-icons/io5";
 import { ThemeToggle } from "../button/ThemeToggle";
 import { Logo } from "../util";
