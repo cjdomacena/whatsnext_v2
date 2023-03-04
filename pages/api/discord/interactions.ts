@@ -39,7 +39,7 @@ export default async function handler(
         try {
           const constructFetchUrl = `${BASE_URL}/api/list/search?type=${
             media_type ?? "multi"
-          }&query=${query}`;
+          }&query=${query}&page=1`;
           const data = await fetch(constructFetchUrl);
           const jsonData = await data.json();
           if (jsonData && jsonData.results.length > 0) {
