@@ -23,7 +23,7 @@ const AddToWatchList = ({
   const supabase = useSupabaseClient();
   const user = useUser();
   const [loading, setLoading] = useState<boolean>(false);
-  const [localActive, setLocalActive] = useState<boolean>(false);
+  const [localActive, setLocalActive] = useState<boolean>(isActive);
   // username, title_id: movie_id/tv_id,  title: name/title, poster_path
   const handleClick = async () => {
     if (user) {
