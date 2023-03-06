@@ -9,7 +9,7 @@ const Pricing = () => {
     if (subscriptionInfo && subscriptionInfo.is_subscribed) {
       router.push(`/settings/manage-subscription`);
     } else {
-      router.push("/auth/register");
+      router.push("/api/stripe/checkout-session");
     }
   };
 
@@ -43,6 +43,13 @@ const Pricing = () => {
           <p className="uppercase tracking-widest font-semibold">Paid</p>
           <h4 className="text-4xl font-bold">Premium</h4>
           <p>Get access to reviews from verified critics and curated titles.</p>
+          <div>
+            <h4 className="text-amber-500">
+              This app is not monetized. To test subscription please use this
+              card number in stripe checkout:{" "}
+            </h4>
+            <p className="my-2 text-white font-medium"> 4242 4242 4242 4242</p>
+          </div>
           <button
             className="p-2 bg-neutral-900 w-full rounded text-center text-white"
             onClick={handleSubmit}
